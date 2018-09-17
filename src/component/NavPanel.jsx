@@ -5,17 +5,17 @@ import styled from 'styled-components'
 const Container = styled.div`
     padding: 2rem;
     background-color: #151B26;
-    width: 33%;
+    width: 150px;
 `
 const Project = styled.h1`
-    color: white;
-    font-size: 2rem;
-    margin-bottom: .5rem;
+    color: #FFFA;
+    font-size: 1rem;
+    margin-bottom: 1rem;
 `
 // Temp code for generating objects
 let projects = []
 for(let i=0; i < 10; i++) {
-    projects.push(<Project>{`Project${i}`}</Project>)
+    projects.push(<Project key={`${i}`}>{`Project${i}`}</Project>)
 }
 
 const NavPanel = () => {

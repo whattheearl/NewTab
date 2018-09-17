@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
+// Styles
 const Link = styled.a`
   width: 100%;
   height: 100%;

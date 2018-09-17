@@ -7,17 +7,20 @@ const Button = styled.button`
     bottom: 75px;
     right: 75px;
     font-size: 75px;
+    width: 75px;
+    height: 75px;
+    background-color: #fff;
+    box-sizing: border-box;
     border-radius: 50%;
     border: none;
-    font-weight: 100;
-    padding: 0;
+    padding: 0;x
     margin: 0;
     color: #178EE0;
 `
 
-const PlusButton = () => {
+const PlusButton = ({onClick}) => {
     return (
-        <Button>
+        <Button onClick={onClick}>
             <FaPlusCircle />
         </Button>
     )
