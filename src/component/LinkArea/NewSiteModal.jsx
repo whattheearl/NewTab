@@ -50,6 +50,7 @@ const SiteInputBorder = styled.div`
 `
 
 const SiteInput = styled.input`
+    width: 100%;
     font-size: 1.2rem;
     border: none;
     border-width: 0;
@@ -76,10 +77,54 @@ const CancelButton = styled.button`
     font-size: 1.2rem;
 `
 
+const Row = styled.div`
+    display: flex;
+    align-items: center;
+`
+
 class NewSiteModal extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            url: null,
+            name: null,
+        }
+        this.handleInputChange.bind(this)
+    }
+
+    handleInputChange(e) {
+        const name = e.target.name
+
+        switch(name) {
+            case "SiteUrl": 
+                this.setState({url: e.target.value})
+                break
+            case "SiteName": 
+                this.setState({name: e.target.value})
+                break
+            case "SiteImage":
+                const hasFile = e.target.files.length === 1
+                if(!hasFile) return
+                const fileReader = new FileReader()
+
+                fileReader.onload = (file) => {
+                    const image = file.target.result
+                    console.log(image)
+                    this.setState({image})
+                }
+                fileReader.readAsDataURL(e.target.files[0])
+                break
+            default:
+                break
+        }
+    }
 
     submit() {
-        this.props.saveSite('hi', 'hi', 'hi')
+        this.props.saveSite(this.state)
+    }
+
+    onClick(e) {
+        e.target.value = null;
     }
 
     render() {
@@ -94,14 +139,16 @@ class NewSiteModal extends Component {
                     <InputContainer>
                         <SiteLabel htmlFor="SiteUrl">Url *</SiteLabel>
                         <SiteInputBorder>
-                            <SiteInput name='SiteUrl' ref={r => r} type='text' placeholder='http://siteurl.com' />
+                            <SiteInput name='SiteUrl' onChange={this.handleInputChange.bind(this)} type='text' placeholder='http://siteurl.com' />
                         </SiteInputBorder>
                         <SiteLabel htmlFor="SiteName">Name *</SiteLabel>
                         <SiteInputBorder>
-                            <SiteInput name='SiteName' type='text' placeholder='Site Name Here' />
+                            <SiteInput name='SiteName' onChange={this.handleInputChange.bind(this)} type='text' placeholder='Site Name Here' />
                         </SiteInputBorder>
                         <SiteLabel htmlFor="SiteImage">Image</SiteLabel>
-                        <SiteInput name='SiteImage' type='file' accept='image/*'/>
+                        <Row>
+                            <SiteInput name='SiteImage' onClick={this.onClick} onChange={this.handleInputChange.bind(this)} type='file' accept='image/*'/>
+                        </Row>
                     </InputContainer>
                     <ButtonContainer>
                         <CancelButton onClick={closeModal}>Cancel</CancelButton>

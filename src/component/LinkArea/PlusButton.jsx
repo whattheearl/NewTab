@@ -6,9 +6,9 @@ const Button = styled.button`
     position: fixed;
     bottom: 75px;
     right: 75px;
-    font-size: 75px;
-    width: 75px;
-    height: 75px;
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
     background-color: #fff;
     box-sizing: border-box;
     border-radius: 50%;

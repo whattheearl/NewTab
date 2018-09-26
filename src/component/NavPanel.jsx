@@ -18,7 +18,8 @@ for(let i=0; i < 10; i++) {
     projects.push(<Project key={`${i}`}>{`Project${i}`}</Project>)
 }
 
-const NavPanel = () => {
+const NavPanel = ({display}) => {
+    if(!display) return null
     return (
         <Container>
             {projects}
