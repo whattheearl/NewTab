@@ -39,6 +39,7 @@ class LinkArea extends Component {
             sites: [],
             displayNewSiteModal: false,
             editable: true,
+            selectedSite: null,
         }
     }
 
@@ -87,9 +88,9 @@ class LinkArea extends Component {
 
     replaceSite(site) {
         const updatedSites = this.state.sites.slice()
-        // remove
-        updatedSites.splice(this.state.selectedSite.index, 1, site)
-        // insert
+
+        const index = this.state.sites.indexOf(this.state.selectedSite)
+        updatedSites.splice(index, 1, site)
         this.setState({sites: updatedSites})
     }
 
@@ -159,6 +160,7 @@ class LinkArea extends Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <Area>
                 <EditSiteModal

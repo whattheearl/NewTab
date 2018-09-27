@@ -122,9 +122,13 @@ class EditSiteModal extends Component {
 
     submit() {
         const site = this.getSite()
-        console.log('replace site', site)
         this.props.replaceSite(site)
         this.props.closeModal()
+        this.setState({
+            url: null,
+            name: null,
+            image: null,
+        })
     }
 
     // image would not retrieve without this
@@ -143,8 +147,6 @@ class EditSiteModal extends Component {
     }
 
     render() {
-        console.log('render props', this.props)
-        console.log('render state', this.state)
         const {displaySelf, closeModal, selectedSite} = this.props
 
         if(!displaySelf || !selectedSite) return null;
