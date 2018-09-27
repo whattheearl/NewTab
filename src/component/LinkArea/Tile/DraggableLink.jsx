@@ -11,6 +11,7 @@ const linkSource = {
     endDrag(props, monitor, component) {
         console.log(props, monitor.getDropResult(), component)
         let sourceIndex = props.index
+        if(!monitor.getDropResult()) return
         let targetIndex = monitor.getDropResult().index
         console.log(sourceIndex, targetIndex)
         props.move(sourceIndex, targetIndex)
@@ -25,7 +26,7 @@ function collect(connect, monitor) {
 }
 
 // Styled
-const LinkContainer = styled.a`
+const LinkContainer = styled.div`
   color: inherit;
   text-decoration: none;
   font-size: 2rem;
@@ -56,7 +57,7 @@ const Thumb = styled.img`
 `
 
 const DraggableLink = (props) => {
-    const {url, alt, image, name} = props
+    const {index, alt, image, name, select} = props
     const { connectDragSource, isDragging } = props
 
     return connectDragSource(
@@ -65,7 +66,7 @@ const DraggableLink = (props) => {
             fontWeight: 'bold',
             cursor: 'move'
         }}>
-            <LinkContainer href={url} alt={alt} >
+            <LinkContainer onClick={()=>{select(index)}}>
                 <Column>
                     <Thumb src={image} alt={alt}/>
                     <Name>{name}</Name>

@@ -7,6 +7,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import LinkTile from './Tile'
 import PlusButton from './PlusButton'
 import NewSiteModal from './NewSiteModal'
+import EditButton from './EditButton'
+import EditSiteModal from './EditSiteModal'
 
 // Styled
 const Grid = styled.div`
@@ -35,8 +37,16 @@ class LinkArea extends Component {
         this.state = {
             linkTiles: [],
             sites: [],
-            displayModal: false,
+            displayNewSiteModal: false,
+            editable: true,
         }
+    }
+
+    toggleEditable() {
+        console.log('toggle')
+        this.setState({
+            editable: !this.state.editable
+        })
     }
 
     createLinkTile({index, name, url, image}) {
@@ -48,9 +58,10 @@ class LinkArea extends Component {
                 name={name}
                 url={url} 
                 image={image}
-                removable={this.props.allowRemove}
+                editable={this.state.editable}
                 remove={this.removeSite.bind(this)}
                 move={this.moveSite.bind(this)}
+                select={this.selectSite.bind(this)}
             />
         )
     }
@@ -74,6 +85,22 @@ class LinkArea extends Component {
         return removedSite
     }
 
+    replaceSite(site) {
+        const updatedSites = this.state.sites.slice()
+        // remove
+        updatedSites.splice(this.state.selectedSite.index, 1, site)
+        // insert
+        this.setState({sites: updatedSites})
+    }
+
+    // selects site while edit is enabled
+    selectSite(index) {
+        console.log(index)
+        console.log(this.state.sites[index])
+        this.setState({selectedSite: this.state.sites[index]})
+        this.openEditSiteModal()
+    }
+
     // removes source then inserts it at target
     moveSite(sourceIndex, targetIndex) {
         // do nothing if source == target
@@ -86,15 +113,23 @@ class LinkArea extends Component {
         this.setState({sites: updatedSites})
     }
 
-    openModal() {
-        this.setState({displayModal: true})
+    openEditSiteModal() {
+        this.setState({displayEditSiteModal: true})
     }
     
-    closeModal() {
-        this.setState({displayModal: false})
+    closeEditSiteModal() {
+        this.setState({displayEditSiteModal: false})
     }
 
-    // create list of linkTiles to render
+    openNewSiteModal() {
+        this.setState({displayNewSiteModal: true})
+    }
+    
+    closeNewSiteModal() {
+        this.setState({displayNewSiteModal: false})
+    }
+
+    // return list of linkTiles to render
     renderLinkTiles() {
         let linkTiles = []
         for(let i = 0; i < this.state.sites.length; i++) {
@@ -113,6 +148,7 @@ class LinkArea extends Component {
         let sites = []
         for(let i = 0; i < 8; i++) {
             let site = Object.assign({}, shortcut)
+            site.name = site.name + i
             sites.push(site)
         }
         return sites
@@ -125,20 +161,25 @@ class LinkArea extends Component {
     render() {
         return (
             <Area>
+                <EditSiteModal
+                    displaySelf={this.state.displayEditSiteModal} 
+                    closeModal={this.closeEditSiteModal.bind(this)}
+                    replaceSite={this.replaceSite.bind(this)}
+                    selectedSite={this.state.selectedSite}
+                />
                 <NewSiteModal 
-                    displaySelf={this.state.displayModal} 
-                    closeModal={this.closeModal.bind(this)}
+                    displaySelf={this.state.displayNewSiteModal} 
+                    closeModal={this.closeNewSiteModal.bind(this)}
                     saveSite={this.addSite.bind(this)} 
                 />
+                <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
                 <Grid>
                     {this.renderLinkTiles()}
                 </Grid>
-                <PlusButton onClick={this.openModal.bind(this)}></PlusButton>
+                <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton>
             </Area>
         )
     }
 }
-
-
 
 export default DragDropContext(HTML5Backend)(LinkArea)

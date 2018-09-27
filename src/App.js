@@ -28,14 +28,13 @@ class App extends Component {
     this.state = {
       displaySettingsPanel: false,
       displayNavPanel: true,
-      allowLinkRemove: false,
+      linkAreaEditable: false,
     }
   }
 
   toggleSettingsPanel() {
     this.setState({
-      displaySettingsPanel: !this.state.displaySettingsPanel,
-      allowLinkRemove: !this.state.displaySettingsPanel
+      displaySettingsPanel: !this.state.displaySettingsPanel
     })
   }
 
@@ -45,8 +44,8 @@ class App extends Component {
         <Row>
           <NavPanel display={this.state.displayNavPanel && !this.state.displaySettingsPanel}/>
           <Col>
-            <MainHeader onClickSettings={this.toggleSettingsPanel.bind(this)}/>
-            <LinkArea allowRemove={this.state.allowLinkRemove}/>
+            <MainHeader toggleSettingsPanel={this.toggleSettingsPanel.bind(this)}/>
+            <LinkArea/>
           </Col>
           <SettingsPanel display={this.state.displaySettingsPanel}/>
         </Row>

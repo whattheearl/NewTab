@@ -24,7 +24,7 @@ const MainHeader = (props) => {
         <HeaderContainer>
             <Row>
                 <h1>I AM A HEADER</h1>
-                <Button onClick={props.onClickSettings}>
+                <Button onClick={props.toggleSettingsPanel}>
                     {'Settings'}
                 </Button>
             </Row>
