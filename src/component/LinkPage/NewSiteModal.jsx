@@ -120,7 +120,11 @@ class NewSiteModal extends Component {
     }
 
     submit() {
+        const {url, name} = this.state
+        if(url === null || url === '' || name === null || name === '') return
         this.props.saveSite(this.state)
+        this.setState({url: null, image: null, name: null})
+        this.props.closeModal()
     }
 
     onClick(e) {

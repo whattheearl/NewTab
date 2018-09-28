@@ -1,3 +1,6 @@
+// LinkPage
+// Displays all links as tiles
+
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import { DragDropContext } from 'react-dnd';
@@ -24,19 +27,12 @@ const Area = styled.div`
     height: 100%;
 `
 
-// Temp Code
-let shortcut = {
-    name: 'facebook',
-    url: 'https://facebook.com',
-    image: 'http://www.valuewalk.com/wp-content/uploads/2017/11/facebook_1509720559.png',
-}
-
-class LinkArea extends Component {
+class LinkPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
             linkTiles: [],
-            sites: [],
+            page: props.page,
             displayNewSiteModal: false,
             editable: true,
             selectedSite: null,
@@ -44,7 +40,6 @@ class LinkArea extends Component {
     }
 
     toggleEditable() {
-        console.log('toggle')
         this.setState({
             editable: !this.state.editable
         })
@@ -68,37 +63,37 @@ class LinkArea extends Component {
     }
 
     addSite(site) {
-        // copy previous site state
-        let sites = this.state.sites.slice()
-        // copy site info and add index
-        let newSite = Object.assign({}, site)
-        // create new tile and add to new state
-        sites.push(newSite)
-        this.setState({sites})
-        this.closeModal()
+        // copy previous page state
+        const page = this.getPageCopy()
+        page.sites.push(site)
+        this.props.updatePage(page)
+    }
+
+    getPageCopy() {
+        let page = Object.assign({}, this.state.page)
+        const updatedSites = page.sites.slice()
+        page.sites = updatedSites
+        return page
     }
 
     // remove site at index
     removeSite(index) {
-        const updatedSites = this.state.sites.slice()
-        let removedSite = updatedSites.splice(index, 1)
-        this.setState({sites: updatedSites})
-        return removedSite
+        const page = this.getPageCopy()
+        page.sites.splice(index, 1)
+        this.props.updatePage(page)
     }
 
+    //replaces selectedSite with site
     replaceSite(site) {
-        const updatedSites = this.state.sites.slice()
-
-        const index = this.state.sites.indexOf(this.state.selectedSite)
-        updatedSites.splice(index, 1, site)
-        this.setState({sites: updatedSites})
+        const index = this.state.page.sites.indexOf(this.state.selectedSite)
+        let page = Object.assign({}, this.state)
+        page.sites.splice(index, 1, site)
+        this.props.updatePage(page)
     }
 
     // selects site while edit is enabled
     selectSite(index) {
-        console.log(index)
-        console.log(this.state.sites[index])
-        this.setState({selectedSite: this.state.sites[index]})
+        this.setState({selectedSite: this.state.page.sites[index]})
         this.openEditSiteModal()
     }
 
@@ -106,12 +101,17 @@ class LinkArea extends Component {
     moveSite(sourceIndex, targetIndex) {
         // do nothing if source == target
         if(sourceIndex === targetIndex) return
-        const updatedSites = this.state.sites.slice()
+        // copy page
+        let page = Object.assign({}, this.props.page)
+        debugger;
+        console.log('copied page', page)
+        const updatedSites = this.props.page.sites.slice()
         // remove
         updatedSites.splice(sourceIndex, 1)
         // insert
-        updatedSites.splice(targetIndex, 0, this.state.sites[sourceIndex])
-        this.setState({sites: updatedSites})
+        updatedSites.splice(targetIndex, 0, this.props.page.sites[sourceIndex])
+        page.sites = updatedSites
+        this.props.updatePage(page)
     }
 
     openEditSiteModal() {
@@ -133,9 +133,10 @@ class LinkArea extends Component {
     // return list of linkTiles to render
     renderLinkTiles() {
         let linkTiles = []
-        for(let i = 0; i < this.state.sites.length; i++) {
+        const {sites} = this.state.page
+        for(let i = 0; i < sites.length; i++) {
             // assign index
-            let site = Object.assign({}, this.state.sites[i])
+            let site = Object.assign({}, sites[i])
             site.index = i
             // create linkTile
             linkTiles.push(
@@ -145,22 +146,8 @@ class LinkArea extends Component {
         return linkTiles
     }
 
-    createSites() {
-        let sites = []
-        for(let i = 0; i < 8; i++) {
-            let site = Object.assign({}, shortcut)
-            site.name = site.name + i
-            sites.push(site)
-        }
-        return sites
-    }
-
-    componentDidMount() {
-        this.setState({sites: this.createSites()})
-    }
-
     render() {
-        console.log(this.state)
+        if(this.props.page !== this.state.page) this.setState({page: this.props.page})
         return (
             <Area>
                 <EditSiteModal
@@ -184,4 +171,4 @@ class LinkArea extends Component {
     }
 }
 
-export default DragDropContext(HTML5Backend)(LinkArea)
+export default DragDropContext(HTML5Backend)(LinkPage)

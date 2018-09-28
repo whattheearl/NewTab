@@ -1,16 +1,19 @@
+// Draggable Link Tile
+// Allow for removal as well as reorganizing of Tiles
 import React from 'react'
 import styled from 'styled-components'
 import { DragSource } from 'react-dnd'
 
-
+// Handle Drag Events
 const linkSource = {
+    // Pass source object to monitor
     beginDrag(props) {
-        console.log('begindrag', props)
         return {props}
     },
+    // Move Tile to dropped location
     endDrag(props, monitor, component) {
-        console.log(props, monitor.getDropResult(), component)
         let sourceIndex = props.index
+        // cancel if dropped on non tile
         if(!monitor.getDropResult()) return
         let targetIndex = monitor.getDropResult().index
         console.log(sourceIndex, targetIndex)
@@ -18,42 +21,49 @@ const linkSource = {
     }
 }
 
+// Connect to event handler
 function collect(connect, monitor) {
     return {
         connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging(),
     }
 }
 
 // Styled
 const LinkContainer = styled.div`
-  color: inherit;
-  text-decoration: none;
-  font-size: 2rem;
+    color: inherit;
+    text-decoration: none;
+    font-size: 2rem;
+    border-radius: 15px;
+    text-transform: capitalize;
+    &:hover {
+        background-color: white;
+        animation-name: bounce;
+        animation-duration: 1s;
+        animation-iteration-count: 5;
+    }
 `
 
 const Name = styled.h2`
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: #4e4e4e;
-  text-transform: capitalize;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #4e4e4e;
 `
 
 const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 `
 
 const Thumb = styled.img`
-  width: 100px;
-  height: 100px;
-  margin: 15px;
-  margin-bottom: 15px;
-  border-radius: 15px;
-  object-fit: cover;
-  border: 1px solid #2e2e2e17;
+    width: 100px;
+    height: 100px;
+    margin: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    object-fit: cover;
+    border: 1px solid #2e2e2e17;
 `
 
 const DraggableLink = (props) => {
