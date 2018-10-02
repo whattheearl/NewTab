@@ -4,6 +4,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { DragSource } from 'react-dnd'
 
+// Colors
+import colors from '../../../styles/colors'
+
 // Handle Drag Events
 const linkSource = {
     // Pass source object to monitor
@@ -22,7 +25,7 @@ const linkSource = {
 }
 
 // Connect to event handler
-function collect(connect, monitor) {
+function collect(connect) {
     return {
         connectDragSource: connect.dragSource(),
     }
@@ -35,6 +38,7 @@ const LinkContainer = styled.div`
     font-size: 2rem;
     border-radius: 15px;
     text-transform: capitalize;
+    background-color: ${colors.white};
     &:hover {
         background-color: white;
         animation-name: bounce;
@@ -66,13 +70,12 @@ const Thumb = styled.img`
     border: 1px solid #2e2e2e17;
 `
 
-const DraggableLink = (props) => {
+const EditableLink = (props) => {
     const {index, alt, image, name, select} = props
     const { connectDragSource, isDragging } = props
 
     return connectDragSource(
         <div style={{
-            opacity: isDragging ? 0.5 : 1,
             fontWeight: 'bold',
             cursor: 'move'
         }}>
@@ -87,4 +90,4 @@ const DraggableLink = (props) => {
     
 }
 
-export default DragSource('draggablelink', linkSource, collect)(DraggableLink)
+export default DragSource('editablelink', linkSource, collect)(EditableLink)

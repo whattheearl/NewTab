@@ -1,11 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
+// Colors
+import colors from '../../../styles/colors'
+
 // Styled
 const LinkContainer = styled.a`
   color: inherit;
   text-decoration: none;
   font-size: 2rem;
+  background-color: ${colors.white};
 `
 
 const Name = styled.h2`

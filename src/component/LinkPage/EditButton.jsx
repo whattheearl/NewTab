@@ -1,23 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
+import {FaEdit} from 'react-icons/fa'
 
 // Styled
-const Row = styled.div`
+const Button = styled.div`
     display: flex;
-    /* justify-content: flex-end; */
+    top: 1em;
+    right: 2rem;
+    position: absolute;
+    font-size: 25px;
+    color: #7e7e7e;
 `
 
-const Button = styled.button`
-
+const Text = styled.span`
+    margin-left: .5rem;
 `
 
 const EditButton = ({toggleEditable}) => {
     return (
-        <Row>
-            <Button onClick={toggleEditable}>
-                {'Edit'}
-            </Button>
-        </Row>
+        <Button onClick={toggleEditable}>
+            <FaEdit/>
+            <Text>Edit</Text>
+        </Button>
     )
 }
 
