@@ -9,12 +9,12 @@ import HTML5Backend from 'react-dnd-html5-backend';
 // Component
 import LinkTile from './Tile'
 import PlusButton from './PlusButton'
-import NewSiteModal from './Modal/NewSite'
+import NewSiteModal from '../Modal/NewSite'
 import EditButton from './EditButton'
-import EditSiteModal from './Modal/EditSite'
+import EditSiteModal from '../Modal/EditSite'
 
 // Colors
-import colors from '../../styles/colors'
+import colors from '../../../styles/colors'
 
 // Styled
 const Area = styled.div`

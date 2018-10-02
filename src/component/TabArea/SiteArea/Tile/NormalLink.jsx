@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 // Colors
-import colors from '../../../styles/colors'
+import colors from '../../../../styles/colors'
 
 // Styled
 const LinkContainer = styled.a`

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { DragSource } from 'react-dnd'
 
 // Colors
-import colors from '../../../styles/colors'
+import colors from '../../../../styles/colors'
 
 // Handle Drag Events
 const linkSource = {

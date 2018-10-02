@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 // Components
 // import Logo from './Logo'
-import Tab from './TabArea/Tab'
+import Tab from './Tab'
 
 // Colors
-import colors from '../../styles/colors'
+import colors from '../../../styles/colors'
 
 // Styles
 const HeaderContainer = styled.div`
@@ -49,15 +49,20 @@ const BorderBottomAreaRight = styled.div`
     border-bottom: 1px solid ${colors.lightGray};
 `
 
-const MainHeader = (props) => {
+const MainHeader = ({selectTab, tabs, selectedTab}) => {
+    const tabsList = tabs.map(tab => {
+        return (<div onClick={() => {
+            console.log(this.props)
+            console.log('onclick tab')
+            selectTab(tab)}
+        }><Tab key={tab.name} name={tab.name} self={tab} selected={tab === selectedTab}/></div>)
+    })
     return(
         <HeaderContainer>
             <Row>
                 <BorderBottomAreaLeft/>
                 <Tabs>
-                    <Tab name={'Main'} selected={true}>{'Main'}</Tab>
-                    <Tab name={'IT'}/>
-                    <Tab name={'Resources'}/>
+                    {tabsList}   
                 </Tabs>
                 {/* <Button onClick={props.toggleSettingsPanel}>
                     {'Settings'}

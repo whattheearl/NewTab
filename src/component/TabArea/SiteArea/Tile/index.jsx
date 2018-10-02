@@ -8,7 +8,7 @@ import DraggableLink from './EditableLink'
 import NormalLink from './NormalLink'
 
 // Colors
-import colors from '../../../styles/colors'
+import colors from '../../../../styles/colors'
 
 // Drag and Drop (react-dnd)
 const tileTarget = {
