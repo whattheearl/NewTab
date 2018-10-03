@@ -15,11 +15,11 @@ const Col = styled.div`
 class TabArea extends Component {
     constructor(props) {
         super(props)
-        let {page} = props
-        let selectedTab = page.tabs[0] ? page.tabs[0] : null
+        let {tabs} = props
+        let selectedTab = tabs[0] ? tabs[0] : null
 
         this.state = {
-            tabs: page.tabs,
+            tabs: tabs,
             selectedTab
         }
     }
@@ -34,22 +34,30 @@ class TabArea extends Component {
         })
     }
 
-    updateTab(updatedTab) {
+    updateSelectedTab(updatedTab) {
         const tabIndex = this.state.tabs.indexOf(this.state.selectedTab)
-        console.log('selectedTab', this.state.selectedTab)
         const tabs = [
           ...this.state.tabs.slice(0, tabIndex),
           updatedTab,
           ...this.state.tabs.slice(tabIndex + 1)
         ]
-        console.log('updatedTabs', tabs)
-        this.setState({selectedTab: updatedTab})
         this.props.updatePageTabs(tabs)
+        this.setState({tabs, selectedTab: updatedTab})
     }
 
     updateSites(updatedSites){
         // create tab and update it in state
-        this.updateTab({name: this.state.selectedTab.name, sites: updatedSites})
+        this.updateSelectedTab({name: this.state.selectedTab.name, sites: updatedSites})
+    }
+
+    addTab(name) {
+        const newTab = {
+            name,
+            sites: [],
+        }
+        const updatedTabs = [...this.state.tabs, newTab]
+        this.props.updatePageTabs(updatedTabs)
+        this.setState({tabs: updatedTabs, selectedTab: newTab})
     }
 
     // Render Link Tiles
@@ -59,12 +67,19 @@ class TabArea extends Component {
     }
 
     render() {
-        if(this.props.page.tabs !== this.state.tabs) {
-            this.setState({tabs: this.props.page.tabs, selectedTab: this.props.page.tabs[0] ? this.props.page.tabs[0] : null})
+        console.log('Tabarea Render', this.state)
+        if(this.props.tabs !== this.state.tabs) {
+            this.setState({tabs: this.props.tabs, selectedTab: this.props.tabs[0] ? this.props.tabs[0] : null})
         }
         return(
             <Col>
-                <TabNav tabs={this.state.tabs} selectTab={this.selectTab.bind(this)} selectedTab={this.state.selectedTab} toggleSettingsPanel={this.toggleSettingsPanel.bind(this)}/>
+                <TabNav
+                    tabs={this.props.tabs}
+                    selectTab={this.selectTab.bind(this)}
+                    selectedTab={this.state.selectedTab}
+                    toggleSettingsPanel={this.toggleSettingsPanel.bind(this)}
+                    addTab={this.addTab.bind(this)}
+                />
                 {this.renderLinkPage()}
             </Col>
         )

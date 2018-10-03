@@ -1,20 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import colors from '../../../styles/colors'
+// Components
+import RemoveButton from './RemoveButton'
+
+// Styled
+import colors from '../../../../styles/colors'
 
 const UnselectedTab = styled.div`
-    padding: .5rem;
+    position: relative;
+    padding: .5rem 1rem;
     color: ${colors.gray};
     min-width: 4rem;
     display: flex;
     justify-content: center;
     border-bottom: 1px solid ${colors.lightGray};
+    :hover{
+        cursor: grab;
+    }
 `
 
 const SelectedTab = styled.div`
+    position: relative;
     background-color: ${colors.white};
-    padding: .5rem;
+    padding: .5rem 1rem;
     color: ${colors.babyBlue};
     min-width: 4rem;
     display: flex;
@@ -28,12 +37,20 @@ const SelectedTab = styled.div`
 const Name = styled.div`
 `
 
-const Tab = ({name, selected}) => {
+const Tab = ({name, selected, editable}) => {
     if(selected) {
-        return <SelectedTab><Name>{name}</Name></SelectedTab>
+        return (
+            <SelectedTab>
+                <Name>{name}</Name>
+                {editable? <RemoveButton/> : null}
+            </SelectedTab>
+        )
     }
     return (
-        <UnselectedTab><Name>{name}</Name></UnselectedTab>
+        <UnselectedTab>
+            <Name>{name}</Name>
+            {editable? <RemoveButton/> : null}
+        </UnselectedTab>
     )
 }
 

@@ -40,8 +40,6 @@ class App extends Component {
     const index = this.state.pages.indexOf(page)
     const selectedPage = this.state.pages[index]
     const selectedTab = this.state.pages[index].tabs[0] || null;
-    console.log('selecting page', selectedPage)
-    console.log('selecting tab', selectedTab)
     this.setState({selectedPage, selectedTab})
   }
 
@@ -66,22 +64,12 @@ class App extends Component {
 
   updatePage(updatedPage) {
     const pageIndex = this.state.pages.indexOf(this.state.selectedPage)
-    console.log('selectedPages', this.state.pages)
     const updatedPages = [
       ...this.state.pages.slice(0, pageIndex),
       updatedPage,
       ...this.state.pages.slice(pageIndex + 1)
     ]
-    console.log('updatedPages', updatedPages)
     this.setState({pages: updatedPages, selectedPage: updatedPage})
-  }
-
-  copyPages() {
-    let copy = []
-    this.state.pages.forEach(page => {
-      copy.push(Object.assign({}, page))
-    })
-    return copy
   }
 
   stringifyPages() {
@@ -93,6 +81,7 @@ class App extends Component {
   }  
 
   render() {
+    console.log('APP RENDER', this.state)
     return (
       <AppContainer className="App">
         <Row>
@@ -104,7 +93,7 @@ class App extends Component {
             selectedPage={this.state.selectedPage}
           />
           <TabArea 
-            page={this.state.selectedPage}
+            tabs={this.state.selectedPage.tabs}
             updatePageTabs={this.updatePageTabs.bind(this)}
           />
           {/* <SettingsPanel display={this.state.displaySettingsPanel}/>  */}

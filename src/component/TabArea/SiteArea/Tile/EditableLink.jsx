@@ -72,7 +72,7 @@ const Thumb = styled.img`
 
 const EditableLink = (props) => {
     const {index, alt, image, name, select} = props
-    const { connectDragSource, isDragging } = props
+    const { connectDragSource } = props
 
     return connectDragSource(
         <div style={{

@@ -118,7 +118,6 @@ class LinkPage extends Component {
         // insert
         updatedSites.splice(targetIndex, 0, this.props.sites[sourceIndex])
         this.props.updateSites(updatedSites)
-
     }
 
     openEditSiteModal() {
@@ -154,29 +153,26 @@ class LinkPage extends Component {
     }
 
     render() {
-        console.log('LinkPage props', this.props)
         if(this.props.sites !== this.state.sites) this.setState({sites: this.props.sites})
         return (
-
-                <Area>
-                    <EditSiteModal
-                        displaySelf={this.state.displayEditSiteModal} 
-                        closeModal={this.closeEditSiteModal.bind(this)}
-                        replaceSite={this.replaceSite.bind(this)}
-                        selectedSite={this.state.selectedSite}
-                    />
-                    <NewSiteModal 
-                        displaySelf={this.state.displayNewSiteModal} 
-                        closeModal={this.closeNewSiteModal.bind(this)}
-                        saveSite={this.addSite.bind(this)} 
-                    />
-                    <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
-                    <Grid>
-                        {this.renderLinkTiles()}
-                    </Grid>
-                    <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton>
-                </Area>
-
+            <Area>
+                <EditSiteModal
+                    displaySelf={this.state.displayEditSiteModal} 
+                    closeModal={this.closeEditSiteModal.bind(this)}
+                    replaceSite={this.replaceSite.bind(this)}
+                    selectedSite={this.state.selectedSite}
+                />
+                <NewSiteModal 
+                    displaySelf={this.state.displayNewSiteModal} 
+                    closeModal={this.closeNewSiteModal.bind(this)}
+                    saveSite={this.addSite.bind(this)} 
+                />
+                <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
+                <Grid>
+                    {this.renderLinkTiles()}
+                </Grid>
+                <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton>
+            </Area>
         )
     }
 }

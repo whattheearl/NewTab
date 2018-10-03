@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components'
 
 // Components
-// import Logo from './Logo'
 import Tab from './Tab'
+import NewTabButton from './NewTabButton'
+import EditTabsButton from './EditTabsButton'
 
 // Colors
 import colors from '../../../styles/colors'
@@ -17,12 +18,6 @@ const Row = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
-`
-
-const Button = styled.button`
-    background-color: none;
-    color: ${colors.gray};
-    margin-left: auto;
 `
 
 const Tabs = styled.div`
@@ -49,28 +44,47 @@ const BorderBottomAreaRight = styled.div`
     border-bottom: 1px solid ${colors.lightGray};
 `
 
-const MainHeader = ({selectTab, tabs, selectedTab}) => {
-    const tabsList = tabs.map(tab => {
-        return (<div onClick={() => {
-            console.log(this.props)
-            console.log('onclick tab')
-            selectTab(tab)}
-        }><Tab key={tab.name} name={tab.name} self={tab} selected={tab === selectedTab}/></div>)
-    })
-    return(
-        <HeaderContainer>
-            <Row>
-                <BorderBottomAreaLeft/>
-                <Tabs>
-                    {tabsList}   
-                </Tabs>
-                {/* <Button onClick={props.toggleSettingsPanel}>
-                    {'Settings'}
-                </Button> */}
-                <BorderBottomAreaRight/>
-            </Row>
-        </HeaderContainer>
-    )
+class MainHeader extends Component {
+    constructor() {
+        super()
+        this.state = {
+            tabsEditable: false,
+        }
+    }
+
+    toggleEdit() {
+        this.setState({tabsEditable: !this.state.tabsEditable})
+    }
+    
+    render() {
+        let {addTab, selectedTab, selectTab, tabs} = this.props
+
+        const tabsList = tabs.map(tab => {
+            return (
+                <div key={tab.name} onClick={() => {selectTab(tab)}}>
+                    <Tab 
+                        name={tab.name} 
+                        self={tab} 
+                        selected={tab === selectedTab}
+                        editable={this.state.tabsEditable}
+                    />
+                </div>
+            )
+        })
+        return(
+            <HeaderContainer>
+                <Row>
+                    <BorderBottomAreaLeft/>
+                    <Tabs>
+                        {tabsList}   
+                    </Tabs>
+                    <NewTabButton addTab={addTab}/>
+                    <BorderBottomAreaRight/>
+                    <EditTabsButton toggleEdit={this.toggleEdit.bind(this)}/>
+                </Row>
+            </HeaderContainer>
+        )
+    }
 }
 
 export default MainHeader

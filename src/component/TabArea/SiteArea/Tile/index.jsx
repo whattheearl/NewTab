@@ -27,7 +27,7 @@ function collect(connect, monitor) {
 
 // Styled
 const Container = styled.div`
-    background-color: ${colors.white}
+    background-color: ${colors.white};
 `
 
 const Column = styled.div`
