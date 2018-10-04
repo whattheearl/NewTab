@@ -4,8 +4,11 @@ import {FaWindowClose} from 'react-icons/fa'
 import { DropTarget } from 'react-dnd'
 
 // Components
-import DraggableLink from './DraggableLink'
+import DraggableLink from './EditableLink'
 import NormalLink from './NormalLink'
+
+// Colors
+import colors from '../../../../styles/colors'
 
 // Drag and Drop (react-dnd)
 const tileTarget = {
@@ -24,6 +27,7 @@ function collect(connect, monitor) {
 
 // Styled
 const Container = styled.div`
+    background-color: ${colors.white};
 `
 
 const Column = styled.div`
@@ -39,6 +43,7 @@ const RemoveButton = styled.div`
     top: 0;
     color: tomato;
     font-size: 2.2rem;
+    z-index: 10;
 `
 
 class Tile extends Component {
@@ -93,4 +98,4 @@ class Tile extends Component {
         )
     }
 }
-export default DropTarget('draggablelink', tileTarget, collect)(Tile)
+export default DropTarget('editablelink', tileTarget, collect)(Tile)

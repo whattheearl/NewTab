@@ -9,22 +9,28 @@ import HTML5Backend from 'react-dnd-html5-backend';
 // Component
 import LinkTile from './Tile'
 import PlusButton from './PlusButton'
-import NewSiteModal from './NewSiteModal'
+import NewSiteModal from '../Modal/NewSite'
 import EditButton from './EditButton'
-import EditSiteModal from './EditSiteModal'
+import EditSiteModal from '../Modal/EditSite'
+
+// Colors
+import colors from '../../../styles/colors'
 
 // Styled
-const Grid = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    max-width: 800px;
-    margin: 0 auto;
+const Area = styled.div`
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    background-color: ${colors.darkerWhite};
 `
 
-const Area = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
+const Grid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin-right: 90px;
+    grid-column-gap: 2px;
+    grid-row-gap: 2px;
 `
 
 class LinkPage extends Component {
@@ -32,7 +38,7 @@ class LinkPage extends Component {
         super(props)
         this.state = {
             linkTiles: [],
-            page: props.page,
+            sites: props.sites,
             displayNewSiteModal: false,
             editable: true,
             selectedSite: null,
@@ -45,28 +51,11 @@ class LinkPage extends Component {
         })
     }
 
-    createLinkTile({index, name, url, image}) {
-        return (
-            <LinkTile 
-                key={`${index}`} 
-                index={index}
-                alt={name} 
-                name={name}
-                url={url} 
-                image={image}
-                editable={this.state.editable}
-                remove={this.removeSite.bind(this)}
-                move={this.moveSite.bind(this)}
-                select={this.selectSite.bind(this)}
-            />
-        )
-    }
-
     addSite(site) {
-        // copy previous page state
-        const page = this.getPageCopy()
-        page.sites.push(site)
-        this.props.updatePage(page)
+        // copy previous page state and add new site
+        let updatedSites = [...this.state.sites, site]
+        // update tab with sites
+        this.props.updateSites(updatedSites)
     }
 
     getPageCopy() {
@@ -78,22 +67,27 @@ class LinkPage extends Component {
 
     // remove site at index
     removeSite(index) {
-        const page = this.getPageCopy()
-        page.sites.splice(index, 1)
-        this.props.updatePage(page)
+        let updatedSites = [
+            ...this.state.sites.slice(0, index),
+            ...this.state.sites.slice(index + 1)
+        ]
+        this.props.updateSites(updatedSites)
     }
 
     //replaces selectedSite with site
     replaceSite(site) {
-        const index = this.state.page.sites.indexOf(this.state.selectedSite)
-        let page = Object.assign({}, this.state)
-        page.sites.splice(index, 1, site)
-        this.props.updatePage(page)
+        const index = this.state.sites.indexOf(this.state.selectedSite)
+        let updatedSites = [
+            ...this.state.sites.slice(0, index),
+            site,
+            ...this.state.sites.slice(index + 1)
+        ]
+        this.props.updateSites(updatedSites)
     }
 
     // selects site while edit is enabled
     selectSite(index) {
-        this.setState({selectedSite: this.state.page.sites[index]})
+        this.setState({selectedSite: this.state.sites[index]})
         this.openEditSiteModal()
     }
 
@@ -101,17 +95,12 @@ class LinkPage extends Component {
     moveSite(sourceIndex, targetIndex) {
         // do nothing if source == target
         if(sourceIndex === targetIndex) return
-        // copy page
-        let page = Object.assign({}, this.props.page)
-        debugger;
-        console.log('copied page', page)
-        const updatedSites = this.props.page.sites.slice()
+        const updatedSites = this.props.sites.slice()
         // remove
         updatedSites.splice(sourceIndex, 1)
         // insert
-        updatedSites.splice(targetIndex, 0, this.props.page.sites[sourceIndex])
-        page.sites = updatedSites
-        this.props.updatePage(page)
+        updatedSites.splice(targetIndex, 0, this.props.sites[sourceIndex])
+        this.props.updateSites(updatedSites)
     }
 
     openEditSiteModal() {
@@ -132,22 +121,24 @@ class LinkPage extends Component {
 
     // return list of linkTiles to render
     renderLinkTiles() {
-        let linkTiles = []
-        const {sites} = this.state.page
-        for(let i = 0; i < sites.length; i++) {
-            // assign index
-            let site = Object.assign({}, sites[i])
-            site.index = i
-            // create linkTile
-            linkTiles.push(
-                this.createLinkTile(site)
-            )
-        }
-        return linkTiles
+        return this.state.sites.map((site, index) => {
+            return <LinkTile 
+                key={`${index}`} 
+                index={index}
+                alt={site.name} 
+                name={site.name}
+                url={site.url} 
+                image={site.image}
+                editable={this.state.editable}
+                remove={this.removeSite.bind(this)}
+                move={this.moveSite.bind(this)}
+                select={this.selectSite.bind(this)}
+            />
+        })
     }
 
     render() {
-        if(this.props.page !== this.state.page) this.setState({page: this.props.page})
+        if(this.props.sites !== this.state.sites) this.setState({sites: this.props.sites})
         return (
             <Area>
                 <EditSiteModal
