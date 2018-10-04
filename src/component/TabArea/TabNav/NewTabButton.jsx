@@ -34,22 +34,27 @@ class NewTabButton extends Component {
         }
     }
 
+    closeModal() {
+        console.log('CLOSE ME')
+        this.setState({displayNewTabModal: false})
+    }
+    
     render() {
         return (
-            <Container 
-                onClick={() => {
-                    console.log('hey hey from my bae bae')
-                    this.setState({displayNewTabModal: true})
-                }}
-            >
+            <Container>
                 <NewTab 
                     display={this.state.displayNewTabModal}
-                    closeModal={() => {
-                        this.setState({displayNewTabModal: false})
-                    }}
+                    closeModal={this.closeModal.bind(this)}
                     addTab={this.props.addTab}
                 />
-                <FaPlusCircle style={style}/>
+                <div
+                    onClick={() => {
+                        console.log('hey hey from my bae bae')
+                        this.setState({displayNewTabModal: true})
+                    }}
+                >
+                    <FaPlusCircle style={style}/>
+                </div>
             </Container>
         )
     }

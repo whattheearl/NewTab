@@ -59,14 +59,15 @@ class MainHeader extends Component {
     render() {
         let {addTab, selectedTab, selectTab, tabs} = this.props
 
-        const tabsList = tabs.map(tab => {
+        const tabsList = tabs.map((tab, index) => {
             return (
-                <div key={tab.name} onClick={() => {selectTab(tab)}}>
+                <div key={index} onClick={() => {selectTab(tab)}}>
                     <Tab 
                         name={tab.name} 
                         self={tab} 
                         selected={tab === selectedTab}
                         editable={this.state.tabsEditable}
+                        remove={(e) => {this.props.removeTab(e, index)}}
                     />
                 </div>
             )

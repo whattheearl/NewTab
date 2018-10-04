@@ -37,19 +37,23 @@ const SelectedTab = styled.div`
 const Name = styled.div`
 `
 
-const Tab = ({name, selected, editable}) => {
+// const remove = () => {
+//     console.log('removeing soething blahblhaksdfjlkasd')
+// }
+
+const Tab = ({name, selected, editable, remove}) => {
     if(selected) {
         return (
             <SelectedTab>
                 <Name>{name}</Name>
-                {editable? <RemoveButton/> : null}
+                {editable? <div onClick={remove}><RemoveButton /></div>: null}
             </SelectedTab>
         )
     }
     return (
         <UnselectedTab>
             <Name>{name}</Name>
-            {editable? <RemoveButton/> : null}
+            {editable? <div onClick={remove}><RemoveButton /></div>: null}
         </UnselectedTab>
     )
 }

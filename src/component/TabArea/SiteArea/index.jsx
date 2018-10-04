@@ -51,23 +51,6 @@ class LinkPage extends Component {
         })
     }
 
-    createLinkTile({index, name, url, image}) {
-        return (
-            <LinkTile 
-                key={`${index}`} 
-                index={index}
-                alt={name} 
-                name={name}
-                url={url} 
-                image={image}
-                editable={this.state.editable}
-                remove={this.removeSite.bind(this)}
-                move={this.moveSite.bind(this)}
-                select={this.selectSite.bind(this)}
-            />
-        )
-    }
-
     addSite(site) {
         // copy previous page state and add new site
         let updatedSites = [...this.state.sites, site]
@@ -138,18 +121,20 @@ class LinkPage extends Component {
 
     // return list of linkTiles to render
     renderLinkTiles() {
-        let linkTiles = []
-        const {sites} = this.state
-        for(let i = 0; i < sites.length; i++) {
-            // assign index
-            let site = Object.assign({}, sites[i])
-            site.index = i
-            // create linkTile
-            linkTiles.push(
-                this.createLinkTile(site)
-            )
-        }
-        return linkTiles
+        return this.state.sites.map((site, index) => {
+            return <LinkTile 
+                key={`${index}`} 
+                index={index}
+                alt={site.name} 
+                name={site.name}
+                url={site.url} 
+                image={site.image}
+                editable={this.state.editable}
+                remove={this.removeSite.bind(this)}
+                move={this.moveSite.bind(this)}
+                select={this.selectSite.bind(this)}
+            />
+        })
     }
 
     render() {

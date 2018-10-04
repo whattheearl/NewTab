@@ -54,8 +54,6 @@ const NavLogo = styled.div`
 
 class NavPanel extends Component {
     keyUp(e) {
-        console.log(e.key)
-        console.log(e.target.value)
         if(e.key === 'Enter') {
             const name = e.target.value
             if (name === '') return
@@ -67,7 +65,6 @@ class NavPanel extends Component {
 
     renderPages() {
         const {pages, selectPage} = this.props
-        console.log(selectPage)
         return (
             pages.map(page => {
                 let selected = page == this.props.selectedPage
@@ -75,7 +72,6 @@ class NavPanel extends Component {
                     <Page 
                         key={page.name} 
                         select={()=> {
-                            console.log('page', page)
                             selectPage(page)
                         }}
                         name={page.name}
