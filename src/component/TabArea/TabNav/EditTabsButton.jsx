@@ -16,9 +16,13 @@ const Container = styled.div`
     align-items: flex-end;
     height: 100%;
     border-bottom: 1px solid ${colors.lightGray};
-    :hover{
-        cursor: pointer;
-    }
+    cursor: pointer;
+`
+
+const Button = styled.div`
+    display: flex;
+    align-items: center;
+    width: 8rem;
 `
 
 const Label = styled.span`
@@ -28,8 +32,10 @@ const Label = styled.span`
 const EditTabsButton = ({toggleEdit}) => {
     return (
         <Container onClick={toggleEdit} >
-            <FaCog/>
-            <Label>Edit Tabs</Label>
+            <Button>
+                <FaCog/>
+                <Label>Edit Tabs</Label>
+            </Button>
         </Container>
     )
 }
