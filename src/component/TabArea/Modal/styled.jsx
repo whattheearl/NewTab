@@ -20,6 +20,7 @@ export const ModalDisplay = styled.div`
     flex-direction: column;
     background-color: #fff;
     border-radius: 7px;
+    cursor: auto;
 `
 
 export const ModalContainer = styled.div`
@@ -76,6 +77,7 @@ export const SubmitButton = styled.button`
     font-size: 1.2rem;
     border-radius: 4px;
     background-color: #e2e2e2;
+    cursor: pointer;
 `
 
 export const CancelButton = styled.button`
@@ -83,6 +85,7 @@ export const CancelButton = styled.button`
     border-radius: 4px;
     background-color: #e2e2e2;
     margin-left: auto;
+    cursor: pointer;
 `
 
 export const Row = styled.div`

@@ -54,10 +54,10 @@ class NewSiteModal extends Component {
         const {display, closeModal} = this.props
         if(!display) return null;
         return (
-            <ModalTint>
-                <ModalDisplay>
+            <ModalTint onClick={closeModal}>
+                <ModalDisplay onClick={(e)=>{e.stopPropagation()}}>
                     <TitleContainer>
-                        <h1>Add a new site</h1>
+                        <h1>Enter Tab Name</h1>
                         <CancelButton onClick={closeModal}>X</CancelButton>
                     </TitleContainer>
                     <ModalContainer>
