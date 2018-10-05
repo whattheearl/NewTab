@@ -23,6 +23,7 @@ const Area = styled.div`
     box-sizing: border-box;
     position: relative;
     background-color: ${colors.darkerWhite};
+    padding: 2rem;
 `
 
 const Grid = styled.div`
@@ -140,7 +141,7 @@ class LinkPage extends Component {
     render() {
         if(this.props.sites !== this.state.sites) this.setState({sites: this.props.sites})
         return (
-            <Area>
+            <div>
                 <EditSiteModal
                     displaySelf={this.state.displayEditSiteModal} 
                     closeModal={this.closeEditSiteModal.bind(this)}
@@ -153,11 +154,13 @@ class LinkPage extends Component {
                     saveSite={this.addSite.bind(this)} 
                 />
                 <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
-                <Grid>
-                    {this.renderLinkTiles()}
-                </Grid>
-                <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton>
-            </Area>
+                <Area>
+                    <Grid>
+                        {this.renderLinkTiles()}
+                    </Grid>
+                    <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton>
+                </Area>
+            </div>
         )
     }
 }

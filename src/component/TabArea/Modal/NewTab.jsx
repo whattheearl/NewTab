@@ -13,7 +13,6 @@ import {
     ButtonContainer,
     SubmitButton,
     CancelButton,
-    Row
 } from './styled'
 
 class NewSiteModal extends Component {

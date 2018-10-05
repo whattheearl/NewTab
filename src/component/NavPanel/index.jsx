@@ -67,7 +67,7 @@ class NavPanel extends Component {
         const {pages, selectPage} = this.props
         return (
             pages.map(page => {
-                let selected = page == this.props.selectedPage
+                let selected = page === this.props.selectedPage
                 return (
                     <Page 
                         key={page.name} 
