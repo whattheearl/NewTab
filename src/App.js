@@ -5,8 +5,8 @@ import styled, {injectGlobal} from 'styled-components'
 import NavPanel from './component/NavPanel'
 import TabArea from './component/TabArea'
 
-// temp data file (no backend yet)
-import data from './data'
+// Starter state
+import defaultPage from './Pages/data'
 
 // Styled
 injectGlobal`
@@ -24,8 +24,7 @@ const Row = styled.div`
 class App extends Component {
   constructor(props) {
     super(props)
-    const pages = data
-
+    let pages = JSON.parse(window.localStorage.getItem('pages')) || defaultPage
     let selectedPage = pages[0] ? pages[0] : null
 
     this.state = {
@@ -44,14 +43,14 @@ class App extends Component {
   }
 
   createPage(name) {
-    return {name, sites: []}
+    return {name, tabs:[{name: 'Main', sites:[]}]}
   }
 
   addPage(name) {
-    let pages = this.copyPages()
     let newPage = this.createPage(name)
-    pages.push(newPage)
+    let pages = [...this.state.pages, newPage]
     this.setState({pages, selectedPage: newPage})
+    window.localStorage.setItem('pages', JSON.stringify(pages))
   }
 
   updatePageTabs(updatedTabs) {
@@ -70,6 +69,7 @@ class App extends Component {
       ...this.state.pages.slice(pageIndex + 1)
     ]
     this.setState({pages: updatedPages, selectedPage: updatedPage})
+    window.localStorage.setItem('pages', JSON.stringify(updatedPages))
   }
 
   stringifyPages() {

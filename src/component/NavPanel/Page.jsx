@@ -20,14 +20,9 @@ const Name = styled.h1`
 `
 
 class Page extends Component {
-    getBackgroundColor() {
-        if(this.props.selected) return {backgroundColor: colors.lightGray}
-        return {}
-    }
-
     render() {
         let style = null
-        if(this.props.selected) style = {backgroundColor: colors.lightGray}
+        if(this.props.selected) style = {color: colors.black, backgroundColor: colors.babyBlue}
         return (
             <Container onClick={() => {this.props.select()}} style={style}>
                 <Name>{this.props.name}</Name>

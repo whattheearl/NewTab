@@ -5,6 +5,9 @@ import styled from 'styled-components'
 import Page from './Page'
 import Logo from './Logo'
 
+// Temp Data
+import defaultPage from '../../Pages/defaultPage'
+
 // Styles
 import colors from '../../styles/colors'
 
@@ -35,7 +38,7 @@ const PageInput = styled.input`
     border-width: 0;
     border-style: none;
     background-color: inherit;
-    color: #3e3e3e;
+    color: ${colors.darkWhite};
     &:focus {
         outline: none;
     }
@@ -54,6 +57,8 @@ const NavLogo = styled.div`
 
 class NavPanel extends Component {
     keyUp(e) {
+        console.log(e.key)
+        console.log(e.target.value)
         if(e.key === 'Enter') {
             const name = e.target.value
             if (name === '') return
@@ -82,6 +87,16 @@ class NavPanel extends Component {
         )
     }
 
+    clearCache() {
+        window.localStorage.clear()
+        window.location.reload()
+    }
+
+    loadTemplate() {
+        window.localStorage.setItem('pages', JSON.stringify(defaultPage))
+        window.location.reload()
+    }
+
     render() {
         const {display} = this.props
         if(!display) return null
@@ -92,6 +107,9 @@ class NavPanel extends Component {
                 <PageInputBorder>
                     <PageInput type="text" name="addPage" placeholder="add a page... " onKeyUp={this.keyUp.bind(this)}/>
                 </PageInputBorder>
+                <h1 style={{color: 'white'}}>Temp Area</h1>
+                <button onClick={this.clearCache} style={{padding: '.5rem'}}>Load Starter Data</button>
+                <button onClick={this.loadTemplate} style={{padding: '.5rem'}}>Load Empty Data</button>
             </Container>
         )
     }
