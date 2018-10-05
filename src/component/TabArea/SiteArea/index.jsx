@@ -41,7 +41,7 @@ class LinkPage extends Component {
             linkTiles: [],
             sites: props.sites,
             displayNewSiteModal: false,
-            editable: true,
+            editable: false,
             selectedSite: null,
         }
     }
