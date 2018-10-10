@@ -12,24 +12,29 @@ import PlusButton from './PlusButton'
 import NewSiteModal from '../Modal/NewSite'
 import EditButton from './EditButton'
 import EditSiteModal from '../Modal/EditSite'
+import ChromeTabArea from './ChromeTabArea'
 
 // Colors
 import colors from '../../../styles/colors'
 
 // Styled
+const MainArea = styled.div`
+    display: flex;
+    flex: 1;
+`
+
 const Area = styled.div`
-    height: 100%;
-    width: 100%;
+    height: calc(100vh - 56px);
     box-sizing: border-box;
     position: relative;
     background-color: ${colors.darkerWhite};
-    padding: 2rem;
+    overflow-y: auto;
 `
 
 const Grid = styled.div`
+    padding: 1rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    margin-right: 90px;
     grid-column-gap: 2px;
     grid-row-gap: 2px;
 `
@@ -138,10 +143,13 @@ class LinkPage extends Component {
         })
     }
 
+    componentDidUpdate() {
+        if(this.props.sites !== this.state.sites) this.setState((state, props) => ({sites: props.sites}))
+    }
+
     render() {
-        if(this.props.sites !== this.state.sites) this.setState({sites: this.props.sites})
         return (
-            <div>
+            <MainArea>
                 <EditSiteModal
                     displaySelf={this.state.displayEditSiteModal} 
                     closeModal={this.closeEditSiteModal.bind(this)}
@@ -153,14 +161,20 @@ class LinkPage extends Component {
                     closeModal={this.closeNewSiteModal.bind(this)}
                     saveSite={this.addSite.bind(this)} 
                 />
-                <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
                 <Area>
                     <Grid>
                         {this.renderLinkTiles()}
                     </Grid>
                     <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton>
                 </Area>
-            </div>
+                <div>
+                    <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
+                    <ChromeTabArea 
+                        selectSite={this.selectSite.bind(this)}
+                        saveSite={this.addSite.bind(this)}
+                    />
+                </div>
+            </MainArea>
         )
     }
 }

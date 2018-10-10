@@ -13,7 +13,6 @@ import colors from '../../../../styles/colors'
 // Drag and Drop (react-dnd)
 const tileTarget = {
     drop(props) {
-        console.log('release drag', props)
         return props
     }
 }
@@ -44,6 +43,7 @@ const RemoveButton = styled.div`
     color: tomato;
     font-size: 2.2rem;
     z-index: 10;
+    cursor: pointer;
 `
 
 class Tile extends Component {
@@ -59,7 +59,7 @@ class Tile extends Component {
     }
 
     renderLink() {
-        const {index, url, name, image, move, editable, select} = this.props
+        const {index, url, name, image, move, editable, select, icons} = this.props
         const {alt} = this.props || name
         if(editable) {
             return (

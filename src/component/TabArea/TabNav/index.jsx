@@ -13,6 +13,7 @@ import colors from '../../../styles/colors'
 const HeaderContainer = styled.div`
     background-color: ${colors.darkWhite};
     height: 3.5rem;
+    width: calc(100vw - 200px);
 `
 const Row = styled.div`
     display: flex;
@@ -23,6 +24,7 @@ const Row = styled.div`
 const Tabs = styled.div`
     display: flex;
     align-items: flex-end;
+    overflow-x: auto;
     height: 100%;
 `
 
@@ -55,10 +57,9 @@ class MainHeader extends Component {
     toggleEdit() {
         this.setState({tabsEditable: !this.state.tabsEditable})
     }
-    
-    render() {
-        let {addTab, selectedTab, selectTab, tabs} = this.props
 
+    renderTabs() {
+        let {selectedTab, selectTab, tabs} = this.props
         const tabsList = tabs.map((tab, index) => {
             return (
                 <div key={index} onClick={() => {selectTab(tab)}}>
@@ -72,12 +73,17 @@ class MainHeader extends Component {
                 </div>
             )
         })
+        return tabsList
+    }
+    
+    render() {
+        let {addTab} = this.props
         return(
             <HeaderContainer>
                 <Row>
                     <BorderBottomAreaLeft/>
                     <Tabs>
-                        {tabsList}   
+                        {this.renderTabs()}   
                     </Tabs>
                     <NewTabButton addTab={addTab}/>
                     <BorderBottomAreaRight/>

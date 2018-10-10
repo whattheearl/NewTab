@@ -19,7 +19,6 @@ const linkSource = {
         // cancel if dropped on non tile
         if(!monitor.getDropResult()) return
         let targetIndex = monitor.getDropResult().index
-        console.log(sourceIndex, targetIndex)
         props.move(sourceIndex, targetIndex)
     }
 }
@@ -51,6 +50,8 @@ const Name = styled.h2`
     font-size: 1.2rem;
     margin-bottom: 1rem;
     color: #4e4e4e;
+    width: calc(calc(100vw - 540px)/5);
+    word-wrap: break-word;
 `
 
 const Column = styled.div`
@@ -77,7 +78,7 @@ const EditableLink = (props) => {
     return connectDragSource(
         <div style={{
             fontWeight: 'bold',
-            cursor: 'move'
+            cursor: 'grab'
         }}>
             <LinkContainer onClick={()=>{select(index)}}>
                 <Column>

@@ -20,12 +20,20 @@ const Name = styled.h1`
 `
 
 class Page extends Component {
+    renderPageName() {
+        const {name} = this.props
+        if(!name) return null
+        if(name.length > 22) {
+            return `${name.slice(0, 22)}...`
+        }
+        return name
+    }
     render() {
         let style = null
         if(this.props.selected) style = {color: colors.black, backgroundColor: colors.babyBlue}
         return (
-            <Container onClick={() => {this.props.select()}} style={style}>
-                <Name>{this.props.name}</Name>
+            <Container onClick={this.props.select} style={style}>
+                <Name>{this.renderPageName()}</Name>
             </Container>
         )
     }

@@ -1,5 +1,9 @@
+/* global chrome */
 import React, { Component } from 'react'
 import styled, {injectGlobal} from 'styled-components'
+
+// Colors
+import colors from './styles/colors'
 
 // Components
 import NavPanel from './component/NavPanel'
@@ -13,8 +17,11 @@ injectGlobal`
   @import url("https://fonts.googleapis.com/css?family=Lobster");
 `
 
+// ChromeExtension
+chrome.extensionId = "flceabcjbijkonhgckgflefpmegkkjig"
+
 const AppContainer = styled.div`
-  background-color: #f8f8f8;
+  background-color: ${colors.white};
 `
 
 const Row = styled.div`

@@ -35,6 +35,7 @@ const SelectedTab = styled.div`
 `
 
 const Name = styled.div`
+    white-space: nowrap;
 `
 
 // const remove = () => {
