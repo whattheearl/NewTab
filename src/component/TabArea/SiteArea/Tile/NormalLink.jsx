@@ -19,12 +19,8 @@ const Name = styled.h2`
   color: #4e4e4e;
   text-transform: capitalize;
   width: calc(calc(100vw - 540px)/5);
-  /* overflow: hidden; */
-  /* white-space: pre-line; */
-  /* word-wrap: break-word; */
   padding: 0 .5rem;
   box-sizing: border-box;
-  /* height: 2em; */
 `
 
 const Column = styled.div`
@@ -50,7 +46,7 @@ class NormalLink extends Component {
     return `${this.props.name.slice(0, 30)}...`
   }
   render() {
-    let {url, alt, image, name, icons} = this.props
+    let {url, alt, image, icons} = this.props
     if(icons && icons.length > 0) {
       image = icons[0]
     }
