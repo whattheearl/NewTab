@@ -10,7 +10,7 @@ import colors from '../../../../styles/colors'
 
 const Container = styled.div`
     width: 300px;
-    height: calc(100vh - 56px - 32px);
+    height: calc(100vh - 56px - 32px - 109px);
     overflow-y: auto;
     padding: 0 1rem;
     box-sizing: border-box;

@@ -17,10 +17,10 @@ import {
     SubmitButton,
     CancelButton
 } from '../../Modal/styled'
-const ImgArea = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-`
+// const ImgArea = styled.div`
+//     display: flex;
+//     flex-wrap: wrap;
+// `
 
 const Col = styled.div`
     display: flex;

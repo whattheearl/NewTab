@@ -107,9 +107,9 @@ class NavPanel extends Component {
                 <PageInputBorder>
                     <PageInput type="text" name="addPage" placeholder="add a page... " onKeyUp={this.keyUp.bind(this)}/>
                 </PageInputBorder>
-                <h1 style={{color: 'white'}}>Temp Area</h1>
+                {/* <h1 style={{color: 'white'}}>Temp Area</h1>
                 <button onClick={this.clearCache} style={{padding: '.5rem'}}>Load Starter Data</button>
-                <button onClick={this.loadTemplate} style={{padding: '.5rem'}}>Load Empty Data</button>
+                <button onClick={this.loadTemplate} style={{padding: '.5rem'}}>Load Empty Data</button> */}
             </Container>
         )
     }

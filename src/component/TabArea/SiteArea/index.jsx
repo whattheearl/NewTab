@@ -26,7 +26,9 @@ const MainArea = styled.div`
 
 const Area = styled.div`
     height: calc(100vh - 56px);
+    width: calc(100vw - 500px);
     box-sizing: border-box;
+    border-right: 1px solid ${colors.lightGray};
     position: relative;
     background-color: ${colors.darkerWhite};
     overflow-y: auto;
@@ -170,11 +172,11 @@ class LinkPage extends Component {
                 </Area>
                 <div>
                     <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
-                    <CreateItemArea />
                     <ChromeTabArea 
                         selectSite={this.selectSite.bind(this)}
                         saveSite={this.addSite.bind(this)}
                     />
+                    <CreateItemArea />
                 </div>
             </MainArea>
         )
