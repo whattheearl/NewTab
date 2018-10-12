@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components'
 
 // Colors
@@ -13,10 +13,18 @@ const LinkContainer = styled.a`
 `
 
 const Name = styled.h2`
+  text-align: center;
   font-size: 1.2rem;
   margin-bottom: 1rem;
   color: #4e4e4e;
   text-transform: capitalize;
+  width: calc(calc(100vw - 540px)/5);
+  /* overflow: hidden; */
+  /* white-space: pre-line; */
+  /* word-wrap: break-word; */
+  padding: 0 .5rem;
+  box-sizing: border-box;
+  /* height: 2em; */
 `
 
 const Column = styled.div`
@@ -36,16 +44,25 @@ const Thumb = styled.img`
   border: 1px solid #2e2e2e17;
 `
 
-const NormalLink = (props) => {
-    const {url, alt, image, name} = props
+class NormalLink extends Component {
+  renderName() {
+    if(this.props.name.length <= 30) return this.props.name
+    return `${this.props.name.slice(0, 30)}...`
+  }
+  render() {
+    let {url, alt, image, name, icons} = this.props
+    if(icons && icons.length > 0) {
+      image = icons[0]
+    }
     return (
-        <LinkContainer href={url} alt={alt} >
+        <LinkContainer target={'_blank'} href={url} alt={alt} >
             <Column>
                 <Thumb src={image} alt={alt}/>
-                <Name>{name}</Name>
+                <Name>{this.renderName()}</Name>
             </Column>
         </LinkContainer>
     )
+  }
 }
 
 export default NormalLink

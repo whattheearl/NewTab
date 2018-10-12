@@ -61,10 +61,7 @@ class TabArea extends Component {
     }
 
     removeTab(e, tabIndex) {
-        console.log(e, tabIndex)
         e.stopPropagation()
-        // console.log('remove', tab)
-        console.log('remove state', this.state.tabs, this.state.selectedTab)
         const updatedTabs = [
             ...this.state.tabs.slice(0, tabIndex),
             ...this.state.tabs.slice(tabIndex + 1)
@@ -78,7 +75,6 @@ class TabArea extends Component {
         } else {
             selectedTab = updatedTabs[tabIndex]
         }
-        console.log('remove to be updated', updatedTabs, selectedTab)
         this.props.updatePageTabs(updatedTabs)
         this.setState({tabs: updatedTabs, selectedTab})
     }
@@ -89,16 +85,13 @@ class TabArea extends Component {
         return <LinkPage sites={this.state.selectedTab.sites} updateSites={this.updateSites.bind(this)}/>;
     }
 
-    componentWillUpdate(){
-        
+    componentDidUpdate() {
+        if(this.props.tabs !== this.state.tabs) {
+            this.setState((state, props) => ({tabs: props.tabs, selectedTab: props.tabs[0] ? props.tabs[0] : null}))
+        }
     }
 
     render() {
-        console.log('Tabarea Render', this.state)
-        console.log('tab area render', this.state.tabs, this.state.selectedTab)
-        if(this.props.tabs !== this.state.tabs) {
-            this.setState((state, props) => ({tabs: this.props.tabs, selectedTab: this.props.tabs[0] ? this.props.tabs[0] : null}))
-        }
         return(
             <Col>
                 <TabNav
