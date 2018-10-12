@@ -1,17 +1,25 @@
-/* global chrome */
 import React, {Component} from 'react'
 import styled from 'styled-components'
 
 // Components
-// import NormalLink from '../TabArea/SiteArea/Tile/NormalLink'
 import TiledTab from './TabTile'
 import NewSiteModal from './NewSiteModal'
 
 // Styled
+import colors from '../../../../styles/colors'
+
 const Container = styled.div`
     width: 300px;
     height: calc(100vh - 56px - 32px);
     overflow-y: auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+`
+
+const AreaTitle = styled.h1`
+    font-size: 1.25rem;
+    color: ${colors.gray};
+    margin-bottom: .25rem;
 `
 
 class ChromeTabArea extends Component {
@@ -26,16 +34,13 @@ class ChromeTabArea extends Component {
     }
 
     // handle plugin messages
+    // TODO rewrite this to recieve message direct from background script
     handleEvent(event) {
         // We only accept messages from ourselves
         if (event.source !== window)
             return
         if (event.data.type && (event.data.type === "UPDATE_CHROMETABS")) {
-            console.log('recieved tabs: ', event.data.chromeTabs)
             this.setState({chromeTabs: event.data.chromeTabs})
-        }
-        if (event.data.type && (event.data.type === "ADD_SITE")) {
-            console.log('ADD_SITE: ', event.data)
         }
     }
 
@@ -82,7 +87,7 @@ class ChromeTabArea extends Component {
                     closeModal={this.closeNewSiteModal.bind(this)}
                     saveSite={this.props.saveSite}
                 />
-                <h1>Open Sites</h1>
+                <AreaTitle>Tabs</AreaTitle>
                 {this.renderTiles()}
             </Container>
         )

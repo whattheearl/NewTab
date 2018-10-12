@@ -59,7 +59,7 @@ class Tile extends Component {
     }
 
     renderLink() {
-        const {index, url, name, image, move, editable, select, icons} = this.props
+        const {index, url, name, image, move, editable, select} = this.props
         const {alt} = this.props || name
         if(editable) {
             return (

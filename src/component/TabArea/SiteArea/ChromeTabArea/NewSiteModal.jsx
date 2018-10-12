@@ -15,8 +15,7 @@ import {
     SiteInput,
     ButtonContainer,
     SubmitButton,
-    CancelButton,
-    Row
+    CancelButton
 } from '../../Modal/styled'
 const ImgArea = styled.div`
     display: flex;
@@ -120,7 +119,7 @@ class NewSiteModal extends Component {
     renderIcons() {
         return this.props.selectedSite.icons
             .filter((icon, index) => {
-                return this.props.selectedSite.icons.indexOf(icon) == index;
+                return this.props.selectedSite.icons.indexOf(icon) === index;
             })
             .map(icon => 
                 <div key={icon} style={{width: '100px', height: '100px', padding: '10px'}}>
@@ -149,14 +148,15 @@ class NewSiteModal extends Component {
                     </TitleContainer>
                     <ModalContainer >
                         <InputContainer>
-                            <SiteLabel htmlFor="SiteName">Name</SiteLabel>
+                            <SiteLabel htmlFor="SiteName">Title</SiteLabel>
                             <SiteInputBorder>
                                 <SiteInput 
                                     name='SiteName' 
                                     value={site.name}
                                     onChange={this.handleInputChange.bind(this)} 
                                     type='text' 
-                                    placeholder='Site Name Here' 
+                                    placeholder='Site Name Here'
+                                    maxLength='30'
                                 />
                             </SiteInputBorder>
                             <SiteLabel htmlFor="SiteUrl">Url</SiteLabel>
@@ -169,11 +169,11 @@ class NewSiteModal extends Component {
                                     placeholder='http://siteurl.com'
                                 />
                             </SiteInputBorder>
-                            <SiteLabel htmlFor="SiteImage">Image</SiteLabel>
+                            {/*<SiteLabel htmlFor="SiteImage">Image</SiteLabel>
                             <ImgArea>
                                 <img style={{height: '100px', width: '100px', padding: '10px'}}src={this.props.selectedSite.image} alt={this.props.selectedSite.name}/>
                                 {this.renderIcons()}
-                            </ImgArea>
+                            </ImgArea> */}
                         </InputContainer>
                         <ButtonContainer>
                             <SubmitButton onClick={this.submit.bind(this)}>Save</SubmitButton>

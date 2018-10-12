@@ -75,7 +75,6 @@ class TabArea extends Component {
         } else {
             selectedTab = updatedTabs[tabIndex]
         }
-        console.log('remove to be updated', updatedTabs, selectedTab)
         this.props.updatePageTabs(updatedTabs)
         this.setState({tabs: updatedTabs, selectedTab})
     }

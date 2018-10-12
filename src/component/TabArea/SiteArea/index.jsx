@@ -8,8 +8,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 // Component
 import LinkTile from './Tile'
-import PlusButton from './PlusButton'
-import NewSiteModal from '../Modal/NewSite'
+// import PlusButton from './PlusButton'
+// import NewSiteModal from '../Modal/NewSite'
+import CreateItemArea from './CreateItemArea'
 import EditButton from './EditButton'
 import EditSiteModal from '../Modal/EditSite'
 import ChromeTabArea from './ChromeTabArea'
@@ -156,19 +157,20 @@ class LinkPage extends Component {
                     replaceSite={this.replaceSite.bind(this)}
                     selectedSite={this.state.selectedSite}
                 />
-                <NewSiteModal 
+                {/* <NewSiteModal 
                     displaySelf={this.state.displayNewSiteModal} 
                     closeModal={this.closeNewSiteModal.bind(this)}
                     saveSite={this.addSite.bind(this)} 
-                />
+                /> */}
                 <Area>
                     <Grid>
                         {this.renderLinkTiles()}
                     </Grid>
-                    <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton>
+                    {/* <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton> */}
                 </Area>
                 <div>
                     <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
+                    <CreateItemArea />
                     <ChromeTabArea 
                         selectSite={this.selectSite.bind(this)}
                         saveSite={this.addSite.bind(this)}

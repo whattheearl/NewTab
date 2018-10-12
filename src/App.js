@@ -88,7 +88,6 @@ class App extends Component {
   }  
 
   render() {
-    console.log('APP RENDER', this.state)
     return (
       <AppContainer className="App">
         <Row>

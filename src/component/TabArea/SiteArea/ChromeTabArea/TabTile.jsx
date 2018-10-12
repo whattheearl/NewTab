@@ -6,9 +6,7 @@ import styled from 'styled-components'
 import colors from '../../../../styles/colors'
 
 const Row = styled.div`
-    padding: 0 1rem;
     margin-bottom: .7rem;
-    box-sizing: border-box;
 `
 
 const Container = styled.div`
@@ -107,10 +105,7 @@ const Title = styled.h1`
     close() {
         chrome.runtime.sendMessage(
             chrome.extensionId, 
-            {type: "CLOSE_TAB", tab: this.props.tab.id},
-            res => {
-                console.log('close_tab', this.props.tab.id, 'res', res)
-            }
+            {type: "CLOSE_TAB", tab: this.props.tab.id}
         )
     }
 
@@ -122,7 +117,6 @@ const Title = styled.h1`
             image: this.props.image,
         }
         if(!tab) return
-        console.log("Enter getSite send to:", tab.id)
         return new Promise((resolve, reject) => {
             chrome.runtime.sendMessage(
                 chrome.extensionId, 
@@ -155,11 +149,11 @@ const Title = styled.h1`
     }
 
     render() {
-        let {tab, name, image} = this.props
+        let {name, image} = this.props
         return (
             <Row>
                 <Container 
-                    onMouseEnter={this.onMouseEnter.bind(this)} 
+                    onMouseOver={this.onMouseEnter.bind(this)} 
                     onMouseLeave={this.onMouseLeave.bind(this)}
                 >
                     <ThumbnailContainer>

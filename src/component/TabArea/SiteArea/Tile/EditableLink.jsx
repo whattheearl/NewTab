@@ -47,6 +47,7 @@ const LinkContainer = styled.div`
 `
 
 const Name = styled.h2`
+    text-align: center;
     font-size: 1.2rem;
     margin-bottom: 1rem;
     color: #4e4e4e;
@@ -77,7 +78,6 @@ const EditableLink = (props) => {
 
     return connectDragSource(
         <div style={{
-            fontWeight: 'bold',
             cursor: 'grab'
         }}>
             <LinkContainer onClick={()=>{select(index)}}>
