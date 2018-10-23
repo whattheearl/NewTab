@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {FaPlusCircle} from 'react-icons/fa'
-import NewTab from '../Modal/NewTab'
+import NewTab from '../../Modal/NewTab'
 
 // Colors
 import colors from '../../../styles/colors'

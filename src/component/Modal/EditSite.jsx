@@ -13,6 +13,7 @@ import {
     ButtonContainer,
     SubmitButton,
     CancelButton,
+    RemoveButton,
     Row
 } from './styled'
 
@@ -25,6 +26,7 @@ class EditSiteModal extends Component {
             image: null,
         }
         this.handleInputChange.bind(this)
+        this.removeSite.bind(this)
     }
 
     handleInputChange(e) {
@@ -54,9 +56,18 @@ class EditSiteModal extends Component {
         }
     }
 
+    removeSite() {
+        this.props.handler('REMOVE_SITE', {site: this.props.site})
+        this.closeModal()
+    }
+
     submit() {
         const site = this.getSite()
-        this.props.replaceSite(site)
+        this.props.handler('REPLACE_SITE', {site: this.props.site, updatedSite: site})
+        this.closeModal()
+    }
+
+    closeModal() {
         this.props.closeModal()
         this.setState({
             url: null,
@@ -72,25 +83,23 @@ class EditSiteModal extends Component {
 
     // retrieve url name image from selected site unless it has been changed by user
     getSite() {
-        const {selectedSite} = this.props
-        const {url} = (this.state.url!==null) ? this.state : selectedSite
-        const {name} = (this.state.name!==null) ? this.state : selectedSite
-        const {image} = (this.state.image!==null) ? this.state : selectedSite
+        const {site} = this.props
+        const {url} = (this.state.url!==null) ? this.state : site
+        const {name} = (this.state.name!==null) ? this.state : site
+        const {image} = (this.state.image!==null) ? this.state : site
 
         return {url, name, image}
     }
 
     render() {
-        const {displaySelf, closeModal, selectedSite} = this.props
-
-        if(!displaySelf || !selectedSite) return null;
+        const {displaySelf} = this.props
+        if(!displaySelf || !this.props.site) return null;
         const site = this.getSite()
         return (
-            <ModalTint>
-                <ModalDisplay>
+            <ModalTint onClick={this.closeModal.bind(this)}>
+                <ModalDisplay onClick={(e) => { e.stopPropagation()}}>
                     <TitleContainer>
                         <h1>Editing {site.name}</h1>
-                        <CancelButton onClick={closeModal}>X</CancelButton>
                     </TitleContainer>
                     <ModalContainer>
                         <InputContainer>
@@ -125,8 +134,11 @@ class EditSiteModal extends Component {
                                 />
                             </Row>
                         </InputContainer>
+
                         <ButtonContainer>
-                            <SubmitButton onClick={this.submit.bind(this)}>Save</SubmitButton>
+                            <RemoveButton onClick={this.removeSite.bind(this)}>Remove</RemoveButton>
+                            <CancelButton onClick={this.closeModal.bind(this)}>Cancel</CancelButton>
+                            <SubmitButton onClick={this.submit.bind(this)}>Done</SubmitButton>
                         </ButtonContainer>
                     </ModalContainer>
                 </ModalDisplay>

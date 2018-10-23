@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 
 // Styles
-import colors from '../../../../styles/colors'
+import colors from '../../styles/colors'
 
 import {
     ModalTint,
@@ -16,11 +16,7 @@ import {
     ButtonContainer,
     SubmitButton,
     CancelButton
-} from '../../Modal/styled'
-// const ImgArea = styled.div`
-//     display: flex;
-//     flex-wrap: wrap;
-// `
+} from '../Modal/styled'
 
 const Col = styled.div`
     display: flex;

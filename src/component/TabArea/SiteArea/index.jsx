@@ -12,8 +12,8 @@ import LinkTile from './Tile'
 // import NewSiteModal from '../Modal/NewSite'
 import CreateItemArea from './CreateItemArea'
 import EditButton from './EditButton'
-import EditSiteModal from '../Modal/EditSite'
-import ChromeTabArea from './ChromeTabArea'
+import EditSiteModal from '../../Modal/EditSite'
+import ChromeTabArea from '../../ChromeTabArea'
 
 // Colors
 import colors from '../../../styles/colors'
@@ -22,10 +22,11 @@ import colors from '../../../styles/colors'
 const MainArea = styled.div`
     display: flex;
     flex: 1;
+    height: calc(100vh - 128px);
 `
 
 const Area = styled.div`
-    height: calc(100vh - 56px);
+    height: 100%;
     width: calc(100vw - 500px);
     box-sizing: border-box;
     border-right: 1px solid ${colors.lightGray};
@@ -40,6 +41,15 @@ const Grid = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 2px;
     grid-row-gap: 2px;
+`
+
+const Col = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+const SpeedDialContainer = styled.div`
+    margin-top: auto;
 `
 
 class LinkPage extends Component {
@@ -170,14 +180,16 @@ class LinkPage extends Component {
                     </Grid>
                     {/* <PlusButton onClick={this.openNewSiteModal.bind(this)}></PlusButton> */}
                 </Area>
-                <div>
+                <Col>
                     <EditButton toggleEditable={this.toggleEditable.bind(this)}/>
                     <ChromeTabArea 
                         selectSite={this.selectSite.bind(this)}
                         saveSite={this.addSite.bind(this)}
                     />
-                    <CreateItemArea />
-                </div>
+                    <SpeedDialContainer>
+                        <CreateItemArea />
+                    </SpeedDialContainer>
+                </Col>
             </MainArea>
         )
     }

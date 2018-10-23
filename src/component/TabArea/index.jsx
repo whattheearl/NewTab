@@ -4,6 +4,7 @@ import styled from 'styled-components'
 // Components
 import TabNav from './TabNav'
 import LinkPage from './SiteArea'
+import BreadCrumbNav from './BreadcrumbNav'
 
 // Styled
 const Col = styled.div`
@@ -94,6 +95,7 @@ class TabArea extends Component {
     render() {
         return(
             <Col>
+                <BreadCrumbNav page={this.props.page}/>
                 <TabNav
                     tabs={this.props.tabs}
                     selectTab={this.selectTab.bind(this)}
@@ -107,5 +109,4 @@ class TabArea extends Component {
         )
     } 
 }
-
 export default TabArea

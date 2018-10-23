@@ -1,24 +1,28 @@
 /* global chrome */
 import React, { Component } from 'react'
-import styled, {injectGlobal} from 'styled-components'
+// May not end up using custom Fonts
+// import styled, {injectGlobal} from 'styled-components'
+import styled from 'styled-components'
 
 // Colors
 import colors from './styles/colors'
 
 // Components
 import NavPanel from './component/NavPanel'
-import TabArea from './component/TabArea'
+// import TabArea from './component/TabArea'
+import NewPage from './Pages/New'
 
 // Starter state
-import defaultPage from './Pages/data'
+import data from './data/samplePage'
+const {pages: defaultPage} = data
 
-// Styled
-injectGlobal`
-  @import url("https://fonts.googleapis.com/css?family=Lobster");
-`
+// Globla CSS Styled Components
+// injectGlobal`
+//   @import url("https://fonts.googleapis.com/css?family=Lobster");
+// `
 
 // ChromeExtension
-chrome.extensionId = "flceabcjbijkonhgckgflefpmegkkjig"
+chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf"
 
 const AppContainer = styled.div`
   background-color: ${colors.white};
@@ -32,79 +36,78 @@ class App extends Component {
   constructor(props) {
     super(props)
     let pages = JSON.parse(window.localStorage.getItem('pages')) || defaultPage
-    let selectedPage = pages[0] ? pages[0] : null
-
+    let selectedPage = null
     this.state = {
       displaySettingsPanel: false,
       displayNavPanel: true,
       pages,
-      selectedPage,
+      selectedPage
     }
   }
-
-  selectPage(page) {
-    const index = this.state.pages.indexOf(page)
-    const selectedPage = this.state.pages[index]
-    const selectedTab = this.state.pages[index].tabs[0] || null;
-    this.setState({selectedPage, selectedTab})
+  exportData() {
+    window.localStorage.setItem('pages', JSON.stringify(this.state.pages))
   }
 
-  createPage(name) {
-    return {name, tabs:[{name: 'Main', sites:[]}]}
-  }
-
-  addPage(name) {
-    let newPage = this.createPage(name)
-    let pages = [...this.state.pages, newPage]
-    this.setState({pages, selectedPage: newPage})
-    window.localStorage.setItem('pages', JSON.stringify(pages))
-  }
-
-  updatePageTabs(updatedTabs) {
-    let updatedPage = {
-      name: this.state.selectedPage.name,
-      tabs: updatedTabs
-    }
-    this.updatePage(updatedPage)
-  }
-
-  updatePage(updatedPage) {
-    const pageIndex = this.state.pages.indexOf(this.state.selectedPage)
-    const updatedPages = [
-      ...this.state.pages.slice(0, pageIndex),
-      updatedPage,
-      ...this.state.pages.slice(pageIndex + 1)
-    ]
-    this.setState({pages: updatedPages, selectedPage: updatedPage})
-    window.localStorage.setItem('pages', JSON.stringify(updatedPages))
-  }
-
-  stringifyPages() {
-    console.log(JSON.stringify(this.state.pages))
-  }
-
-  importPages(pages) {
-    this.setState({pages})
+  importData() {
   }  
 
+  // selectPage(page) {
+  //   const index = this.state.pages.indexOf(page)
+  //   const selectedPage = this.state.pages[index]
+  //   const selectedTab = this.state.pages[index].tabs[0] || null;
+  //   this.setState({selectedPage, selectedTab})
+  // }
+
+  // createPage(name) {
+  //   return {name, tabs:[{name: 'Main', sites:[]}]}
+  // }
+
+  // addPage(name) {
+  //   let newPage = this.createPage(name)
+  //   let pages = [...this.state.pages, newPage]
+  //   this.setState({pages, selectedPage: newPage}, this.exportData())
+  // }
+
+  // updatePageTabs(updatedTabs) {
+  //   let updatedPage = {
+  //     name: this.state.selectedPage.name,
+  //     tabs: updatedTabs
+  //   }
+  //   this.updatePage(updatedPage)
+  // }
+
+  // updatePage(updatedPage) {
+  //   const pageIndex = this.state.pages.indexOf(this.state.selectedPage)
+  //   const updatedPages = [
+  //     ...this.state.pages.slice(0, pageIndex),
+  //     updatedPage,
+  //     ...this.state.pages.slice(pageIndex + 1)
+  //   ]
+  //   this.setState({pages: updatedPages, selectedPage: updatedPage}, this.exportData())
+  // }
+
+  // updateNewPage(updatedNewPage) {
+  //   this.this.setState({newPage: updatedNewPage}, this.exportData())
+  // }
+
   render() {
+    // if(!this.state.pages) return null
     return (
-      <AppContainer className="App">
-        <Row>
-          <NavPanel 
-            display={this.state.displayNavPanel && !this.state.displaySettingsPanel}
-            pages={this.state.pages}
-            selectPage={this.selectPage.bind(this)}
-            addPage={this.addPage.bind(this)}
-            selectedPage={this.state.selectedPage}
-          />
-          <TabArea 
-            tabs={this.state.selectedPage.tabs}
-            updatePageTabs={this.updatePageTabs.bind(this)}
-          />
-          {/* <SettingsPanel display={this.state.displaySettingsPanel}/>  */}
-        </Row>
-      </AppContainer>
+        <div>
+            <AppContainer className="App">
+              <Row>
+                <NavPanel 
+                  display={true}
+                  // pages={this.state.pages}
+                  // selectPage={this.selectPage.bind(this)}
+                  // addPage={this.addPage.bind(this)}
+                  // selectedPage={this.state.selectedPage}
+                />
+                <NewPage />
+                {/* <SettingsPanel display={this.state.displaySettingsPanel}/>  */}
+              </Row>
+            </AppContainer>
+        </div>
     );
   }
 }

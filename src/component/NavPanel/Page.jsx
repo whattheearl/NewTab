@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 // Color
@@ -16,15 +17,15 @@ const Container = styled.div`
 `
 
 const Name = styled.h1`
-    margin-left: 1rem;
+
 `
 
 class Page extends Component {
     renderPageName() {
         const {name} = this.props
         if(!name) return null
-        if(name.length > 22) {
-            return `${name.slice(0, 22)}...`
+        if(name.length > 19) {
+            return `${name.slice(0, 19)}...`
         }
         return name
     }
@@ -32,9 +33,11 @@ class Page extends Component {
         let style = null
         if(this.props.selected) style = {color: colors.black, backgroundColor: colors.babyBlue}
         return (
-            <Container onClick={this.props.select} style={style}>
-                <Name>{this.renderPageName()}</Name>
-            </Container>
+            <Link to={`/${this.props.name}`} style={{textDecoration: 'none'}}>
+                <Container onClick={this.props.select} style={style}>
+                    <Name>{this.renderPageName()}</Name>
+                </Container>
+            </Link>
         )
     }
 }

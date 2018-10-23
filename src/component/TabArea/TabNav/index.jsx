@@ -12,7 +12,7 @@ import colors from '../../../styles/colors'
 // Styles
 const HeaderContainer = styled.div`
     background-color: ${colors.darkWhite};
-    height: 3.5rem;
+    height: 2.25rem;
     width: calc(100vw - 200px);
 `
 const Row = styled.div`
