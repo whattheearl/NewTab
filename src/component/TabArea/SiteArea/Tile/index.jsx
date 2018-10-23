@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import {FaWindowClose} from 'react-icons/fa'
+import { FaWindowClose } from 'react-icons/fa'
 import { DropTarget } from 'react-dnd'
 
 // Components
@@ -48,44 +48,44 @@ const RemoveButton = styled.div`
 
 class Tile extends Component {
     renderRemoveButton() {
-        if(!this.props.editable) return null
+        if (!this.props.editable) return null
         return (
-            <RemoveButton 
-                onClick={() => {this.props.remove(this.props.index)}}
+            <RemoveButton
+                onClick={() => { this.props.remove(this.props.index) }}
             >
-                <FaWindowClose/>
+                <FaWindowClose />
             </RemoveButton>
         )
     }
 
     renderLink() {
-        const {index, url, name, image, move, editable, select} = this.props
-        const {alt} = this.props || name
-        if(editable) {
+        const { index, url, name, image, move, editable, select } = this.props
+        const { alt } = this.props || name
+        if (editable) {
             return (
-                <DraggableLink 
-                    index={index} 
-                    url={url} 
-                    name={name} 
-                    image={image} 
-                    alt={alt} 
+                <DraggableLink
+                    index={index}
+                    url={url}
+                    name={name}
+                    image={image}
+                    alt={alt}
                     move={move}
                     select={select}
                 />
             )
         }
         return (
-            <NormalLink 
-                index={index} 
-                url={url} name={name} 
-                image={image} 
+            <NormalLink
+                index={index}
+                url={url} name={name}
+                image={image}
                 alt={alt}
             />
         )
     }
 
     render() {
-        const {connectDropTarget} = this.props
+        const { connectDropTarget } = this.props
         return connectDropTarget(
             <div>
                 <Container>

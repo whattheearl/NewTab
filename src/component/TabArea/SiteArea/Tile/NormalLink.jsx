@@ -18,7 +18,6 @@ const Name = styled.h2`
   margin-bottom: 1rem;
   color: #4e4e4e;
   text-transform: capitalize;
-  width: calc(calc(100vw - 540px)/5);
   padding: 0 .5rem;
   box-sizing: border-box;
 `
@@ -34,10 +33,10 @@ const Thumb = styled.img`
   width: 100px;
   height: 100px;
   margin: 15px;
-  margin-bottom: 15px;
   border-radius: 15px;
   object-fit: cover;
   border: 1px solid #2e2e2e17;
+  box-sizing: border-box;
 `
 
 class NormalLink extends Component {

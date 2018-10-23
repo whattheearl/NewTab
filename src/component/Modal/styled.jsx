@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import colors from '../../styles/colors'
 // Styles
 export const ModalTint = styled.section`
     position: fixed;
@@ -70,13 +70,15 @@ export const SiteInput = styled.input`
 
 export const ButtonContainer = styled.div`
     display: flex;
-    justify-content: space-between;
 `
 
 export const SubmitButton = styled.button`
+    margin-left: 1rem;
     font-size: 1.2rem;
     border-radius: 4px;
-    background-color: #e2e2e2;
+    background-color: white;
+    color: ${colors.babyBlue};
+    padding: 16px;
     cursor: pointer;
 `
 
@@ -85,6 +87,14 @@ export const CancelButton = styled.button`
     border-radius: 4px;
     background-color: #e2e2e2;
     margin-left: auto;
+    padding: 16px;
+    cursor: pointer;
+`
+export const RemoveButton = styled.button`
+    font-size: 1.2rem;
+    border-radius: 4px;
+    background-color: #e2e2e2;
+    padding: 16px;
     cursor: pointer;
 `
 
