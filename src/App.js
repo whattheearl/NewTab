@@ -1,7 +1,5 @@
 /* global chrome */
 import React, { Component } from 'react'
-// May not end up using custom Fonts
-// import styled, {injectGlobal} from 'styled-components'
 import styled from 'styled-components'
 
 // Colors
@@ -9,107 +7,91 @@ import colors from './styles/colors'
 
 // Components
 import NavPanel from './component/NavPanel'
-// import TabArea from './component/TabArea'
 import NewPage from './Pages/New'
 
 // Starter state
-import data from './data/samplePage'
-const {pages: defaultPage} = data
-
-// Globla CSS Styled Components
-// injectGlobal`
-//   @import url("https://fonts.googleapis.com/css?family=Lobster");
-// `
+import defaultWorkspaces from './data/workspaces'
 
 // ChromeExtension
 chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf"
 
-const AppContainer = styled.div`
+const AppContainer = styled.div `
   background-color: ${colors.white};
 `
 
-const Row = styled.div`
+const Row = styled.div `
   display: flex;
 `
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    let pages = JSON.parse(window.localStorage.getItem('pages')) || defaultPage
-    let selectedPage = null
-    this.state = {
-      displaySettingsPanel: false,
-      displayNavPanel: true,
-      pages,
-      selectedPage
+    constructor(props) {
+        super(props)
+        const localWorkspaces = window.localStorage.getItem('workspace')
+        const workspaces = localWorkspaces ? JSON.parse(localWorkspaces) : defaultWorkspaces
+        console.log('local', localWorkspaces)
+        console.log(defaultWorkspaces)
+        this.state = {
+            workspaces,
+            selectedWorkspace: null,
+        }
     }
-  }
-  exportData() {
-    window.localStorage.setItem('pages', JSON.stringify(this.state.pages))
-  }
 
-  importData() {
-  }  
+    exportWorkspace() {
+        window.localStorage.setItem('workspace', JSON.stringify(this.state.workspaces))
+    }
 
-  // selectPage(page) {
-  //   const index = this.state.pages.indexOf(page)
-  //   const selectedPage = this.state.pages[index]
-  //   const selectedTab = this.state.pages[index].tabs[0] || null;
-  //   this.setState({selectedPage, selectedTab})
-  // }
+    // handler deals with state changes, ADD_WORKSPACE, REMOVE_WORKSPACE
+    workspaceHandler(action, payload) {
+        switch (action) {
+            // adds a new workspace
+            case 'ADD_WORKSPACE':
+                // Only add if name is set
+                let {
+                    name,
+                    sites
+                } = payload
+                // create new workspace and add to state
+                this.setState(state => ({
+                    workspaces: [{
+                            id: state.workspaces.length,
+                            created: Date.now(),
+                            lastModified: Date.now(),
+                            name,
+                            sites,
+                        },
+                        ...state.workspaces,
+                    ]
+                }), this.exportWorkspace)
+                // Close all tabs
+                chrome.runtime.sendMessage(chrome.extensionId, {
+                    type: "CLOSE_ALL_TABS"
+                })
+                return
+            default:
+                return
+        }
+    }
 
-  // createPage(name) {
-  //   return {name, tabs:[{name: 'Main', sites:[]}]}
-  // }
 
-  // addPage(name) {
-  //   let newPage = this.createPage(name)
-  //   let pages = [...this.state.pages, newPage]
-  //   this.setState({pages, selectedPage: newPage}, this.exportData())
-  // }
-
-  // updatePageTabs(updatedTabs) {
-  //   let updatedPage = {
-  //     name: this.state.selectedPage.name,
-  //     tabs: updatedTabs
-  //   }
-  //   this.updatePage(updatedPage)
-  // }
-
-  // updatePage(updatedPage) {
-  //   const pageIndex = this.state.pages.indexOf(this.state.selectedPage)
-  //   const updatedPages = [
-  //     ...this.state.pages.slice(0, pageIndex),
-  //     updatedPage,
-  //     ...this.state.pages.slice(pageIndex + 1)
-  //   ]
-  //   this.setState({pages: updatedPages, selectedPage: updatedPage}, this.exportData())
-  // }
-
-  // updateNewPage(updatedNewPage) {
-  //   this.this.setState({newPage: updatedNewPage}, this.exportData())
-  // }
-
-  render() {
-    // if(!this.state.pages) return null
-    return (
-        <div>
-            <AppContainer className="App">
-              <Row>
-                <NavPanel 
-                  display={true}
-                  // pages={this.state.pages}
-                  // selectPage={this.selectPage.bind(this)}
-                  // addPage={this.addPage.bind(this)}
-                  // selectedPage={this.state.selectedPage}
-                />
-                <NewPage />
-                {/* <SettingsPanel display={this.state.displaySettingsPanel}/>  */}
-              </Row>
-            </AppContainer>
-        </div>
-    );
-  }
+    render() {
+        return ( 
+            <div>
+                <AppContainer className = "App" >
+                    <Row>
+                        <NavPanel 
+                            display={ true } 
+                            workspaces={ this.state.workspaces } 
+                            workspaceHandler={this.workspaceHandler.bind(this)} 
+                        /> 
+                        <NewPage 
+                            workspaces={this.state.workspaces} 
+                            workspaceHandler={this.workspaceHandler.bind(this)} 
+                        />
+                    </Row> 
+                </AppContainer> 
+            </div>
+        );
+    }
 }
 
 export default App;

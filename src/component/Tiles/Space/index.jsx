@@ -1,4 +1,3 @@
-/* global chrome */
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
@@ -32,15 +31,11 @@ const Container = styled.div`
     width: 100%;
     box-sizing: border-box;
     border-bottom: 1px solid ${color.lightGray};
-    box-sizing: border-box;
     background-color: white;
     padding: 0 1px 0 1px;
     :hover {
         z-index: 10;
         padding: 0;
-        border-left: 1px solid ${color.lightGray};
-        border-right: 1px solid ${color.lightGray};
-
         box-shadow: 0 8px 3px -7px #777;
     }
 `

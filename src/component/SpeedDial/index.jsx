@@ -62,11 +62,12 @@ class SpeedDial extends Component {
         })
     }
 
+
     // return list of linkTiles to render
     renderLinkTiles() {
         let links = this.props.sites.map((site, index) => {
             return <Tile 
-                key={`${index}`} 
+                key={index} 
                 site={site}
                 index={index}
                 alt={site.name} 
@@ -80,7 +81,7 @@ class SpeedDial extends Component {
 
         if(links.length < 10) {
             links.push(<NewLink 
-                key={`${links.length}`}
+                key={links.length}
                 index={links.length}
                 name={'Add Shortcut'}
                 select={this.openNewSiteModal.bind(this)}

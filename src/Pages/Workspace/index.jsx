@@ -9,9 +9,6 @@ import colors from '../../styles/colors'
 
 
 class WorkspacePage extends Component {
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         return (
