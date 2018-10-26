@@ -14,13 +14,7 @@ const LinkContainer = styled.div`
     font-size: 2rem;
     border-radius: 15px;
     text-transform: capitalize;
-    background-color: ${colors.white};
-    &:hover {
-        background-color: white;
-        animation-name: bounce;
-        animation-duration: 1s;
-        animation-iteration-count: 5;
-    }
+    background-color: white;
 `
 
 const Name = styled.h2`

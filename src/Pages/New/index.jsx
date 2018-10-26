@@ -2,26 +2,48 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 // Components
-import Workspaces from '../../component/Workspace'
+import SpaceList from '../../component/Workspace/SpaceList'
+import DetailList from '../../component/Workspace/DetailList'
 import SpeedDial from '../../component/SpeedDial/Container'
 import ChromeTabArea from '../../component/ChromeTabArea'
+import BreadCrumb from '../../component/BreadcrumbNav'
+import NameInput from '../../component/Workspace/name.input'
+import FavoriteButton from '../../component/Buttons/Favorite/Container'
+import SettingsButton from '../../component/Buttons/Settings/Container'
 
 // colors
 import colors from '../../styles/colors'
 
 class NewPage extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     render() {
-        console.log(this.props)
         return (
             <Row>
                 <MainArea>
-                    <Workspaces 
+                    <Header>
+                        <BreadCrumb 
+                            workspace={this.props.selectedWorkspace} 
+                            workspaceHandler={this.props.workspaceHandler}
+                        />
+                        <FavoriteButton
+                            selectedWorkspace={this.props.selectedWorkspace} 
+                            workspaceHandler={this.props.workspaceHandler}
+                        />
+                        <SettingsButton
+                            selectedWorkspace={this.props.selectedWorkspace} 
+                            workspaceHandler={this.props.workspaceHandler}
+                        />
+                        <RightCol>
+                            <NameInput workspaceHandler={this.props.workspaceHandler} />
+                        </RightCol>
+                    </Header>
+                    <SpaceList
                         workspaceHandler={this.props.workspaceHandler}
-                        workspaces={this.props.workspaces} 
+                        workspaces={this.props.workspaces}
+                        display={this.props.selectedWorkspace === null}
+                    />
+                    <DetailList
+                        workspaceHandler={this.props.workspaceHandler}
+                        selectedWorkspace={this.props.selectedWorkspace}
                     />
                     <Container>
                         <SpeedDial />
@@ -55,8 +77,20 @@ const Row = styled.div`
     display: flex;
 `
 
+const Header = styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+`
+
 const SideBar = styled.div`
     display: flex;
     flex-direction: column;
+`
+
+const RightCol = styled.div`
+    margin-left: auto;
 `
 

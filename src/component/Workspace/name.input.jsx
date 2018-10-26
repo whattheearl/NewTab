@@ -71,9 +71,7 @@ export default NameInput
 const Row = styled.div`
     display: flex;
     align-items: center;
-    width: 100%;
     height: 2rem;
-    padding-bottom: .5rem;
 `
 
 const NameInputBorder = styled.div`

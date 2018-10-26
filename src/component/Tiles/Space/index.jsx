@@ -9,10 +9,10 @@ class Space extends Component {
     render() {
         const { name, sites, lastModified} = this.props
         return (
-            <Container>
+            <Container onClick={this.props.select} >
                 <Row>
                     <Name onClick={this.props.openAllLinks}>{name}</Name>
-                    <RightCol onClick={(e) => {e.stopPropagation()}}>
+                    <RightCol>
                         <Grid numColumns={10}>
                             {sites}
                         </Grid>
@@ -32,10 +32,12 @@ const Container = styled.div`
     box-sizing: border-box;
     border-bottom: 1px solid ${color.lightGray};
     background-color: white;
-    padding: 0 1px 0 1px;
+    padding: 0 3px 0 1px;
+    cursor: pointer;
     :hover {
         z-index: 10;
-        padding: 0;
+        padding-left: 0px;
+        border-left: 3px solid ${color.babyBlue};
         box-shadow: 0 8px 3px -7px #777;
     }
 `

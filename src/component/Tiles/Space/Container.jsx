@@ -39,12 +39,18 @@ class SpaceContainer extends Component {
         })
     }
 
+    selectWorkspace(e) {
+        e.stopPropagation()
+        this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: this.props.workspace})
+    }
+
     render() {
         return (
             <Space 
                 {...this.props}
                 sites={this.getSites()}
-                openAllLinks={this.openAllLinks.bind(this)} 
+                openAllLinks={this.openAllLinks.bind(this)}
+                select={this.selectWorkspace.bind(this)}
             />
         )
     }

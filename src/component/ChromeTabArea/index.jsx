@@ -136,7 +136,7 @@ const Container = styled.div`
 
 const AreaTitle = styled.h1`
     font-size: 1.25rem;
-    color: ${colors.gray};
+    color: ${colors.black};
     margin-bottom: .25rem;
 `
 
