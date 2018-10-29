@@ -10,7 +10,6 @@ const Grid = ({ children, numColumns}) => {
     let items = children.map((item, index) => {
         return <Item key={index}>{item}</Item>
     })
-    console.log('items', items)
     return (
         <Container>
             {items}

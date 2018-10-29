@@ -25,6 +25,7 @@
         "tabs",
         "activeTab",
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "history"
     ]
 }

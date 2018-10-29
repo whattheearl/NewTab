@@ -133,7 +133,6 @@ const Row = styled.div`
 const Container = styled.div`
     position: relative;
     width: 100%;
-    background-color: ${colors.darkWhite};
     display: flex;
     align-items: center;
     border-radius: 4px;

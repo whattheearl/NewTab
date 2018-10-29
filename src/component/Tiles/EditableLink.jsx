@@ -156,22 +156,23 @@ const BorderColumn = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 15px;
+    padding-top: 25px;
+    padding-bottom: 5px;
     position: relative;
-    border: 1px solid #2e2e2e17;
-    border-radius: 3px;
     text-decoration: none;
     color: ${colors.white};
     background-color: white;
     overflow: hidden;
+    box-sizing: border-box;
     :visited {
         color: ${colors.white};
         text-decoration: none;
     }
     :hover {
         z-index: 10;
-        border: 1px solid ${colors.lightGray};
-        background-color: white;
-        box-shadow: 0 8px 3px -7px #777;
+        border-top: 2px solid ${colors.babyBlue};
+        padding-top: 20px;
+        padding-bottom: 8px;
     }
 `
 

@@ -16,6 +16,12 @@ class Thumbnail extends Component {
         this.setState({image: this.props.backupImage})
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.image !== this.state.image) {
+            this.setState({image: nextProps.image})
+        }
+    }
+
     render() {
         return <img 
             src={this.state.image} 

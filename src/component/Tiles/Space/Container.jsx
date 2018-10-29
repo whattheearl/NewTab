@@ -39,12 +39,36 @@ class SpaceContainer extends Component {
         })
     }
 
+    selectWorkspace(e) {
+        e.stopPropagation()
+        this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: this.props.workspace})
+    }
+
+    removeWorkspace(e) {
+        e.stopPropagation()
+        console.log('removeing workspace')
+        this.props.workspaceHandler('REMOVE_WORKSPACE', {workspace: this.props.workspace})
+    }
+
+    favoriteWorkspace(e) {
+        e.stopPropagation()
+        const updatedWorkspace = { 
+            ...this.props.workspace,
+            saved: !this.props.workspace.saved
+        };
+        this.props.workspaceHandler('REPLACE_WORKSPACE', {workspace: this.props.workspace, updatedWorkspace})
+    }
+
     render() {
+        console.log('workspace container props', this.props)
         return (
             <Space 
                 {...this.props}
                 sites={this.getSites()}
-                openAllLinks={this.openAllLinks.bind(this)} 
+                openAllLinks={this.openAllLinks.bind(this)}
+                select={this.selectWorkspace.bind(this)}
+                remove={this.removeWorkspace.bind(this)}
+                favorite={this.favoriteWorkspace.bind(this)}
             />
         )
     }
