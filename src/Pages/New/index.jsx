@@ -8,11 +8,6 @@ import SpeedDial from '../../component/SpeedDial/Container'
 import ChromeTabArea from '../../component/ChromeTabArea'
 import BreadCrumb from '../../component/BreadcrumbNav'
 import NameInput from '../../component/Workspace/name.input'
-import FavoriteButton from '../../component/Buttons/Favorite/Container'
-import SettingsButton from '../../component/Buttons/Settings/Container'
-
-// colors
-import colors from '../../styles/colors'
 
 class NewPage extends Component {
     render() {
@@ -22,14 +17,6 @@ class NewPage extends Component {
                     <Header>
                         <BreadCrumb 
                             workspace={this.props.selectedWorkspace} 
-                            workspaceHandler={this.props.workspaceHandler}
-                        />
-                        <FavoriteButton
-                            selectedWorkspace={this.props.selectedWorkspace} 
-                            workspaceHandler={this.props.workspaceHandler}
-                        />
-                        <SettingsButton
-                            selectedWorkspace={this.props.selectedWorkspace} 
                             workspaceHandler={this.props.workspaceHandler}
                         />
                         <RightCol>
@@ -62,7 +49,6 @@ export default NewPage
 const MainArea = styled.div`
     width: calc(100vw - 500px);
     box-sizing: border-box;
-    border-right: 1px solid ${colors.lightGray};
     display: flex;
     flex-direction: column;
     align-items: center;

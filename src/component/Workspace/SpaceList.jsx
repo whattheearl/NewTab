@@ -45,7 +45,7 @@ const SpaceContainer = styled.div`
     flex-direction: column;
     width: 100%;
     overflow-y: auto;
-    border-top: 1px solid ${colors.lightGray};
+    border-top: 1px solid ${colors.darkWhite};
     padding-bottom: .5rem;
     box-sizing: border-box;
     flex: 1;

@@ -65,4 +65,5 @@ const Container = styled.div`
 const WorkspaceTile = styled.div`
     color: white;
     cursor: pointer;
+    padding: 3px 0;
 `

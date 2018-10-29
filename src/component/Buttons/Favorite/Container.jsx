@@ -6,13 +6,11 @@ class FavoriteContainer extends Component {
         console.log('fav container')
         e.preventDefault()
         e.stopPropagation()
-        this.props.workspaceHandler('TOGGLE_SAVE_WORKSPACE')
     }
 
     render() {
         return <Favorite 
-            display={!!this.props.selectedWorkspace}
-            isFull={!!this.props.selectedWorkspace && this.props.selectedWorkspace.saved}
+            isFull={true}
             onClick={this.onClick.bind(this)}
         />;
     }

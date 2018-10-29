@@ -1,19 +1,16 @@
 /* global chrome */
-import React, { Component } from 'react'
-import styled from 'styled-components'
-
-// Colors
-import colors from './styles/colors'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // Components
-import NavPanel from './component/NavPanel'
-import NewPage from './Pages/New'
+import NavPanel from './component/NavPanel';
+import NewPage from './Pages/New';
 
 // Starter state
-import defaultWorkspaces from './data/workspaces'
+import defaultWorkspaces from './data/workspaces';
 
 // ChromeExtension
-chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf"
+chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf";
 
 const AppContainer = styled.div `
   background-color: white;
@@ -25,9 +22,9 @@ const Row = styled.div `
 
 class App extends Component {
     constructor(props) {
-        super(props)
-        const localWorkspaces = window.localStorage.getItem('workspace')
-        const workspaces = localWorkspaces ? JSON.parse(localWorkspaces) : defaultWorkspaces
+        super(props);
+        const localWorkspaces = window.localStorage.getItem('workspace');
+        const workspaces = localWorkspaces ? JSON.parse(localWorkspaces) : defaultWorkspaces;
         this.state = {
             workspaces,
             selectedWorkspace: null,
@@ -35,7 +32,7 @@ class App extends Component {
     }
 
     exportWorkspace() {
-        window.localStorage.setItem('workspace', JSON.stringify(this.state.workspaces))
+        window.localStorage.setItem('workspace', JSON.stringify(this.state.workspaces));
     }
 
     // handler deals with state changes, ADD_WORKSPACE, REMOVE_WORKSPACE
@@ -44,7 +41,7 @@ class App extends Component {
             // adds a new workspace
             case 'ADD_WORKSPACE':
                 // Only add if name is set
-                let { name, sites } = payload
+                let { name, sites } = payload;
                 // create new workspace and add to state
                 this.setState(state => ({
                     workspaces: [{
@@ -56,41 +53,44 @@ class App extends Component {
                         },
                         ...state.workspaces,
                     ]
-                }), this.exportWorkspace)
+                }), this.exportWorkspace);
                 // Close all tabs
-                chrome.runtime.sendMessage(chrome.extensionId, {
-                    type: "CLOSE_ALL_TABS"
-                })
-                return
+                chrome.runtime.sendMessage(chrome.extensionId, {type: "CLOSE_ALL_TABS"});
+                return;
             case 'SELECT_WORKSPACE':
-                const { workspace: selectedWorkspace } = payload
-                this.setState({ selectedWorkspace })
-                return
+                const { workspace: selectedWorkspace } = payload;
+                this.setState({ selectedWorkspace });
+                return;
             // probably dont want workspace logic and workspaces logic in the same handler
-            case 'TOGGLE_SAVE_WORKSPACE':
-                const workspace = this.state.selectedWorkspace
-                const index = this.state.workspaces.indexOf(workspace)
-                let updatedWorkspace = {
-                    id: workspace.id,
-                    created: workspace.created,
-                    lastModified: Date.now(),
-                    name: workspace.name,
-                    sites: workspace.sites,
-                    saved: !workspace.saved,
-                }
-                this.setState(
-                    state => ({
-                        selectedWorkspace: updatedWorkspace,
-                        workspaces: [
-                            ...state.workspaces.slice(0, index),
-                            updatedWorkspace,
-                            ...state.workspaces.slice(index+1),
-                        ],
-                    }),
-                )
-                return
+            case 'REMOVE_WORKSPACE':
+                console.log('removing workspace in handler', action, payload)
+                // remove target workspace
+                const { workspace } = payload;
+                const index = this.state.workspaces.indexOf(workspace);
+                console.log(index)
+                this.setState(state => ({
+                    workspaces: [
+                        ...state.workspaces.slice(0, index),
+                        ...state.workspaces.slice(index + 1)
+                    ],
+                    selectedWorkspace: state.selectedWorkspace
+                }), this.exportWorkspace);
+                return;
+            case 'REPLACE_WORKSPACE':
+                const { workspace: prevWorkspace, updatedWorkspace } = payload;
+                const indexToBeReplaced = this.state.workspaces.indexOf(prevWorkspace);
+                const selected = prevWorkspace === this.state.selectedWorkspace? updatedWorkspace : null;
+                this.setState(state => ({
+                    workspaces: [
+                        ...state.workspaces.slice(0, indexToBeReplaced),
+                        updatedWorkspace,
+                        ...state.workspaces.slice(indexToBeReplaced + 1)
+                    ],
+                    selectedWorkspace: selected
+                }), this.exportWorkspace);
+                return;
             default:
-                return
+                return;
         }
     }
 

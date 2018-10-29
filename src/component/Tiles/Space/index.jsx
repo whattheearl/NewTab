@@ -3,14 +3,17 @@ import styled from 'styled-components'
 
 import LocalDate from './LocalDate'
 import Grid from '../../Grid'
+import CloseButton from '../../Buttons/Close'
+import Favorite from '../../Buttons/Favorite'
 import color from '../../../styles/colors'
 
 class Space extends Component {
     render() {
-        const { name, sites, lastModified} = this.props
+        const { name, sites, lastModified } = this.props
         return (
             <Container onClick={this.props.select} >
                 <Row>
+                    <Favorite display={true} isFull={this.props.workspace.saved} onClick={this.props.favorite}/>
                     <Name onClick={this.props.openAllLinks}>{name}</Name>
                     <RightCol>
                         <Grid numColumns={10}>
@@ -20,6 +23,7 @@ class Space extends Component {
                             <LocalDate date={lastModified}/>
                         </DateContainer>
                     </RightCol>
+                    <CloseButton display={true} onClick={this.props.remove} />
                 </Row>
             </Container>
         )
@@ -30,7 +34,7 @@ export default Space
 const Container = styled.div`
     width: 100%;
     box-sizing: border-box;
-    border-bottom: 1px solid ${color.lightGray};
+    border-bottom: 1px solid ${color.darkWhite};
     background-color: white;
     padding: 0 3px 0 1px;
     cursor: pointer;

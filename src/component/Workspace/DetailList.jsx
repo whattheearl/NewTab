@@ -1,10 +1,42 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+// components
+import CloseButton from '../../component/Buttons/Close'
+
 // colors
 import colors from '../../styles/colors'
+import autobind from 'autobind-decorator';
 
 class Detail extends Component {
+
+    sitesHandler(action, payload) {
+        switch(action.type) {
+            case 'REMOVE_SITE':
+                const { site } = payload
+                const { sites } = this.props.selectedWorkspace
+                const index = sites.indexOf(site)
+                let updatedWorkspace = {
+                    ...this.props.selectedWorkspace,
+                    sites:[
+                        ...sites.slice(0, index),
+                        ...sites.slice(index+1)
+                    ]
+                }
+                this.props.workspaceHandler('REPLACE_WORKSPACE', { 
+                    workspace: this.props.selectedWorkspace, 
+                    updatedWorkspace}
+                )
+                this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: updatedWorkspace })
+                return;
+            case 'ADD_SITE':
+                return;
+            case 'REPLACE_SITE':
+                return;
+            default:
+                return;
+        }
+    }
 
     renderSiteList() {
         const workspace = this.props.selectedWorkspace
@@ -15,6 +47,16 @@ class Detail extends Component {
                         <img src={site.favIconUrl} alt={'site.title'} style={{height: '25px', width: '25px'}}/>
                         <Title>{site.title}</Title>
                         {site.content}
+                        <div style={{marginLeft: 'auto'}}>
+                            <CloseButton 
+                                display={true}
+                                onClick={(e)=> {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    this.sitesHandler({type: 'REMOVE_SITE'}, {site});
+                                }
+                            }/>
+                        </div>
                     </Row>
                 </SiteContainer>
             )
@@ -49,7 +91,7 @@ const SpaceContainer = styled.div`
     flex-direction: column;
     width: 100%;
     overflow-y: auto;
-    border-top: 1px solid ${colors.lightGray};
+    border-top: 1px solid ${colors.darkWhite};
     padding-bottom: .5rem;
     box-sizing: border-box;
     flex: 1;
@@ -58,7 +100,7 @@ const SpaceContainer = styled.div`
 const SiteContainer = styled.div`
     width: 100%;
     box-sizing: border-box;
-    border-bottom: 1px solid ${colors.lightGray};
+    border-bottom: 1px solid ${colors.darkWhite};
     background-color: white;
     padding: 0 3px 0 1px;
     :hover {

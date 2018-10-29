@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import colors from '../../styles/colors'
 
+// Name input is used for naming workspace, may want to abstract this as a general text input
 class NameInput extends Component {
     constructor(props) {
         super(props)
@@ -13,9 +14,21 @@ class NameInput extends Component {
     }
 
     // maintain name state
-    onNameInputChange(e) {
-        const name = e.target.value
-        this.setState({name})
+    onKeyDown(e) {
+
+        let key = e.key
+        if(e.key === 'Backspace') {
+            this.setState(state => ({name: state.name.slice(0, -1)}))
+            return
+        }
+        // save on enter
+        if(e.key === 'Enter') {
+            this.onSaveButtonClick()
+            return
+        }
+        // ignore non single characters
+        if(key.length > 1) return
+        this.setState(state => ({name: `${state.name}`+key}))   
     }
 
 
@@ -54,13 +67,13 @@ class NameInput extends Component {
                     <Input 
                         innerRef={this.nameInput}
                         value={this.props.name} 
-                        onChange={this.onNameInputChange.bind(this)} 
+                        onKeyDown={this.onKeyDown.bind(this)} 
                         type={'text'} 
                         placeholder={'new workspace'}
                         required={true} 
                     />
                 </NameInputBorder>
-                <SaveWorkspaceButton onClick={this.onSaveButtonClick.bind(this)}>Save</SaveWorkspaceButton>
+                {/* <SaveWorkspaceButton onClick={this.onSaveButtonClick.bind(this)}>Save</SaveWorkspaceButton> */}
             </Row>
         )
     }
@@ -77,14 +90,15 @@ const Row = styled.div`
 const NameInputBorder = styled.div`
     border: 1px solid ${colors.darkWhite};
     border-right: none;
-    background-color: white;
     padding: 0 .5rem;
-    border-radius: 3px 0 0 3px;
+    border-radius: 3px;
     height: 2rem;
     margin-left: auto;
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    background-color: ${colors.darkWhite};
+
     :focus-within {
         border: 1px solid ${colors.babyBlue};
     }
@@ -92,12 +106,12 @@ const NameInputBorder = styled.div`
 
 const Input = styled.input`
     width: 100%;
-    font-size: 1.25rem;
+    font-size: 1rem;
     border: none;
     border-width: 0;
     border-style: none;
-    background-color: inherit;
-    color: ${colors.gray};
+    background-color: ${colors.darkWhite};
+    color: ${colors.black};
     &:focus {
         outline: none;
     }

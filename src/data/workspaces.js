@@ -1,9 +1,9 @@
 export default [
     {
-        id: 'something1',
+        id: '0',
         name: 'React Lifecycle Methods',
-        created: '1139810426826',
-        lastModified: '1239810426826',
+        created: '1540588488460',
+        lastModified: '1540588488460',
         saved: true,
         sites: [{
             title: 'facebook',
@@ -37,7 +37,7 @@ export default [
         }]
     },
     {
-        id: 'something2',
+        id: '1',
         name: 'Test open withthis',
         created: '1239810426826',
         lastModified: '1039810426826',
@@ -59,7 +59,7 @@ export default [
         }],
     },
     {
-        id: 'something2',
+        id: '2',
         name: 'hello2',
         created: '1239810426826',
         lastModified: '1339810426826',
