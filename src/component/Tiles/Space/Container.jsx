@@ -46,21 +46,20 @@ class SpaceContainer extends Component {
 
     removeWorkspace(e) {
         e.stopPropagation()
-        console.log('removeing workspace')
         this.props.workspaceHandler('REMOVE_WORKSPACE', {workspace: this.props.workspace})
     }
 
     favoriteWorkspace(e) {
         e.stopPropagation()
+        const saved = this.props.workspace.saved? null : Date.now()
         const updatedWorkspace = { 
             ...this.props.workspace,
-            saved: !this.props.workspace.saved
+            saved,
         };
         this.props.workspaceHandler('REPLACE_WORKSPACE', {workspace: this.props.workspace, updatedWorkspace})
     }
 
     render() {
-        console.log('workspace container props', this.props)
         return (
             <Space 
                 {...this.props}

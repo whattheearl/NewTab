@@ -6,44 +6,14 @@ import CloseButton from '../../component/Buttons/Close'
 
 // colors
 import colors from '../../styles/colors'
-import autobind from 'autobind-decorator';
 
 class Detail extends Component {
-
-    sitesHandler(action, payload) {
-        switch(action.type) {
-            case 'REMOVE_SITE':
-                const { site } = payload
-                const { sites } = this.props.selectedWorkspace
-                const index = sites.indexOf(site)
-                let updatedWorkspace = {
-                    ...this.props.selectedWorkspace,
-                    sites:[
-                        ...sites.slice(0, index),
-                        ...sites.slice(index+1)
-                    ]
-                }
-                this.props.workspaceHandler('REPLACE_WORKSPACE', { 
-                    workspace: this.props.selectedWorkspace, 
-                    updatedWorkspace}
-                )
-                this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: updatedWorkspace })
-                return;
-            case 'ADD_SITE':
-                return;
-            case 'REPLACE_SITE':
-                return;
-            default:
-                return;
-        }
-    }
-
     renderSiteList() {
         const workspace = this.props.selectedWorkspace
         return workspace.sites.map((site, index) => {
             return (
                 <SiteContainer key={index}>
-                    <Row>
+                    <Row href={site.url} target={'_blank'}>
                         <img src={site.favIconUrl} alt={'site.title'} style={{height: '25px', width: '25px'}}/>
                         <Title>{site.title}</Title>
                         {site.content}
@@ -53,7 +23,7 @@ class Detail extends Component {
                                 onClick={(e)=> {
                                     e.preventDefault();
                                     e.stopPropagation();
-                                    this.sitesHandler({type: 'REMOVE_SITE'}, {site});
+                                    this.props.sitesHandler({type: 'REMOVE_SITE_FROM_SELECTED_WORKSPACE'}, {site});
                                 }
                             }/>
                         </div>
@@ -80,7 +50,8 @@ export default Detail
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 363.344px - 64px);
+    max-height: calc(100vh - 64px);
+    flex: 1;
     width: 100%;
     box-sizing: border-box;
 `
@@ -92,6 +63,7 @@ const SpaceContainer = styled.div`
     width: 100%;
     overflow-y: auto;
     border-top: 1px solid ${colors.darkWhite};
+    border-bottom: 1px solid ${colors.darkWhite};
     padding-bottom: .5rem;
     box-sizing: border-box;
     flex: 1;
@@ -104,7 +76,6 @@ const SiteContainer = styled.div`
     background-color: white;
     padding: 0 3px 0 1px;
     :hover {
-
         z-index: 10;
         padding-left: 0px;
         border-left: 3px solid ${colors.babyBlue};
@@ -112,14 +83,14 @@ const SiteContainer = styled.div`
     }
 `
 
-
-const Row = styled.div`
+const Row = styled.a`
     padding: .25rem 1rem;
     display: flex;
     align-items: center;
+    text-decoration: none;
 `
 
 const Title = styled.div`
     margin-left: .66rem;
-    color: #202124;
+color: #202124;
 `

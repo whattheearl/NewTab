@@ -14,12 +14,12 @@ chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf";
 
 const AppContainer = styled.div `
   background-color: white;
-`
+`;
 
 const Row = styled.div `
   display: flex;
-`
-
+`;
+ 
 class App extends Component {
     constructor(props) {
         super(props);
@@ -28,9 +28,11 @@ class App extends Component {
         this.state = {
             workspaces,
             selectedWorkspace: null,
-        }
+        };
+        this.workspaceHandler = this.workspaceHandler.bind(this);
     }
 
+    // Store changes to local storage
     exportWorkspace() {
         window.localStorage.setItem('workspace', JSON.stringify(this.state.workspaces));
     }
@@ -54,8 +56,6 @@ class App extends Component {
                         ...state.workspaces,
                     ]
                 }), this.exportWorkspace);
-                // Close all tabs
-                chrome.runtime.sendMessage(chrome.extensionId, {type: "CLOSE_ALL_TABS"});
                 return;
             case 'SELECT_WORKSPACE':
                 const { workspace: selectedWorkspace } = payload;
@@ -63,11 +63,9 @@ class App extends Component {
                 return;
             // probably dont want workspace logic and workspaces logic in the same handler
             case 'REMOVE_WORKSPACE':
-                console.log('removing workspace in handler', action, payload)
                 // remove target workspace
                 const { workspace } = payload;
                 const index = this.state.workspaces.indexOf(workspace);
-                console.log(index)
                 this.setState(state => ({
                     workspaces: [
                         ...state.workspaces.slice(0, index),
@@ -93,7 +91,23 @@ class App extends Component {
                 return;
         }
     }
-
+    
+    // Auto save current state on open (could check previously saved state and not save if it is the same)
+    componentDidMount() {
+        // get curren open sites from backgroun script
+        chrome.runtime.sendMessage(
+            chrome.extensionId, 
+            {type: 'GET_TABS'}, 
+            (res) => {
+                const {filtered: sites} = res;
+                // Don't save if no sites open
+                if(sites.length === 0) return;
+                // save them as "Autosave localeStringDateTime"
+                const date = new Date()
+                this.workspaceHandler('ADD_WORKSPACE',{name: `AutoSave ${date.toLocaleString()}`, sites})
+            }
+        );
+    }
 
     render() {
         return (
@@ -104,12 +118,12 @@ class App extends Component {
                             display={ true } 
                             workspaces={ this.state.workspaces.filter(space => !!space.saved) } 
                             selectedWorkspace={ this.state.selectedWorkspace }
-                            workspaceHandler={ this.workspaceHandler.bind(this) }
+                            workspaceHandler={ this.workspaceHandler }
                         /> 
                         <NewPage 
                             workspaces={this.state.workspaces}
                             selectedWorkspace={ this.state.selectedWorkspace }
-                            workspaceHandler={ this.workspaceHandler.bind(this) } 
+                            workspaceHandler={ this.workspaceHandler } 
                         />
                     </Row> 
                 </AppContainer> 

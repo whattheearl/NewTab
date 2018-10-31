@@ -109,7 +109,7 @@ class NewSiteModal extends Component {
                 chrome.extensionId,
                 {
                     type: "GET_SITE",
-                    to: tab.id,
+                    tab,
                 },
                 response => {
                     site.icons = response && response.icons ? response.icons : []

@@ -64,6 +64,7 @@ class SpeedDialContainer extends Component {
     }
 
     render() {
+        if(!this.props.display) return null
         return (
             <div>
                 <SpeedDial 

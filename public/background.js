@@ -1,8 +1,19 @@
 const filterTabs = (tabs) => {
-    return tabs.filter(tab => 
+    // filter out extension and test url
+    // then remove unused properties (save space)
+    let filtered =  tabs.filter(tab => 
         !tab.url.startsWith('chrome') && 
         !tab.url.startsWith('http://localhost:3000') 
-    )
+    );
+    let removedExtraProps = filtered.map(tab => {
+        return {
+            url: tab.url,
+            title: tab.title,
+            favIconUrl: tab.favIconUrl,
+        }
+    });
+    console.log(removedExtraProps);
+    return removedExtraProps;
 }
 
 const messageHandler = (request, sender, sendResponse) => {
