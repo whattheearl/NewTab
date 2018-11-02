@@ -73,7 +73,6 @@ class NameInput extends Component {
                         required={true} 
                     />
                 </NameInputBorder>
-                {/* <SaveWorkspaceButton onClick={this.onSaveButtonClick.bind(this)}>Save</SaveWorkspaceButton> */}
             </Row>
         )
     }
@@ -117,16 +116,5 @@ const Input = styled.input`
     }
     &::placeholder{
         color: ${colors.lightGray};
-    }
-`
-
-const SaveWorkspaceButton = styled.button`
-    border-radius:  0  3px 3px 0;
-    height: 2rem;
-    background-color: ${colors.darkWhite};
-    border: 1px solid ${colors.darkWhite};
-    :hover{
-        border: 1px solid ${colors.gray};
-        box-sizing: border-box;
     }
 `

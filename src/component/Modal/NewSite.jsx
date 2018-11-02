@@ -112,9 +112,10 @@ class NewSiteModal extends Component {
                     to: tab.id,
                 },
                 response => {
-                    site.icons = response && response.icons ? response.icons : []
-                    site.content = response && response.content ? response.content : ""
-                    if (site.icons && site.icons.length > 0) site.image = site.icons[0]
+                    // site.icons = response && response.icons ? response.icons : []
+                    // site.content = response && response.content ? response.content : ""
+                    if(response.icons.length > 0) site.image = response.icons[0]
+                    // if (site.icons && site.icons.length > 0) site.favIconUrl = site.icons[0]
                     if (response) {
                         resolve(site);
                     } else {

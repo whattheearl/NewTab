@@ -5,7 +5,7 @@ import SpeedDial from '../../component/SpeedDial'
 
 // temp data
 //TODO: remove
-import defaultSpeedDial from '../../data/samplePage'
+import defaultSpeedDial from '../../data/speeddial'
 
 class SpeedDialContainer extends Component {
     constructor(props) {
@@ -64,6 +64,7 @@ class SpeedDialContainer extends Component {
     }
 
     render() {
+        if(!this.props.display) return null
         return (
             <div>
                 <SpeedDial 

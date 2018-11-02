@@ -4,12 +4,10 @@ import styled from 'styled-components'
 
 // Components
 import TiledTab from './TabTile'
-// import NewSiteModal from './NewSiteModal'
+import VerticalScrollArea from '../ContentContainers/VerticalScroll'
 
 // Styled
 import colors from '../../styles/colors'
-
-
 
 class ChromeTabArea extends Component {
     constructor() {
@@ -81,7 +79,8 @@ class ChromeTabArea extends Component {
                 image={tab.favIconUrl}
                 openNewSiteModal={this.openNewSiteModal.bind(this)}
                 select={this.selectTab.bind(this)}
-                saveSite={this.props.saveSite}
+                sitesHandler={this.props.sitesHandler}
+                selectedWorkspace={this.props.selectedWorkspace}
             />
         })
     }
@@ -109,13 +108,15 @@ class ChromeTabArea extends Component {
                     saveSite={this.props.saveSite}
                 /> */}
                 <AreaTitle>Tabs</AreaTitle>
-                {this.renderTiles()}
-                <LastActivity>
-                    <Row>
-                        <div>{`${this.state.chromeTabs.length} Tabs`}</div>
-                        {this.renderLastActivity()}
-                    </Row>
-                </LastActivity>
+                <VerticalScrollArea>
+                    {this.renderTiles()}
+                    <LastActivity>
+                        <Row>
+                            <div>{`${this.state.chromeTabs.length} Tabs`}</div>
+                            {this.renderLastActivity()}
+                        </Row>
+                    </LastActivity>
+                </VerticalScrollArea>
             </Container>
             
         )
@@ -126,18 +127,17 @@ export default ChromeTabArea
 const Container = styled.div`
     box-sizing: border-box;
     width: 300px;
-    overflow-y: auto;
     padding: 2rem 1rem;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    flex: 1;
 `
 
 const AreaTitle = styled.h1`
     font-size: 1.25rem;
     color: ${colors.black};
     margin-bottom: .25rem;
+    box-sizing: border-box;
 `
 
 const Row = styled.div`
@@ -146,6 +146,7 @@ const Row = styled.div`
 `
 
 const LastActivity = styled.div`
-    margin-top: auto;
+
     color: ${colors.gray};
+    box-sizing: border-box;
 `

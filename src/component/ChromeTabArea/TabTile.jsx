@@ -12,19 +12,17 @@ class TabTile extends Component {
         this.state = {
             overlayVisibility: 'hidden',
         }
+        this.save = this.save.bind(this);
+        this.close = this.close.bind(this)
     }
 
     async save(e) {
         e.stopPropagation()
         try {
-            let site = await this.getSite(this.props.tab)
-            this.props.saveSite(site)
-            chrome.runtime.sendMessage(
-                chrome.extensionId, 
-                {type: "CLOSE_TAB", tab: this.props.tab.id}
-            )
+            this.props.sitesHandler({type: 'ADD_SITE_TO_SELECTED_WORKSPACE'}, {site: this.props.tab});
+
         } catch(error) {
-            console.log(error)
+            console.log(error);
         }
     }
 
@@ -46,9 +44,9 @@ class TabTile extends Component {
         let {tab} = this.props
         if(!tab) return
         let site = {
-            name: this.props.name,
+            title: this.props.name,
             url: this.props.tab.url,
-            image: this.props.image,
+            favIconUrl: this.props.image,
         }
         return new Promise((resolve, reject) => {
             chrome.runtime.sendMessage(
@@ -60,7 +58,7 @@ class TabTile extends Component {
                 response => {
                     site.icons = response && response.icons? response.icons : []
                     site.content = response && response.content? response.content : ""
-                    if(site.icons && site.icons.length > 0) site.image = site.icons[0]
+                    if(site.icons && site.icons.length > 0) site.favIconUrl = site.icons[0]
                     if(response) {
                         resolve(site);
                     } else {
@@ -90,9 +88,13 @@ class TabTile extends Component {
         if(!shouldRender) return null
         return (
             <Overlay style={{visibility: this.state.overlayVisibility}}>
-                {/* <SaveButton onClick={this.save.bind(this)}>Save</SaveButton> */}
+                <SaveButton 
+                    style={{visibility: !!this.props.selectedWorkspace && this.state.overlayVisibility === 'visible'? 'visible' : 'hidden'}}
+                    onClick={this.save}>
+                    Save
+                </SaveButton>
                 {/* <SaveAsButton onClick={this.saveAs.bind(this)}>As</SaveAsButton> */}
-                <CloseButton onClick={this.close.bind(this)}>X</CloseButton>
+                <CloseButton onClick={this.close}>X</CloseButton>
             </Overlay> 
         )
     }
@@ -151,21 +153,19 @@ const Overlay = styled.div`
     z-index: 1;
     box-sizing: border-box;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     display: flex;
     visibility: hidden;
 `
 
-// Reworking this feature
-// const SaveButton = styled.button`
-//     padding: .5rem;
-//     width: 35%;
-//     border-radius: 4px;
-//     background-color: #000000AA;
-//     color: ${colors.white};
-//     cursor: pointer;
-//     margin-left: auto;
-// `
+const SaveButton = styled.button`
+    padding: .5rem;
+    width: 35%;
+    border-radius: 4px;
+    background-color: #000000AA;
+    color: ${colors.white};
+    cursor: pointer;
+`
 
 // const SaveAsButton = styled.button`
 //     padding: .5rem;

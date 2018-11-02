@@ -14,7 +14,6 @@ import EditSiteModal from '../Modal/EditSite'
 // Colors
 import colors from '../../styles/colors'
 
-
 class SpeedDial extends Component {
     constructor(props) {
         super(props)
@@ -92,22 +91,24 @@ class SpeedDial extends Component {
 
     render() {
         return (
-            <Area>
-                <NewSiteModal 
-                    displaySelf={this.state.displayNewSiteModal}
-                    closeModal={this.closeModals.bind(this)}
-                    handler={this.props.handler}
-                />
-                <EditSiteModal 
-                    displaySelf={this.state.displayEditSiteModal}
-                    closeModal={this.closeModals.bind(this)}
-                    site={this.state.selectedSite}
-                    handler={this.props.handler}
-                />
-                <Grid>
-                    {this.renderLinkTiles()}
-                </Grid>
-            </Area>
+            <Container>
+                <Area>
+                    <NewSiteModal 
+                        displaySelf={this.state.displayNewSiteModal}
+                        closeModal={this.closeModals.bind(this)}
+                        handler={this.props.handler}
+                    />
+                    <EditSiteModal 
+                        displaySelf={this.state.displayEditSiteModal}
+                        closeModal={this.closeModals.bind(this)}
+                        site={this.state.selectedSite}
+                        handler={this.props.handler}
+                    />
+                    <Grid>
+                        {this.renderLinkTiles()}
+                    </Grid>
+                </Area>
+            </Container>
         )
     }
 }
@@ -127,4 +128,9 @@ const Grid = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 2px;
     grid-row-gap: 2px;
+`
+
+const Container = styled.div`
+    max-width: 700px;
+    width: calc(100vw - 500px);
 `

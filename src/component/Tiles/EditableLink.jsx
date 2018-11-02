@@ -94,12 +94,13 @@ class EditableLink extends Component {
     render() {
         const { image, url, name, connectDragSource } = this.props
         return connectDragSource(
-            <div>
+            <div >
                 <LinkContainer 
                     href={url}
                     style={{cursor: 'pointer'}}
                     onMouseEnter={this.fadeInEllipsis.bind(this)} 
                     onMouseLeave={this.hideEllipsis.bind(this)}
+                    target={'_blank'}
                 >
                     <BorderColumn>
                         {this.renderEllipsis()}

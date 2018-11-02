@@ -6,25 +6,27 @@ import colors from '../../styles/colors'
 
 // Components
 import Space from '../Tiles/Space/Container'
+import VerticalScrollArea from '../ContentContainers/VerticalScroll'
 
 class SpaceList extends Component {
     render() {
-        const { workspaces, display } = this.props
-        if(!workspaces || !display) return null
+        const { workspaces, display } = this.props;
+        if(!workspaces || !display) return null;
         return (
             <Container>
-                <SpaceContainer>
+                <VerticalScrollArea>
                     {workspaces.slice()
                         .sort((a, b) => { return b.lastModified - a.lastModified })
-                        .map((space, index) => {
-                            return <Space 
-                                key={index} 
+                        .map((space, index) =>
+                            (<Space
+                                key={index}
                                 workspace={space} 
                                 workspaceHandler={this.props.workspaceHandler} 
                                 {...space} 
-                            />
-                    })}
-                </SpaceContainer>
+                            />)
+                        )
+                    }
+                </VerticalScrollArea>
             </Container>
         )
     }
@@ -33,20 +35,11 @@ export default SpaceList
 
 const Container = styled.div`
     display: flex;
-    flex-direction: column;
     height: calc(100vh - 363.344px - 64px);
     width: 100%;
-    box-sizing: border-box;
-`
-
-const SpaceContainer = styled.div`
     background-color: white;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow-y: auto;
     border-top: 1px solid ${colors.darkWhite};
-    padding-bottom: .5rem;
+    border-bottom: 1px solid ${colors.darkWhite};
     box-sizing: border-box;
-    flex: 1;
+    /* end */
 `

@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
-import LocalDate from './LocalDate'
-import Grid from '../../Grid'
-import CloseButton from '../../Buttons/Close'
-import Favorite from '../../Buttons/Favorite'
-import color from '../../../styles/colors'
+import LocalDate from './LocalDate';
+import Grid from '../../Grid';
+import CloseButton from '../../Buttons/Close';
+import Favorite from '../../Buttons/Favorite';
+import color from '../../../styles/colors';
+import Text from '../../Text';
 
 class Space extends Component {
     render() {
@@ -14,7 +15,9 @@ class Space extends Component {
             <Container onClick={this.props.select} >
                 <Row>
                     <Favorite display={true} isFull={this.props.workspace.saved} onClick={this.props.favorite}/>
-                    <Name onClick={this.props.openAllLinks}>{name}</Name>
+                    <Name onClick={this.props.openAllLinks}>
+                        <Text text={name} maxLength={33}/>
+                    </Name>
                     <RightCol>
                         <Grid numColumns={10}>
                             {sites}
@@ -65,6 +68,8 @@ const RightCol = styled.div`
 
 const Name = styled.div`
     color: #000;
+    max-width: 22rem;
+    overflow: hidden;
     cursor: pointer;
     :hover {
         text-decoration: underline;

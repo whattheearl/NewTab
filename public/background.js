@@ -1,4 +1,6 @@
 const filterTabs = (tabs) => {
+    // filter out extension and test url
+    // then remove unused properties (save space)
     return tabs.filter(tab => 
         !tab.url.startsWith('chrome') && 
         !tab.url.startsWith('http://localhost:3000') 
@@ -6,7 +8,6 @@ const filterTabs = (tabs) => {
 }
 
 const messageHandler = (request, sender, sendResponse) => {
-    console.log(filterTabs)
     switch(request.type) {
     case "GET_TABS":
         // checker( )
