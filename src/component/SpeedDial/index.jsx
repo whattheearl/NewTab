@@ -14,7 +14,6 @@ import EditSiteModal from '../Modal/EditSite'
 // Colors
 import colors from '../../styles/colors'
 
-
 class SpeedDial extends Component {
     constructor(props) {
         super(props)

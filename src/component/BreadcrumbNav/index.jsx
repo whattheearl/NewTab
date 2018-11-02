@@ -1,18 +1,24 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
-import colors from '../../styles/colors'
+// Components
+import Text from '../Text';
 
+// Colors
+import colors from '../../styles/colors';
+
+
+// Styled
 const Row = styled.div`
     display: flex;
-`
+`;
 
 const Name = styled.div`
     text-decoration: none;
     color: ${colors.babyBlue};
     font-size: 2rem;
     white-space: pre; 
-`
+`;
 
 const Bkmrkr = styled.div`
     text-transform: lowercase;
@@ -20,7 +26,7 @@ const Bkmrkr = styled.div`
     font-size: 2rem;
     color: ${colors.babyBlue};
     cursor: default;
-`
+`;
 
 class BreadCrumbNav extends Component {
     back() {
@@ -37,7 +43,7 @@ class BreadCrumbNav extends Component {
         return (
             <Row>
                 <Bkmrkr style={style} onClick={this.back.bind(this)}>bkmrkr</Bkmrkr>
-                {isWorkspaceSelected? (<Name>{` / ${this.props.workspace.name}`}</Name>) : null}
+                {isWorkspaceSelected? (<Name><Text text={` / ${this.props.workspace.name}`} maxLength={33}/></Name>) : null}
             </Row>
         )
     }

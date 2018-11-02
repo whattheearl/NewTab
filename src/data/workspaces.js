@@ -9,32 +9,7 @@ export default [
             title: 'facebook',
             url: 'https://facebook.com',
             favIconUrl: 'http://www.valuewalk.com/wp-content/uploads/2017/11/facebook_1509720559.png',
-        },
-        {
-            title: 'Gmail',
-            url: 'https://gmail.com',
-            favIconUrl: 'https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png',
-        },
-        {
-            title: 'Asana',
-            url: 'https://asana.com',
-            favIconUrl: 'https://static1.squarespace.com/static/56b52779b6aa604bd212b0f1/t/5887a44f197aea6e03fd93c2/1485284435763/?format=300w',
-        },
-        {
-            title: 'facebook',
-            url: 'https://facebook.com',
-            favIconUrl: 'http://www.valuewalk.com/wp-content/uploads/2017/11/facebook_1509720559.png',
-        },
-        {
-            title: 'Gmail',
-            url: 'https://gmail.com',
-            favIconUrl: 'https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png',
-        },
-        {
-            title: 'Asana',
-            url: 'https://asana.com',
-            favIconUrl: 'https://static1.squarespace.com/static/56b52779b6aa604bd212b0f1/t/5887a44f197aea6e03fd93c2/1485284435763/?format=300w',
-        }]
+        },]
     },
     {
         id: '1',

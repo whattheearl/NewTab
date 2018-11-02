@@ -89,7 +89,7 @@ class TabTile extends Component {
         return (
             <Overlay style={{visibility: this.state.overlayVisibility}}>
                 <SaveButton 
-                    style={{visibility: !!this.props.selectedWorkspace && this.state.overlayVisibility == 'visible'? 'visible' : 'hidden'}}
+                    style={{visibility: !!this.props.selectedWorkspace && this.state.overlayVisibility === 'visible'? 'visible' : 'hidden'}}
                     onClick={this.save}>
                     Save
                 </SaveButton>

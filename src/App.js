@@ -92,22 +92,24 @@ class App extends Component {
         }
     }
     
-    // Auto save current state on open (could check previously saved state and not save if it is the same)
-    componentDidMount() {
-        // get curren open sites from backgroun script
-        chrome.runtime.sendMessage(
-            chrome.extensionId, 
-            {type: 'GET_TABS'}, 
-            (res) => {
-                const {filtered: sites} = res;
-                // Don't save if no sites open
-                if(sites.length === 0) return;
-                // save them as "Autosave localeStringDateTime"
-                const date = new Date()
-                this.workspaceHandler('ADD_WORKSPACE',{name: `AutoSave ${date.toLocaleString()}`, sites})
-            }
-        );
-    }
+
+    //******** removed auto save, it is extremely excessive for users who make new tabs often ********/
+    // // Auto save current state on open (could check previously saved state and not save if it is the same)
+    // componentDidMount() {
+    //     // get curren open sites from backgroun script
+    //     chrome.runtime.sendMessage(
+    //         chrome.extensionId, 
+    //         {type: 'GET_TABS'}, 
+    //         (res) => {
+    //             const {filtered: sites} = res;
+    //             // Don't save if no sites open
+    //             if(sites.length === 0) return;
+    //             // save them as "Autosave localeStringDateTime"
+    //             const date = new Date()
+    //             this.workspaceHandler('ADD_WORKSPACE',{name: `AutoSave ${date.toLocaleString()}`, sites})
+    //         }
+    //     );
+    // }
 
     render() {
         return (

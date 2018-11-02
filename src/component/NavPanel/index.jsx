@@ -4,15 +4,17 @@ import styled from 'styled-components';
 // Components
 import Logo from './Logo';
 import VerticalScrollArea from '../ContentContainers/VerticalScroll';
+import Text from '../Text'
 
 // Temp Data
-import defaultPage from '../../data/samplePage';
+import defaultPage from '../../data/speeddial';
 
 // Styles
 import colors from '../../styles/colors';
 
 class NavPanel extends Component {
     clearCache() {
+        console.log('clearing cache')
         window.localStorage.clear()
         window.location.reload()
     }
@@ -32,7 +34,7 @@ class NavPanel extends Component {
                 return <WorkspaceTile 
                     key={index} 
                     onClick={()=>{this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: space})}}>
-                    {space.name}
+                    <Text text={space.name} maxLength={20} />
                 </WorkspaceTile>});
         return (
             <Container>
