@@ -21,6 +21,7 @@ export const ModalDisplay = styled.div`
     background-color: #fff;
     border-radius: 7px;
     cursor: auto;
+    max-height: 100vh;
 `
 
 export const ModalContainer = styled.div`
