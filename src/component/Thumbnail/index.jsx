@@ -4,7 +4,7 @@ class Thumbnail extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            image: props.image
+            image: props.image? props.image : props.backupImage
         }
     }
 
