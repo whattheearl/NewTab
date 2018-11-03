@@ -5,6 +5,12 @@ import styled from 'styled-components'
 // Styled
 import colors from '../../styles/colors'
 
+// Component
+import Thumbnail from '../Thumbnail'
+
+// Image
+import bookmarkIcon from '../../image/bookmark.png'
+
 
 class TabTile extends Component {
     constructor(props) {
@@ -110,12 +116,11 @@ class TabTile extends Component {
                 >
                     <ThumbnailContainer>
                         <Thumbnail 
-                            src={image} 
-                            alt={name} 
-                            onError={(e) => {
-                                e.target.onError = null
-                                e.target.src=''
-                            }}
+                            image={image} 
+                            alt={name}
+                            width={'25px'}
+                            height={'25px'}
+                            backupImage={bookmarkIcon}
                         />
                     </ThumbnailContainer>
                     <Title>{name}</Title>
@@ -187,11 +192,6 @@ const CloseButton = styled.button`
 const ThumbnailContainer = styled.div`
     height: 25px;
     width: 25px;
-`
-
-const Thumbnail = styled.img`
-    width: 25px;
-    height: 25px;
 `
 
 const Title = styled.h1`

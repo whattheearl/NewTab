@@ -1,6 +1,5 @@
 /* global chrome */
 import React, { Component } from 'react';
-import styled from 'styled-components';
 
 // Component
 import TiledTab from '../ChromeTabArea/TabTile';

@@ -13,11 +13,11 @@ import defaultWorkspaces from './data/workspaces';
 chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf";
 
 const AppContainer = styled.div `
-  background-color: white;
+    background-color: white;
 `;
 
 const Row = styled.div `
-  display: flex;
+    display: flex;
 `;
  
 class App extends Component {
