@@ -1,8 +1,10 @@
 /* global chrome */
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // Component
-import TiledTab from '../ChromeTabArea/TabTile'
+import TiledTab from '../ChromeTabArea/TabTile';
+import VerticalScroll from '../ContentContainers/VerticalScroll';
 
 // styled
 import {
@@ -112,10 +114,7 @@ class NewSiteModal extends Component {
                     to: tab.id,
                 },
                 response => {
-                    // site.icons = response && response.icons ? response.icons : []
-                    // site.content = response && response.content ? response.content : ""
                     if(response.icons.length > 0) site.image = response.icons[0]
-                    // if (site.icons && site.icons.length > 0) site.favIconUrl = site.icons[0]
                     if (response) {
                         resolve(site);
                     } else {
@@ -160,7 +159,9 @@ class NewSiteModal extends Component {
                         <h1>Add Shortcut</h1>
                     </TitleContainer>
                     <ModalContainer>
-                        {this.renderTiles()}
+                        <VerticalScroll style={{maxHeight: '300px'}}>
+                            {this.renderTiles()}
+                        </VerticalScroll>
                         <InputContainer>
                             <SiteLabel htmlFor="SiteName">Name</SiteLabel>
                             <SiteInputBorder>
