@@ -8,6 +8,7 @@
 
 # production
 /build
+bkmrkr.zip
 
 # misc
 .DS_Store

@@ -3,15 +3,12 @@
     "name": "bkmrkr",
     "description": "Easily save and handle new book marks",
     "version": "1.0.0",
-    "browser_action": {
-        "default_popup": "popup.html"
-    },
     "background": {
         "scripts": ["background.js"],
         "persistent": false
     },
     "content_scripts": [{
-        "matches": ["http://*/*", "https://*/*"],
+        "matches": ["http://localhost:3000/*"],
         "js": ["content.js"],
         "run_at": "document_start"
     }],
@@ -22,10 +19,6 @@
         "matches": ["http://localhost:3000/*"]
     },
     "permissions": [
-        "tabs",
-        "activeTab",
-        "http://*/*",
-        "https://*/*",
-        "history"
+        "tabs"
     ]
 }

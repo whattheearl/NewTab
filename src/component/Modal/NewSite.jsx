@@ -126,12 +126,14 @@ class NewSiteModal extends Component {
     }
 
     async selectTab(tab) {
-        let site = await this.getTab(tab)
+        // Quick fix, can't upload to store with broad permissions to all sites
+        // Will likely need to run a web service if i want to scrape icon data
+        // let site = await this.getTab(tab)
+
         this.setState({
-            image: site.image,
-            url: site.url,
-            name: site.name,
-            content: site.content
+            image: tab.favIconUrl,
+            url: tab.url,
+            name: tab.title,
         })
     }
 
