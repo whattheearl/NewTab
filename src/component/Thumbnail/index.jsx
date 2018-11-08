@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 class Thumbnail extends Component {
     constructor(props) {
         super(props)
+        let image = props.image;
+        if(!image) image = props.backupImage;
         this.state = {
             image: props.image? props.image : props.backupImage
         }
@@ -18,7 +20,7 @@ class Thumbnail extends Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.image !== this.state.image) {
-            this.setState({image: nextProps.image})
+            this.setState({image: nextProps.image? nextProps.image : nextProps.backupImage})
         }
     }
 

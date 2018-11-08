@@ -15,9 +15,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "deploy": "rm -rf ./build && aws s3 rm s3://newtab.jonathanearl.io/ --recursive && yarn build && aws s3 cp ./build s3://newtab.jonathanearl.io/ --recursive"
+    "build": "rm -rf bkmrkr.zip && react-scripts build && zip -r bkmrkr.zip build",
+    "eject": "react-scripts eject"
   }
 }
