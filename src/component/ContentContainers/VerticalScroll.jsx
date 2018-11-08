@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
+// creates a verticle scroll Area
 const VerticalScrollArea = styled.div`
     width: 100%;
+    height: 100%;
     background-color: inherit;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    flex: 1;
     overflow-y: scroll;
     /* Force display scrollbar for osx */
     ::-webkit-scrollbar {

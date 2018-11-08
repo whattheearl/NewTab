@@ -1,3 +1,4 @@
+// Star button with optional filled or outline
 import React  from 'react'
 import styled from 'styled-components'
 import { IoIosStar } from 'react-icons/io'
@@ -9,6 +10,7 @@ let style = {cursor: 'pointer', padding: '0 .5rem', height: '20px', width: '20px
 
 const Favorite = ({ onClick, display, isFull }) => {
     if(!display) return null
+    // display full star if isFull otherwise outline
     if(isFull) 
         return <Container onClick={onClick}><IoIosStar style={style}/></Container>;
     else {

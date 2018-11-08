@@ -1,4 +1,8 @@
 /* global chrome */
+// ChromeTabArea component displays currently opened tabs and allows you to:
+// - contextually save tabs to your workspace
+// - Focus tabs
+// - Close tabs
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
@@ -10,17 +14,18 @@ import VerticalScrollArea from '../ContentContainers/VerticalScroll'
 import colors from '../../styles/colors'
 
 class ChromeTabArea extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             chromeTabs: [],
             selectedTab: null,
             displayModal: true,
             lastActivity: Date.now()
         }
+        this.selectTab = this.selectTab.bind(this);
     }
 
-    // handle plugin messages
+    // Update Tabs in development environment
     // TODO rewrite this to recieve message direct from background script
     handleEvent(event) {
         if(process.env.NODE_ENV === 'production') return
@@ -32,6 +37,7 @@ class ChromeTabArea extends Component {
         }
     }
 
+    // Updates Tabs in production
     chromeTabHandler(request, sender, sendResponse) {
         switch(request.type) {
             case 'UPDATE_TABS': 
@@ -42,6 +48,7 @@ class ChromeTabArea extends Component {
         }
     }
 
+    // add event handler to listen for tab updates from background script
     componentDidMount() {
         if(process.env.NODE_ENV === 'development') {
             window.addEventListener('message', this.handleEvent.bind(this))
@@ -50,6 +57,7 @@ class ChromeTabArea extends Component {
         }
     }
 
+    // remove listener
     componentWillUnmount() {
         if(process.env.NODE_ENV === 'development') {
             window.removeEventListener('message', this.handleEvent.bind(this))
@@ -58,18 +66,12 @@ class ChromeTabArea extends Component {
         }
     }
 
+    // Tells chrome to focus tab in browser
     selectTab(tab) {
         chrome.runtime.sendMessage(chrome.extensionId, {type: 'FOCUS_TAB', tab})
     }
 
-    openNewSiteModal() {
-        this.setState({ displayModal: true })
-    }
-
-    closeNewSiteModal() {
-        this.setState({ displayModal: false })
-    }
-
+    // Create Tiles for tab display
     renderTiles() {
         return this.state.chromeTabs.map(tab => {
             return <TiledTab
@@ -77,14 +79,14 @@ class ChromeTabArea extends Component {
                 tab={tab}
                 name={tab.title}
                 image={tab.favIconUrl}
-                openNewSiteModal={this.openNewSiteModal.bind(this)}
-                select={this.selectTab.bind(this)}
+                select={this.selectTab}
                 sitesHandler={this.props.sitesHandler}
                 selectedWorkspace={this.props.selectedWorkspace}
             />
         })
     }
 
+    // format date
     renderLastActivity() {
         let d = new Date(this.state.lastActivity)
         let h = d.getHours()
@@ -101,12 +103,6 @@ class ChromeTabArea extends Component {
     render() {
         return (
             <Container>
-                {/* <NewSiteModal 
-                    selectedSite={this.state.selectedTab}
-                    displaySelf={this.state.displayModal}
-                    closeModal={this.closeNewSiteModal.bind(this)}
-                    saveSite={this.props.saveSite}
-                /> */}
                 <AreaTitle>Tabs</AreaTitle>
                 <VerticalScrollArea>
                     {this.renderTiles()}

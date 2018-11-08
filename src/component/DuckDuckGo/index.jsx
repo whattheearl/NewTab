@@ -1,3 +1,4 @@
+// Shows duckduckgo search bar, currently unused as url bar can be used for search
 import React from 'react'
 import styled from 'styled-components'
 

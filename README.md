@@ -48,3 +48,46 @@ Detailed Instructions [upload-your-app](https://developer.chrome.com/webstore/pu
 
 The bkmrkr.zip needs to be uploaded to chrome [Chrome Dashboard](https://chrome.google.com/webstore/developer/dashboard).
 
+
+## Chrome Extension
+### Background Script
+Chrome extension has 2 main parts. The background script which has access to Chrome api's and can be sent messages to control Chrome.
+
+I use the background script to listen for messages from the front-end in order to control opening closing and focusing tabs based on user actions on the newtab page.
+
+Located at: /public/background.js
+
+Config at: /public/manifest.json
+```javascript
+"background": {
+    "scripts": ["background.js"],
+    "persistent": false
+},
+    }],
+```
+
+### Content Script
+Content scripts run on webpages like an injected script allowing for communication between the page and the background script through message passing. These messages can be added as event handlers to certain events on the page allowing to react to both the page and the user
+
+I use the content script only to send updates of tab changes so that they may be render in ChromeTabArea tiles
+
+Located at: /public/content.js
+
+Config at: /public/manifest.json
+```javascript
+"content_scripts": [{
+    "matches": ["http://localhost:3000/*"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+}],
+```
+
+### Tab Permission
+Permissions are required to gain access to Chrome api controls. This gives the user the ability to reject strong permissions for the extension they are trying to install. The tab permission is required for control of opening and closing tabs as well as getting feedback on when tabs are opened as well as which tabs are opened.
+
+/public/manifest.json
+```javascript
+"permissions": [
+    "tabs"
+]
+```

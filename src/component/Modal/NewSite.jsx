@@ -1,3 +1,4 @@
+// Used to create new site for speed dial
 /* global chrome */
 import React, { Component } from 'react';
 
@@ -19,19 +20,19 @@ import {
     SubmitButton,
     CancelButton,
     Row
-} from './styled'
+} from './styled';
 
 class NewSiteModal extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             url: '',
             name: '',
             image: '',
             chromeTabs: null,
-        }
-        this.handleInputChange.bind(this)
-        this.close.bind(this)
+        };
+        this.handleInputChange.bind(this);
+        this.close.bind(this);
     }
 
     resetState() {
@@ -40,49 +41,49 @@ class NewSiteModal extends Component {
             name: '',
             image: '',
             chromeTabs: null,
-        })
+        });
     }
 
     handleInputChange(e) {
-        const name = e.target.name
+        const name = e.target.name;
 
         switch (name) {
             case "SiteUrl":
-                this.setState({ url: e.target.value })
-                break
+                this.setState({ url: e.target.value });
+                break;
             case "SiteName":
-                this.setState({ name: e.target.value })
-                break
+                this.setState({ name: e.target.value });
+                break;
             case "SiteImage":
-                const hasFile = e.target.files.length === 1
-                if (!hasFile) return
-                const fileReader = new FileReader()
+                const hasFile = e.target.files.length === 1;
+                if (!hasFile) return;
+                const fileReader = new FileReader();
 
                 fileReader.onload = (file) => {
-                    const image = file.target.result
-                    this.setState({ image })
+                    const image = file.target.result;
+                    this.setState({ image });
                 }
-                fileReader.readAsDataURL(e.target.files[0])
-                break
+                fileReader.readAsDataURL(e.target.files[0]);
+                break;
             default:
-                break
+                break;
         }
     }
 
     submit() {
-        const { url, name } = this.state
-        if (url === '' || name === '') return
-        let data = { site: Object.assign({}, this.state) }
-        let action = 'ADD_SITE'
-        this.props.handler(action, data)
-        this.resetState()
-        this.props.closeModal()
+        const { url, name } = this.state;
+        if (url === '' || name === '') return;
+        let data = { site: Object.assign({}, this.state) };
+        let action = 'ADD_SITE';
+        this.props.handler(action, data);
+        this.resetState();
+        this.props.closeModal();
     }
 
     close(e) {
-        e.stopPropagation()
-        this.resetState()
-        this.props.closeModal()
+        e.stopPropagation();
+        this.resetState();
+        this.props.closeModal();
     }
 
     onClick(e) {
@@ -93,18 +94,18 @@ class NewSiteModal extends Component {
         if (!this.state.chromeTabs) {
             chrome.runtime.sendMessage(chrome.extensionId, { type: 'GET_TABS' }, (res) => {
                 let { filtered: sites } = res;
-                this.setState({ chromeTabs: sites })
-            })
+                this.setState({ chromeTabs: sites });
+            });
         }
     }
 
     getTab(tab) {
-        if (!tab) return
+        if (!tab) return;
         let site = {
             name: tab.title,
             url: tab.url,
             image: tab.favIconUrl,
-        }
+        };
         return new Promise((resolve, reject) => {
             chrome.runtime.sendMessage(
                 chrome.extensionId,
@@ -120,7 +121,7 @@ class NewSiteModal extends Component {
                         reject('sendMessage Failure');
                     }
                 }
-            )
+            );
         })
 
     }
@@ -134,11 +135,11 @@ class NewSiteModal extends Component {
             image: tab.favIconUrl,
             url: tab.url,
             name: tab.title,
-        })
+        });
     }
 
     renderTiles() {
-        if (!this.state.chromeTabs) return null
+        if (!this.state.chromeTabs) return null;
         return this.state.chromeTabs.map(tab => {
             return <TiledTab
                 key={tab.id}
@@ -146,12 +147,12 @@ class NewSiteModal extends Component {
                 name={tab.title}
                 image={tab.favIconUrl}
                 select={this.selectTab.bind(this)}
-            />
-        })
+            />;
+        });
     }
 
     render() {
-        const { displaySelf } = this.props
+        const { displaySelf } = this.props;
         if (!displaySelf) return null;
         return (
             <ModalTint onClick={this.close.bind(this)}>
@@ -196,9 +197,8 @@ class NewSiteModal extends Component {
                     </ModalContainer>
                 </ModalDisplay>
             </ModalTint>
-        )
+        );
     }
 
 }
-
-export default NewSiteModal
+export default NewSiteModal;
