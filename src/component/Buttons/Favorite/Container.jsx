@@ -1,3 +1,4 @@
+// Star button used to favorite workspaces
 import React, { Component } from 'react'
 import Favorite from './index'
 

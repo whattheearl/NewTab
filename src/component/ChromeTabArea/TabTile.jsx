@@ -90,8 +90,8 @@ class TabTile extends Component {
     }
 
     renderOverlay () {
-        const shouldRender = !!this.props.openNewSiteModal
-        if(!shouldRender) return null
+        const shouldRender = !!this.props.selectedWorkspace
+        // if(!shouldRender) return null
         return (
             <Overlay style={{visibility: this.state.overlayVisibility}}>
                 <SaveButton 
@@ -106,7 +106,8 @@ class TabTile extends Component {
     }
 
     render() {
-        let {name, image} = this.props
+        console.log(this.props, this.state);
+        let {name, image} = this.props;
         return (
             <Row>
                 <Container 

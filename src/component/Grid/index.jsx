@@ -1,3 +1,6 @@
+// Creates a grid area for child items
+// - numColumns: how many items before a new row
+// - items will be spaced evenly
 import React from 'react'
 import styled from 'styled-components'
 

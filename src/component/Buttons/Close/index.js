@@ -1,3 +1,5 @@
+// Trashcan button used to remove elements
+
 import React  from 'react'
 import styled from 'styled-components'
 import { FaTrash } from 'react-icons/fa'

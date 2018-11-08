@@ -1,3 +1,4 @@
+// Gear button intended for use for opening options
 import React, { Component } from 'react'
 import Setting from './index'
 
