@@ -44,7 +44,7 @@ yarn build
 ```
 
 ### Deployment
-Detailed Instructions[upload-your-app](https://developer.chrome.com/webstore/publish#upload-your-app)
+Detailed Instructions [upload-your-app](https://developer.chrome.com/webstore/publish#upload-your-app)
 
 The bkmrkr.zip needs to be uploaded to chrome [Chrome Dashboard](https://chrome.google.com/webstore/developer/dashboard).
 
