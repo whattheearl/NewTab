@@ -21,11 +21,13 @@ const Name = styled.div`
 `;
 
 const Bkmrkr = styled.div`
-    text-transform: lowercase;
+    text-transform: uppercase;
+    font-weight: 300;
     text-decoration: none;
     font-size: 2rem;
-    color: ${colors.babyBlue};
-    cursor: default;
+    color: ${colors.black};
+    cursor: pointer;
+
 `;
 
 class BreadCrumbNav extends Component {

@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 // Components
-import Logo from './Logo';
 import VerticalScrollArea from '../ContentContainers/VerticalScroll';
-import Text from '../Text'
+import Text from '../Text';
+import HomeButton from '../Buttons/Home';
 
 // Temp Data
 import defaultPage from '../../data/speeddial';
@@ -13,15 +13,22 @@ import defaultPage from '../../data/speeddial';
 import colors from '../../styles/colors';
 
 class NavPanel extends Component {
+    clickHomeButton = this.clickHomeButton.bind(this);
+
     clearCache() {
-        console.log('clearing cache')
-        window.localStorage.clear()
-        window.location.reload()
+        console.log('clearing cache');
+        window.localStorage.clear();
+        window.location.reload();
     }
 
     loadTemplate() {
-        window.localStorage.setItem('pages', JSON.stringify(defaultPage))
-        window.location.reload()
+        window.localStorage.setItem('pages', JSON.stringify(defaultPage));
+        window.location.reload();
+    }
+
+    // unselects current workspace
+    clickHomeButton() {
+        this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: null});
     }
 
     // using workspaces as "pages" to sort work
@@ -34,46 +41,38 @@ class NavPanel extends Component {
                 return <WorkspaceTile 
                     key={index} 
                     onClick={()=>{this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: space})}}>
-                    <Text text={space.name} maxLength={20} />
+                    <Text text={space.name} maxLength={24} />
                 </WorkspaceTile>});
+
+        
         return (
             <Container>
-                    <NavLogo>
-                        <Logo/>
-                    </NavLogo>
-                    <VerticalScrollArea style={{height: '6.5rem'}}>
-                        {spaces}
-                        {displayTempArea? <div style={{marginTop: 'auto'}}>
-                            <h1 style={{color: 'white', marginTop: 'auto'}}>Temp Area</h1>
-                            <button onClick={this.clearCache} style={{padding: '.5rem'}}>Load Starter Data</button>
-                            <button onClick={this.loadTemplate} style={{padding: '.5rem'}}>Load Empty Data</button></div>
-                            : null }
-                    </VerticalScrollArea>
+                <HomeButton display={true} onClick={this.clickHomeButton}/>
+                <VerticalScrollArea>
+                    {spaces}
+                    {displayTempArea? <div style={{marginTop: 'auto'}}>
+                        <h1 style={{color: 'white', marginTop: 'auto'}}>Temp Area</h1>
+                        <button onClick={this.clearCache} style={{padding: '.5rem'}}>Load Starter Data</button>
+                        <button onClick={this.loadTemplate} style={{padding: '.5rem'}}>Load Empty Data</button></div>
+                        : null }
+                </VerticalScrollArea>
             </Container>
         );
     }
 }
 export default NavPanel
 
-const NavLogo = styled.div`
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: ${colors.white};
-`;
-
 const Container = styled.div`
-    padding: 2rem 1rem;
-    min-height: 100vh;
+    height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    width: 256px;
-    background-color: ${colors.darkBlue};
+    width: 100%;
+    color: ${colors.black};
 `;
 
 const WorkspaceTile = styled.div`
-    color: white;
+    padding: 5px 2rem;
+    font-size: .9rem;
     cursor: pointer;
-    padding: 3px 0;
 `;

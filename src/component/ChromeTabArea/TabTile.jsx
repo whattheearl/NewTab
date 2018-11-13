@@ -2,14 +2,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-// Styled
+// Assets
 import colors from '../../styles/colors'
+import bookmarkIcon from '../../image/bookmark.png'
 
 // Component
 import Thumbnail from '../Thumbnail'
-
-// Image
-import bookmarkIcon from '../../image/bookmark.png'
 
 
 class TabTile extends Component {
@@ -90,8 +88,6 @@ class TabTile extends Component {
     }
 
     renderOverlay () {
-        const shouldRender = !!this.props.selectedWorkspace
-        // if(!shouldRender) return null
         return (
             <Overlay style={{visibility: this.state.overlayVisibility}}>
                 <SaveButton 
@@ -106,7 +102,6 @@ class TabTile extends Component {
     }
 
     render() {
-        console.log(this.props, this.state);
         let {name, image} = this.props;
         return (
             <Row>

@@ -17,7 +17,6 @@ const VerticalScrollArea = styled.div`
     ::-webkit-scrollbar-thumb {
         border-radius: 4px;
         background-color: rgba(0, 0, 0, .5);
-        -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
     }
     /* end */
 `;

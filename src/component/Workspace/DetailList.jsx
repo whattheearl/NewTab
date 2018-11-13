@@ -62,7 +62,6 @@ const SpaceContainer = styled.div`
     flex-direction: column;
     width: 100%;
     overflow-y: auto;
-    border-top: 1px solid ${colors.darkWhite};
     border-bottom: 1px solid ${colors.darkWhite};
     padding-bottom: .5rem;
     box-sizing: border-box;
@@ -73,7 +72,6 @@ const SiteContainer = styled.div`
     width: 100%;
     box-sizing: border-box;
     border-bottom: 1px solid ${colors.darkWhite};
-    background-color: white;
     padding: 0 3px 0 1px;
     :hover {
         z-index: 10;

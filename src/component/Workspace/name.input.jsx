@@ -1,7 +1,7 @@
 /* global chrome */
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import colors from '../../styles/colors'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import colors from '../../styles/colors';
 
 // Name input is used for naming workspace, may want to abstract this as a general text input
 class NameInput extends Component {
@@ -69,7 +69,7 @@ class NameInput extends Component {
                         value={this.props.name} 
                         onKeyDown={this.onKeyDown.bind(this)} 
                         type={'text'} 
-                        placeholder={'new workspace'}
+                        placeholder={'save workspace...'}
                         required={true} 
                     />
                 </NameInputBorder>
@@ -84,15 +84,16 @@ const Row = styled.div`
     display: flex;
     align-items: center;
     height: 2rem;
+    margin-bottom: 1rem;
 `
 
 const NameInputBorder = styled.div`
+    width: 95%;
     border: 1px solid ${colors.darkWhite};
     border-right: none;
     padding: 0 .5rem;
     border-radius: 3px;
     height: 2rem;
-    margin-left: auto;
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -100,6 +101,7 @@ const NameInputBorder = styled.div`
 
     :focus-within {
         border: 1px solid ${colors.babyBlue};
+        background-color: ${colors.white};
     }
 `
 
@@ -113,6 +115,7 @@ const Input = styled.input`
     color: ${colors.black};
     &:focus {
         outline: none;
+        background-color: inherit;
     }
     &::placeholder{
         color: ${colors.lightGray};

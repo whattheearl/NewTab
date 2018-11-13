@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+// Components
 import LocalDate from './LocalDate';
 import Grid from '../../Grid';
 import CloseButton from '../../Buttons/Close';
@@ -38,7 +39,6 @@ const Container = styled.div`
     width: 100%;
     box-sizing: border-box;
     border-bottom: 1px solid ${color.darkWhite};
-    background-color: white;
     padding: 0 3px 0 1px;
     cursor: pointer;
     :hover {

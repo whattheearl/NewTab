@@ -1,12 +1,13 @@
 /* global chrome */
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+
+// Assets
+import bookmark from '../../../image/bookmark.png';
 
 // components
-import Space from './index'
+import Space from './index';
+import Thumbnail from '../../Thumbnail';
 
-// styles
-import color from '../../../styles/colors'
 
 class SpaceContainer extends Component {
     openAllLinks = (e) => {
@@ -19,44 +20,51 @@ class SpaceContainer extends Component {
                     type: 'OPEN_TABS',
                     tabs: this.props.sites
                 }
-            )
+            );
         } else {
             chrome.runtime.sendMessage(
                 {
                     type: 'OPEN_TABS',
                     tabs: this.props.sites
                 }
-            )
+            );
         }
     }
 
     getSites() {
-        return this.props.sites.map((site, index) => {
-            let src = site.image || site.favIconUrl
-            return (<a key={index} href={site.url} target="_blank" style={{display: 'block'}}>
-                <Thumbnail src={src} />
-            </a>)
+        return this.props.sites.map((site) => {
+            let image = site.image || site.favIconUrl
+            return (<a key={site.url} href={site.url} target="_blank" style={{display: 'block'}}>
+                <Thumbnail
+                    image={image} 
+                    backupImage={bookmark}
+                    alt={image}
+                    width={'25px'}
+                    height={'25px'}
+                    padding={'0 4px'}
+                />
+            </a>);
         })
     }
 
     selectWorkspace(e) {
-        e.stopPropagation()
-        this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: this.props.workspace})
+        e.stopPropagation();
+        this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: this.props.workspace});
     }
 
     removeWorkspace(e) {
-        e.stopPropagation()
-        this.props.workspaceHandler('REMOVE_WORKSPACE', {workspace: this.props.workspace})
+        e.stopPropagation();
+        this.props.workspaceHandler('REMOVE_WORKSPACE', {workspace: this.props.workspace});
     }
 
     favoriteWorkspace(e) {
         e.stopPropagation()
-        const saved = this.props.workspace.saved? null : Date.now()
+        const saved = this.props.workspace.saved? null : Date.now();
         const updatedWorkspace = { 
             ...this.props.workspace,
             saved,
         };
-        this.props.workspaceHandler('REPLACE_WORKSPACE', {workspace: this.props.workspace, updatedWorkspace})
+        this.props.workspaceHandler('REPLACE_WORKSPACE', {workspace: this.props.workspace, updatedWorkspace});
     }
 
     render() {
@@ -69,16 +77,16 @@ class SpaceContainer extends Component {
                 remove={this.removeWorkspace.bind(this)}
                 favorite={this.favoriteWorkspace.bind(this)}
             />
-        )
+        );
     }
 }
 export default SpaceContainer
 
-const Thumbnail = styled.img`
-    width: 25px;
-    height: 25px;
-    padding: 4px;
-    :hover {
-        background-color: ${color.white};
-    }
-`
+// const Thumbnail = styled.img`
+//     width: 25px;
+//     height: 25px;
+//     padding: 4px;
+//     :hover {
+//         background-color: ${color.white};
+//     }
+// `
