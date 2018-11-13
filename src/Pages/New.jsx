@@ -135,6 +135,7 @@ const RightCol = styled.div`
 `;
 
 const LeftCol = styled.div`
+    padding: 2rem 0;
     display: flex;
     flex-direction: column;
     width: 220px;

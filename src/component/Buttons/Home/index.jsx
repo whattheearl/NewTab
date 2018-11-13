@@ -25,6 +25,7 @@ const HomeButton = ({ onClick, display }) => {
 export default HomeButton
 
 const Container = styled.div `
+    padding: 0 2rem;
     display: flex;
     align-items: center;
     text-transform: uppercase;

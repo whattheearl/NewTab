@@ -64,7 +64,6 @@ export default NavPanel
 
 const Container = styled.div`
     height: 100%;
-    padding: 2rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -73,7 +72,7 @@ const Container = styled.div`
 `;
 
 const WorkspaceTile = styled.div`
+    padding: 5px 2rem;
     font-size: .9rem;
     cursor: pointer;
-    padding: 5px 0;
 `;
