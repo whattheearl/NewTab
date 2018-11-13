@@ -25,12 +25,13 @@ class Thumbnail extends Component {
     }
 
     render() {
-        return <img 
+        console.log(this.props, this.state);
+        return (<img 
             src={this.state.image} 
-            style={{objectFit: 'cover', width: this.props.width, height: this.props.height, display: 'block', backgroundColor: 'inherit'}} 
+            style={{objectFit: 'cover', padding: this.props.padding, width: this.props.width, height: this.props.height, display: 'inline-block', backgroundColor: 'inherit'}} 
             onError={this.imgError.bind(this)}
             alt={this.props.alt}
-        />
+        />);
     }
 }
 export default Thumbnail

@@ -123,8 +123,7 @@ export default ChromeTabArea
 const Container = styled.div`
     box-sizing: border-box;
     width: 300px;
-    padding: 2rem 1rem;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
 `
@@ -142,7 +141,6 @@ const Row = styled.div`
 `
 
 const LastActivity = styled.div`
-
     color: ${colors.gray};
     box-sizing: border-box;
 `

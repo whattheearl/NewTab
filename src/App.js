@@ -2,24 +2,24 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+// Assets
+import colors from './styles/colors';
+import defaultWorkspaces from './data/workspaces'; // New user state
+
 // Components
-import NavPanel from './component/NavPanel';
 import NewPage from './Pages/New';
-
-// Starter state
-import defaultWorkspaces from './data/workspaces';
-
-// ChromeExtension
-chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf";
-
+import NavPanel from './component/NavPanel';
 const AppContainer = styled.div `
-    background-color: white;
+    color: ${colors.black};
 `;
 
 const Row = styled.div `
     display: flex;
 `;
- 
+
+// ChromeExtension ID, need it for communication while developing
+chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf";
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -91,25 +91,6 @@ class App extends Component {
                 return;
         }
     }
-    
-
-    //******** removed auto save, it is extremely excessive for users who make new tabs often ********/
-    // // Auto save current state on open (could check previously saved state and not save if it is the same)
-    // componentDidMount() {
-    //     // get curren open sites from backgroun script
-    //     chrome.runtime.sendMessage(
-    //         chrome.extensionId, 
-    //         {type: 'GET_TABS'}, 
-    //         (res) => {
-    //             const {filtered: sites} = res;
-    //             // Don't save if no sites open
-    //             if(sites.length === 0) return;
-    //             // save them as "Autosave localeStringDateTime"
-    //             const date = new Date()
-    //             this.workspaceHandler('ADD_WORKSPACE',{name: `AutoSave ${date.toLocaleString()}`, sites})
-    //         }
-    //     );
-    // }
 
     render() {
         return (
@@ -117,7 +98,7 @@ class App extends Component {
                 <AppContainer className = "App" >
                     <Row>
                         <NavPanel 
-                            display={ true } 
+                            display={ false } 
                             workspaces={ this.state.workspaces.filter(space => !!space.saved) } 
                             selectedWorkspace={ this.state.selectedWorkspace }
                             workspaceHandler={ this.workspaceHandler }
