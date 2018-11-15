@@ -15,9 +15,10 @@ const Row = styled.div`
 
 const Name = styled.div`
     text-decoration: none;
-    color: ${colors.babyBlue};
+    color: ${colors.black};
     font-size: 2rem;
-    white-space: pre; 
+    white-space: pre;
+    font-weight: 300;
 `;
 
 const Bkmrkr = styled.div`
@@ -27,7 +28,6 @@ const Bkmrkr = styled.div`
     font-size: 2rem;
     color: ${colors.black};
     cursor: pointer;
-
 `;
 
 class BreadCrumbNav extends Component {
@@ -46,7 +46,11 @@ class BreadCrumbNav extends Component {
             <Row>
                 <Bkmrkr style={style} onClick={this.back.bind(this)}>bkmrkr</Bkmrkr>
                 {/* show bread crumb for currently selected workspace */}
-                {isWorkspaceSelected? (<Name><Text text={` / ${this.props.workspace.name}`} maxLength={33}/></Name>) : null}
+                {isWorkspaceSelected? 
+                    (<Name>
+                        <Text text={` / ${this.props.workspace.name}`} maxLength={28}/>
+                    </Name>) 
+                    : null}
             </Row>
         )
     }

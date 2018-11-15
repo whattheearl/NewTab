@@ -7,8 +7,8 @@ import colors from './styles/colors';
 import defaultWorkspaces from './data/workspaces'; // New user state
 
 // Components
-import NewPage from './Pages/New';
-import NavPanel from './component/NavPanel';
+import Home from './Pages/Home';
+
 const AppContainer = styled.div `
     color: ${colors.black};
 `;
@@ -97,13 +97,7 @@ class App extends Component {
             <div>
                 <AppContainer className = "App" >
                     <Row>
-                        <NavPanel 
-                            display={ false } 
-                            workspaces={ this.state.workspaces.filter(space => !!space.saved) } 
-                            selectedWorkspace={ this.state.selectedWorkspace }
-                            workspaceHandler={ this.workspaceHandler }
-                        /> 
-                        <NewPage 
+                        <Home 
                             workspaces={this.state.workspaces}
                             selectedWorkspace={ this.state.selectedWorkspace }
                             workspaceHandler={ this.workspaceHandler } 

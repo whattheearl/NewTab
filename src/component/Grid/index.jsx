@@ -8,6 +8,7 @@ const Grid = ({ children, numColumns}) => {
     let cols = Math.min(numColumns, children.length)
     const Container = styled.div`
         display: grid;
+        padding: .5rem;
         grid-template-columns: repeat(${cols}, 1fr);
     `
     let items = children.map((item, index) => {

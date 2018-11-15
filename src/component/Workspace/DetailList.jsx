@@ -1,11 +1,14 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+
+// Assets
+import colors from '../../styles/colors';
+import bookmarkIcon from '../../image/bookmark.png';
 
 // components
-import CloseButton from '../../component/Buttons/Close'
+import CloseButton from '../../component/Buttons/Close';
+import Thumbnail from '../Thumbnail';
 
-// colors
-import colors from '../../styles/colors'
 
 class Detail extends Component {
     renderSiteList() {
@@ -14,7 +17,15 @@ class Detail extends Component {
             return (
                 <SiteContainer key={index}>
                     <Row href={site.url} target={'_blank'}>
-                        <img src={site.favIconUrl} alt={'site.title'} style={{height: '25px', width: '25px'}}/>
+                        <Thumbnail
+                            image={site.favIconUrl} 
+                            backupImage={bookmarkIcon}
+                            alt={site.title}
+                            width={'25px'}
+                            height={'25px'}
+                            padding={'0 4px'}
+                        />
+
                         <Title>{site.title}</Title>
                         {site.content}
                         <div style={{marginLeft: 'auto'}}>
@@ -29,23 +40,23 @@ class Detail extends Component {
                         </div>
                     </Row>
                 </SiteContainer>
-            )
-        })
+            );
+        });
     }
 
     render() {
-        const workspace = this.props.selectedWorkspace
-        if(!workspace) return null
+        const workspace = this.props.selectedWorkspace;
+        if(!workspace) return null;
         return (
             <Container>
                 <SpaceContainer>
                     {this.renderSiteList()}
                 </SpaceContainer>
             </Container>
-        )
+        );
     }
 }
-export default Detail
+export default Detail;
 
 const Container = styled.div`
     display: flex;
@@ -54,7 +65,7 @@ const Container = styled.div`
     flex: 1;
     width: 100%;
     box-sizing: border-box;
-`
+`;
 
 const SpaceContainer = styled.div`
     background-color: white;
@@ -66,7 +77,7 @@ const SpaceContainer = styled.div`
     padding-bottom: .5rem;
     box-sizing: border-box;
     flex: 1;
-`
+`;
 
 const SiteContainer = styled.div`
     width: 100%;
@@ -79,16 +90,16 @@ const SiteContainer = styled.div`
         border-left: 3px solid ${colors.babyBlue};
         box-shadow: 0 8px 3px -7px #777;
     }
-`
+`;
 
 const Row = styled.a`
     padding: .25rem 1rem;
     display: flex;
     align-items: center;
     text-decoration: none;
-`
+`;
 
 const Title = styled.div`
     margin-left: .66rem;
-color: #202124;
-`
+    /* color: #202124; */
+`;

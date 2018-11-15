@@ -10,12 +10,12 @@ class NameInput extends Component {
         this.state = {
             name: ''
         }
-        this.nameInput = React.createRef()
+        this.nameInput = React.createRef();
+        this.addWorkspace = this.addWorkspace.bind(this);
     }
 
     // maintain name state
     onKeyDown(e) {
-
         let key = e.key
         if(e.key === 'Backspace') {
             this.setState(state => ({name: state.name.slice(0, -1)}))
@@ -41,6 +41,21 @@ class NameInput extends Component {
         this.props.workspaceHandler('ADD_WORKSPACE', {sites, name})
         this.setState({name: ''})
         this.nameInput.current.value = ''
+        this.closeAllTabs();
+
+    }
+
+    closeAllTabs() {
+        if(process.env.NODE_ENV === 'development') {
+            chrome.runtime.sendMessage(
+                chrome.extensionId, 
+                {type: "CLOSE_ALL_TABS"}
+            );
+        } else {
+            chrome.runtime.sendMessage(
+                {type: "CLOSE_ALL_TABS"}
+            );
+        }
     }
 
     // save new workspace
@@ -50,12 +65,12 @@ class NameInput extends Component {
             chrome.runtime.sendMessage(
                 chrome.extensionId, 
                 {type: "GET_TABS"},
-                this.addWorkspace.bind(this)
+                this.addWorkspace
             )
         } else {
             chrome.runtime.sendMessage(
                 {type: "GET_TABS"},
-                this.addWorkspace.bind(this)
+                this.addWorkspace
             )
         }
     }

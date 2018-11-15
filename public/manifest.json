@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "bkmrkr",
     "description": "Easily save and handle new book marks",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "background": {
         "scripts": ["background.js"],
         "persistent": false

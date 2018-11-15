@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
+// Assets
+import defaultPage from '../../data/speeddial';
+import colors from '../../styles/colors';
+
 // Components
 import VerticalScrollArea from '../ContentContainers/VerticalScroll';
-import Text from '../Text';
 import HomeButton from '../Buttons/Home';
-
-// Temp Data
-import defaultPage from '../../data/speeddial';
-
-// Styles
-import colors from '../../styles/colors';
+import WorkspaceNavTile from '../Tiles/Nav'
 
 class NavPanel extends Component {
     clickHomeButton = this.clickHomeButton.bind(this);
@@ -33,21 +31,26 @@ class NavPanel extends Component {
 
     // using workspaces as "pages" to sort work
     render() {
-        if(!this.props.display) return null
-        const displayTempArea = process.env.NODE_ENV === 'development'
+        if(!this.props.display) return null;
+        const displayTempArea = process.env.NODE_ENV === 'development';
         // sort by descending saved time
         let spaces = this.props.workspaces.slice().sort((a, b) => {return a.saved - b.saved})
             .map((space, index) => { 
-                return <WorkspaceTile 
+                return <WorkspaceNavTile 
                     key={index} 
-                    onClick={()=>{this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: space})}}>
-                    <Text text={space.name} maxLength={24} />
-                </WorkspaceTile>});
+                    onClick={()=>{this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: space})}} 
+                    name={space.name}
+                    selected={this.props.selectedWorkspace === space}
+                />;})
 
         
         return (
             <Container>
-                <HomeButton display={true} onClick={this.clickHomeButton}/>
+                <HomeButton 
+                    display={true} 
+                    onClick={this.clickHomeButton} 
+                    selected={!this.props.selectedWorkspace}
+                />
                 <VerticalScrollArea>
                     {spaces}
                     {displayTempArea? <div style={{marginTop: 'auto'}}>
@@ -60,7 +63,7 @@ class NavPanel extends Component {
         );
     }
 }
-export default NavPanel
+export default NavPanel;
 
 const Container = styled.div`
     height: 100%;
@@ -69,10 +72,4 @@ const Container = styled.div`
     flex-direction: column;
     width: 100%;
     color: ${colors.black};
-`;
-
-const WorkspaceTile = styled.div`
-    padding: 5px 2rem;
-    font-size: .9rem;
-    cursor: pointer;
 `;
