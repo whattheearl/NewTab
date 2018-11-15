@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -9,7 +9,6 @@ const days = hours * 24;
 
 const LocaleDate = ({date}) => {
     let dateNum = parseInt(date, 10);
-
     let daysPassed = (Date.now() - dateNum)/days;
     let d = new Date(dateNum);
     if(daysPassed < 1) return <span>{d.toLocaleTimeString([], {hour12: true, hour: '2-digit', minute: '2-digit'})}</span>;
@@ -18,4 +17,4 @@ const LocaleDate = ({date}) => {
     }
     return <span>{d.toLocaleDateString([])}</span>;
 }
-export default LocaleDate
+export default LocaleDate;

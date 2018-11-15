@@ -1,54 +1,77 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import colors from '../styles/colors';
+
+// Assets
+import COLORS from '../styles/colors';
 
 // Components
-import SpaceList from '../component/Workspace/SpaceList';
-import DetailList from '../component/Workspace/DetailList';
-import SpeedDial from '../component/SpeedDial/Container';
-import ChromeTabArea from '../component/ChromeTabArea';
 import BreadCrumb from '../component/BreadcrumbNav';
+import ChromeTabArea from '../component/ChromeTabArea';
+import DetailList from '../component/Workspace/DetailList';
 import NameInput from '../component/Workspace/name.input';
 import NavPanel from '../component/NavPanel';
+import SearchBar from '../component/SearchBar';
+import SpaceList from '../component/Workspace/SpaceList';
+
 
 class NewPage extends Component {
     constructor(props) {
-        super(props)
-        this.sitesHandler = this.sitesHandler.bind(this)
+        super(props);
+        this.state = {
+            filter:'',
+        }
+
+        this.sitesHandler = this.sitesHandler.bind(this);
+        this.filterHandler = this.filterHandler.bind(this);
+    }
+
+    filterHandler(action, payload) {
+        console.log(action, payload);
+        switch(action.type) {
+            case 'SET_FILTER': 
+                this.setState({filter: payload.filter});
+                return;
+            case 'CLEAR_FILTER':
+                this.setState({filter: ''});
+                return;
+            default: 
+                console.error('error unreachable switch case filter');
+                return;
+        }
     }
 
     sitesHandler(action, payload) {
         // check if workspace is selected (should throw some visable error)
         if(!this.props.selectedWorkspace) return;
-        const { site } = payload
-        const { sites } = this.props.selectedWorkspace
+        const { site } = payload;
+        const { sites } = this.props.selectedWorkspace;
         let updatedWorkspace = {
             ...this.props.selectedWorkspace,
             lastModified: Date.now()
-        }
+        };
         switch(action.type) {
             case 'REMOVE_SITE_FROM_SELECTED_WORKSPACE':
                 const index = sites.indexOf(site)
                 updatedWorkspace.sites = [
                     ...sites.slice(0, index),
                     ...sites.slice(index+1)
-                ]
+                ];
                 // Replace selectedWorkspace with updatedWorkspace
                 this.props.workspaceHandler('REPLACE_WORKSPACE', { 
                     workspace: this.props.selectedWorkspace, 
                     updatedWorkspace
-                })
+                });
                 return;
             case 'ADD_SITE_TO_SELECTED_WORKSPACE':
                 updatedWorkspace.sites = [
                     ...sites,
                     site,
-                ]
+                ];
                 // Replace selectedWorkspace with updatedWorkspace
                 this.props.workspaceHandler('REPLACE_WORKSPACE', { 
                     workspace: this.props.selectedWorkspace, 
                     updatedWorkspace
-                })
+                });
                 return;
 
             case 'REPLACE_SITE':
@@ -66,6 +89,7 @@ class NewPage extends Component {
                         workspace={this.props.selectedWorkspace} 
                         workspaceHandler={this.props.workspaceHandler}
                     />
+                    <SearchBar filterHandler={this.filterHandler} />
                     <div>&nbsp;</div>
                 </Header>
                 <Row>
@@ -84,6 +108,7 @@ class NewPage extends Component {
                             selectedWorkspace={this.props.selectedWorkspace}
                         />
                         <SpaceList
+                            filter={this.state.filter}
                             workspaceHandler={this.props.workspaceHandler}
                             workspaces={this.props.workspaces}
                             display={this.props.selectedWorkspace === null}
@@ -98,7 +123,7 @@ class NewPage extends Component {
                     </RightCol>
                 </Row>
             </div>
-        )
+        );
     }
 }
 export default NewPage;
@@ -119,12 +144,13 @@ const Row = styled.div`
 `;
 
 const Header = styled.div`
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100vw;
     padding: 1rem;
-    border-bottom: 1px solid ${colors.darkWhite};
+    border-bottom: 1px solid ${COLORS.darkWhite};
     box-sizing: border-box;
 `;
 
@@ -139,5 +165,5 @@ const LeftCol = styled.div`
     display: flex;
     flex-direction: column;
     width: 220px;
-`
+`;
 

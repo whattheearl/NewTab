@@ -1,20 +1,80 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-// colors
+// Assets
 import colors from '../../styles/colors';
 
 // Components
 import Space from '../Tiles/Space/Container';
 import VerticalScrollArea from '../ContentContainers/VerticalScroll';
-
+import Header from './SpaceHeader';
 
 class SpaceList extends Component {
-    render() {
-        const { workspaces, display } = this.props;
-        if(!workspaces || !display) return null;
-        const spaces = workspaces.slice()
-            .sort((a, b) => { return b.lastModified - a.lastModified })
+    constructor(props) {
+        super(props);
+        this.state = {
+            sortFunction: this.sortByCreate,
+        }
+        this.sortHandler = this.sortHandler.bind(this);
+    }
+
+    sortByCreate = (a, b) => {
+        return b.created - a.created;
+    }
+
+    sortByCreateReverse = (a, b) => {
+        return a.created - b.created;
+    }
+
+    sortByName = (a, b) => {
+        return ('' + a.name).localeCompare(b.name);
+    }
+
+    sortByNameReverse = (a, b) => {
+        return ('' + b.name).localeCompare(a.name);
+    }
+
+    sortHandler(action) {
+        console.log(action.type)
+        switch(action.type) {
+            case 'SELECT_NAME':
+                if(this.state.sortFunction === this.sortByName)   {
+                    this.setState({sortFunction: this.sortByNameReverse});
+                }
+                else {
+                    this.setState({sortFunction: this.sortByName});
+                }
+                break;
+            case 'SELECT_CREATED':
+                if(this.state.sortFunction === this.sortByCreate)   {
+                    this.setState({sortFunction: this.sortByCreateReverse});
+                }
+                else {
+                    this.setState({sortFunction: this.sortByCreate});
+                }
+                break;
+            default:
+                console.error('Unreachable switch case');
+        }
+    }
+
+    renderSpaces() {
+        const { workspaces } = this.props;
+        if(!this.props.filter) {
+            return workspaces.slice()
+                .sort(this.state.sortFunction) // need to select which sor to use
+                .map((space, index) =>
+                    (<Space
+                        key={index}
+                        workspace={space} 
+                        workspaceHandler={this.props.workspaceHandler} 
+                        {...space} 
+                    />)
+                );
+        } 
+        return workspaces.slice()
+            .sort(this.state.sortFunction) // need to select which sor to use
+            .filter(space => {return space.name.toLowerCase().includes(this.props.filter.toLowerCase())})
             .map((space, index) =>
                 (<Space
                     key={index}
@@ -22,11 +82,17 @@ class SpaceList extends Component {
                     workspaceHandler={this.props.workspaceHandler} 
                     {...space} 
                 />)
-            )
-        return (
-            <Container>
+            );
+    }
 
-                <VerticalScrollArea>
+    render() {
+        const { workspaces, display } = this.props;
+        if(!workspaces || !display) return null;
+        const spaces = this.renderSpaces();
+        return (
+            <Container className="SpaceList">
+                <Header className="Header" sortHandler={this.sortHandler} />
+                <VerticalScrollArea className="VerticalScrollArea">
                     {spaces}
                 </VerticalScrollArea>
                 <InfoContainer>{`${spaces.length.toString()} workspaces created`}</InfoContainer>
