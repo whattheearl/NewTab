@@ -8,39 +8,46 @@ import bookmarkIcon from '../../image/bookmark.png';
 // components
 import CloseButton from '../../component/Buttons/Close';
 import Thumbnail from '../Thumbnail';
+import DetailHeader from './DetailHeader';
 
 
 class Detail extends Component {
     renderSiteList() {
         const workspace = this.props.selectedWorkspace
-        return workspace.sites.map((site, index) => {
-            return (
-                <SiteContainer key={index}>
-                    <Row href={site.url} target={'_blank'}>
-                        <Thumbnail
-                            image={site.favIconUrl} 
-                            backupImage={bookmarkIcon}
-                            alt={site.title}
-                            width={'25px'}
-                            height={'25px'}
-                            padding={'0 4px'}
-                        />
-
-                        <Title>{site.title}</Title>
-                        {site.content}
-                        <div style={{marginLeft: 'auto'}}>
-                            <CloseButton 
-                                display={true}
-                                onClick={(e)=> {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    this.props.sitesHandler({type: 'REMOVE_SITE_FROM_SELECTED_WORKSPACE'}, {site});
-                                }
-                            }/>
-                        </div>
-                    </Row>
-                </SiteContainer>
-            );
+        return workspace.sites.slice()
+            .sort((a, b) => {
+                return ('' + a.title).localeCompare(b.title);
+            })
+            .map((site, index) => {
+                return (
+                    <SiteContainer key={index}>
+                        <Row href={site.url} target={'_blank'}>
+                            <Thumbnail
+                                image={site.favIconUrl} 
+                                backupImage={bookmarkIcon}
+                                alt={site.title}
+                                width={'25px'}
+                                height={'25px'}
+                                padding={'0 4px'}
+                            />
+                            <div>
+                                <Title>{site.title}</Title>
+                                {/* <Url>{site.url}</Url> */}
+                            </div>
+                            {site.content}
+                            <div style={{marginLeft: 'auto'}}>
+                                <CloseButton 
+                                    display={true}
+                                    onClick={(e)=> {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        this.props.sitesHandler({type: 'REMOVE_SITE_FROM_SELECTED_WORKSPACE'}, {site});
+                                    }
+                                }/>
+                            </div>
+                        </Row>
+                    </SiteContainer>
+                );
         });
     }
 
@@ -50,6 +57,7 @@ class Detail extends Component {
         return (
             <Container>
                 <SpaceContainer>
+                    <DetailHeader/>
                     {this.renderSiteList()}
                 </SpaceContainer>
             </Container>
@@ -96,10 +104,16 @@ const Row = styled.a`
     padding: .25rem 1rem;
     display: flex;
     align-items: center;
-    text-decoration: none;
 `;
 
 const Title = styled.div`
     margin-left: .66rem;
+    margin-bottom: .2rem;
     /* color: #202124; */
+`;
+
+const Url = styled.div`
+    margin-left: .66rem;
+    color: ${colors.gray};
+    font-size: .66rem;
 `;

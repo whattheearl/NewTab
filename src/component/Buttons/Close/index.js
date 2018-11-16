@@ -4,7 +4,12 @@ import React  from 'react'
 import styled from 'styled-components'
 import { FaTrash } from 'react-icons/fa'
 
-let style = {cursor: 'pointer', paddingTop: '.15rem', height: '1rem', width: '1rem'}
+let style = {
+    cursor: 'pointer', 
+    paddingTop: '.15rem', 
+    height: '1rem', 
+    width: '1rem'
+}
 
 const Container = styled.div`
     display: flex;

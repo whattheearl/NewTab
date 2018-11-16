@@ -7,6 +7,7 @@ import bookmark from '../../../image/bookmark.png';
 // components
 import Space from './index';
 import Thumbnail from '../../Thumbnail';
+import withHover from '../../../HOC/withHover'
 
 
 class SpaceContainer extends Component {
@@ -80,7 +81,7 @@ class SpaceContainer extends Component {
         );
     }
 }
-export default SpaceContainer
+export default withHover(SpaceContainer);
 
 // const Thumbnail = styled.img`
 //     width: 25px;

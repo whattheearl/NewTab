@@ -13,7 +13,6 @@ import NavPanel from '../component/NavPanel';
 import SearchBar from '../component/SearchBar';
 import SpaceList from '../component/Workspace/SpaceList';
 
-
 class NewPage extends Component {
     constructor(props) {
         super(props);
@@ -138,9 +137,9 @@ const MainArea = styled.div`
 `;
 
 const Row = styled.div`
-    height: calc(100vh - 64px);
+    height: calc(100vh - 65px);
     display: flex;
-    width: 100vw;
+    width: 100%;
 `;
 
 const Header = styled.div`
@@ -148,7 +147,7 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100vw;
+    width: 100%;
     padding: 1rem;
     border-bottom: 1px solid ${COLORS.darkWhite};
     box-sizing: border-box;

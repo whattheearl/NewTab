@@ -1,6 +1,7 @@
 /* global chrome */
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { IconContext } from 'react-icons';
 
 // Assets
 import colors from './styles/colors';
@@ -13,8 +14,17 @@ const AppContainer = styled.div `
     color: ${colors.black};
 `;
 
+const ICON_STYLES = {
+    fontSize: '24px', 
+    width: '24px', 
+    height: '24px', 
+    color: `${colors.lightGray}`,
+};
+
 const Row = styled.div `
-    display: flex;
+    margin: 0 auto;
+    max-width: 1980px;
+    height: 100vh;
 `;
 
 // ChromeExtension ID, need it for communication while developing
@@ -95,15 +105,17 @@ class App extends Component {
     render() {
         return (
             <div>
-                <AppContainer className = "App" >
-                    <Row>
-                        <Home 
-                            workspaces={this.state.workspaces}
-                            selectedWorkspace={ this.state.selectedWorkspace }
-                            workspaceHandler={ this.workspaceHandler } 
-                        />
-                    </Row> 
-                </AppContainer> 
+                {/* <IconContext.Provider > */}
+                    <AppContainer className = "App" >
+                        <Row>
+                            <Home 
+                                workspaces={this.state.workspaces}
+                                selectedWorkspace={ this.state.selectedWorkspace }
+                                workspaceHandler={ this.workspaceHandler } 
+                            />
+                        </Row> 
+                    </AppContainer> 
+                {/* </IconContext.Provider> */}
             </div>
         );
     }
