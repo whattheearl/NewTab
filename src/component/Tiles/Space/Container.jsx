@@ -2,19 +2,26 @@
 import React, { Component } from 'react';
 
 // Assets
-import bookmark from '../../../image/bookmark.png';
+import bookmark from '../../../assets/image/bookmark.png';
 
 // components
 import Space from './index';
 import Thumbnail from '../../Thumbnail';
-import withHover from '../../../HOC/withHover'
-
 
 class SpaceContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.openAllLinks = this.openAllLinks.bind(this);
+        this.selectWorkspace = this.selectWorkspace.bind(this);
+        this.removeWorkspace = this.removeWorkspace.bind(this);
+        this.favoriteWorkspace = this.favoriteWorkspace.bind(this);
+        this.renameWorkspace = this.renameWorkspace.bind(this);
+    }
+
     openAllLinks = (e) => {
         e.preventDefault()
         e.stopPropagation()
-        if(process && process.env.NODE_ENV === 'development') {
+        if (process && process.env.NODE_ENV === 'development') {
             chrome.runtime.sendMessage(
                 chrome.extensionId,
                 {
@@ -35,9 +42,9 @@ class SpaceContainer extends Component {
     getSites() {
         return this.props.sites.map((site) => {
             let image = site.image || site.favIconUrl
-            return (<a key={site.url} href={site.url} target="_blank" style={{display: 'block'}}>
+            return (<a key={site.url} href={site.url} target="_blank" style={{ display: 'block' }}>
                 <Thumbnail
-                    image={image} 
+                    image={image}
                     backupImage={bookmark}
                     alt={image}
                     width={'25px'}
@@ -50,44 +57,49 @@ class SpaceContainer extends Component {
 
     selectWorkspace(e) {
         e.stopPropagation();
-        this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: this.props.workspace});
+        this.props.workspaceHandler('SELECT_WORKSPACE', this.props.workspace);
     }
 
     removeWorkspace(e) {
         e.stopPropagation();
-        this.props.workspaceHandler('REMOVE_WORKSPACE', {workspace: this.props.workspace});
+        this.props.workspaceHandler('REMOVE_WORKSPACE', { workspace: this.props.workspace });
     }
 
     favoriteWorkspace(e) {
         e.stopPropagation()
-        const saved = this.props.workspace.saved? null : Date.now();
-        const updatedWorkspace = { 
+        const saved = this.props.workspace.saved ? null : Date.now();
+        const updatedWorkspace = {
             ...this.props.workspace,
             saved,
         };
-        this.props.workspaceHandler('REPLACE_WORKSPACE', {workspace: this.props.workspace, updatedWorkspace});
+        this.props.workspaceHandler('REPLACE_WORKSPACE', { workspace: this.props.workspace, updatedWorkspace });
+    }
+
+    renameWorkspace(e, name) {
+        e.preventDefault();
+        e.stopPropagation();
+        const payload = {
+            workspace: this.props.workspace,
+            updatedWorkspace: {
+                ...this.props.workspace,
+                name: 'bob1',
+            }
+        }
+        this.props.workspaceHandler('REPLACE_WORKSPACE', payload);
     }
 
     render() {
         return (
-            <Space 
+            <Space
                 {...this.props}
                 sites={this.getSites()}
-                openAllLinks={this.openAllLinks.bind(this)}
-                select={this.selectWorkspace.bind(this)}
-                remove={this.removeWorkspace.bind(this)}
-                favorite={this.favoriteWorkspace.bind(this)}
+                openAllLinks={this.openAllLinks}
+                edit={this.selectWorkspace}
+                remove={this.removeWorkspace}
+                favorite={this.favoriteWorkspace}
+                rename={this.renameWorkspace}
             />
         );
     }
 }
-export default withHover(SpaceContainer);
-
-// const Thumbnail = styled.img`
-//     width: 25px;
-//     height: 25px;
-//     padding: 4px;
-//     :hover {
-//         background-color: ${color.white};
-//     }
-// `
+export default SpaceContainer;

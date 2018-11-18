@@ -16,30 +16,22 @@ class Space extends Component {
     render() {
         const { name, sites, lastModified } = this.props;
         return (
-            <Container onClick={this.props.select} >
+            <Container>
                 <Row>
-                    <Favorite display={true} isFull={this.props.workspace.saved} onClick={this.props.favorite}/>
+                    <Favorite
+                        display={true}
+                        isFull={this.props.workspace.saved}
+                        onClick={this.props.favorite} />
                     <Name >
-                        <Text 
+                        <Text
                             onClick={this.props.openAllLinks}
                             text={name}
-                            maxLength={33}/>
+                            maxLength={33} />
                         <EditContainer>
                             <Edit
                                 display={true}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    const updatedWorkspace = {
-                                        ...this.props.workspace,
-                                        name: 'bob',
-                                    }
-                                    const payload = {
-                                        workspace: this.props.workspace, 
-                                        updatedWorkspace: updatedWorkspace
-                                    }
-                                    this.props.workspaceHandler('REPLACE_WORKSPACE', payload);
-                                }}/>
+                                onClick={this.props.edit}
+                            />
                         </EditContainer>
                     </Name>
                     <RightCol>
@@ -48,7 +40,7 @@ class Space extends Component {
                         </Grid>
                     </RightCol>
                     <DateContainer>
-                        <LocalDate date={lastModified}/>
+                        <LocalDate date={lastModified} />
                     </DateContainer>
                     <IconContainer>
                         <CloseButton display={true} onClick={this.props.remove} />

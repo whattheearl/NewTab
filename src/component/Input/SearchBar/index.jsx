@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // Assets
-import COLORS from '../../styles/colors';
+import COLORS from '../../../styles/colors';
 
 // input is used for searching workspace
 class SearchBarContainer extends Component {
@@ -18,8 +18,8 @@ class SearchBarContainer extends Component {
 
     // maintain searchTerm state
     handleChange(e) {
-        this.setState({value: e.target.value});
-        this.props.filterHandler({type: 'SET_FILTER'}, {filter: e.target.value});
+        this.setState({ value: e.target.value });
+        this.props.filterHandler({ type: 'SET_FILTER' }, { filter: e.target.value });
     }
 
     handleSubmit(e) {
@@ -31,11 +31,11 @@ class SearchBarContainer extends Component {
             <Row>
                 <InputBorder>
                     <Form onSubmit={this.handleSubmit}>
-                        <Input 
+                        <Input
                             innerRef={this.input}
-                            value={this.state.searchTerm} 
-                            onChange={this.handleChange} 
-                            type={'text'} 
+                            value={this.state.searchTerm}
+                            onChange={this.handleChange}
+                            type={'text'}
                             placeholder={'Search'}
                         />
                     </Form>
@@ -83,10 +83,12 @@ const InputBorder = styled.div`
 
 const Form = styled.form`
     width: 100%;
+    height: 100%;
 `
 
 const Input = styled.input`
     width: 100%;
+    height: 100%;
     font-size: 1rem;
     border: none;
     border-width: 0;

@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // Components
-import Text from '../Text';
+import Text from '../../Text';
 
 // Colors
-import colors from '../../styles/colors';
+import colors from '../../../styles/colors';
 
 // Styled
 const Row = styled.div`
@@ -32,13 +32,13 @@ const Bkmrkr = styled.div`
 
 class BreadCrumbNav extends Component {
     back() {
-        this.props.workspaceHandler('SELECT_WORKSPACE', {workspace: null})
+        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null })
     }
 
     render() {
         const isWorkspaceSelected = !!this.props.workspace
-        let style={}
-        if(isWorkspaceSelected) {
+        let style = {}
+        if (isWorkspaceSelected) {
             style.color = colors.lightGray
             style.cursor = 'pointer'
         }
@@ -46,10 +46,10 @@ class BreadCrumbNav extends Component {
             <Row>
                 <Bkmrkr style={style} onClick={this.back.bind(this)}>bkmrkr</Bkmrkr>
                 {/* show bread crumb for currently selected workspace */}
-                {isWorkspaceSelected? 
+                {isWorkspaceSelected ?
                     (<Name>
-                        <Text text={` / ${this.props.workspace.name}`} maxLength={28}/>
-                    </Name>) 
+                        <Text text={` / ${this.props.workspace.name}`} maxLength={28} />
+                    </Name>)
                     : null}
             </Row>
         )

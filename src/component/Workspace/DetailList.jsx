@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 // Assets
 import colors from '../../styles/colors';
-import bookmarkIcon from '../../image/bookmark.png';
+import bookmarkIcon from '../../assets/image/bookmark.png';
 
 // components
 import CloseButton from '../../component/Buttons/Close';
@@ -23,7 +23,7 @@ class Detail extends Component {
                     <SiteContainer key={index}>
                         <Row href={site.url} target={'_blank'}>
                             <Thumbnail
-                                image={site.favIconUrl} 
+                                image={site.favIconUrl}
                                 backupImage={bookmarkIcon}
                                 alt={site.title}
                                 width={'25px'}
@@ -35,29 +35,29 @@ class Detail extends Component {
                                 {/* <Url>{site.url}</Url> */}
                             </div>
                             {site.content}
-                            <div style={{marginLeft: 'auto'}}>
-                                <CloseButton 
+                            <div style={{ marginLeft: 'auto' }}>
+                                <CloseButton
                                     display={true}
-                                    onClick={(e)=> {
+                                    onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        this.props.sitesHandler({type: 'REMOVE_SITE_FROM_SELECTED_WORKSPACE'}, {site});
+                                        this.props.sitesHandler({ type: 'REMOVE_SITE_FROM_SELECTED_WORKSPACE' }, { site });
                                     }
-                                }/>
+                                    } />
                             </div>
                         </Row>
                     </SiteContainer>
                 );
-        });
+            });
     }
 
     render() {
         const workspace = this.props.selectedWorkspace;
-        if(!workspace) return null;
+        if (!workspace) return null;
         return (
             <Container>
                 <SpaceContainer>
-                    <DetailHeader/>
+                    <DetailHeader />
                     {this.renderSiteList()}
                 </SpaceContainer>
             </Container>

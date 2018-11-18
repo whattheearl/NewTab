@@ -11,15 +11,15 @@ import DetailList from '../component/Workspace/DetailList';
 import NameInput from '../component/Workspace/name.input';
 import NavPanel from '../component/Nav/NavPanel';
 import SearchBar from '../component/Input/SearchBar';
-import SpaceList from '../component/Workspace/SpaceList';
 import WorkspaceEditModal from '../component/Modal/WorkspaceEdit';
 
-class NewPage extends Component {
+class Workspace extends Component {
     constructor(props) {
         super(props);
         this.state = {
             filter: '',
         }
+
         this.sitesHandler = this.sitesHandler.bind(this);
         this.filterHandler = this.filterHandler.bind(this);
     }
@@ -104,16 +104,10 @@ class NewPage extends Component {
                         />
                     </LeftCol>
                     <MainArea>
-                        {/* <DetailList
+                        <DetailList
                             sitesHandler={this.sitesHandler}
                             workspaceHandler={this.props.workspaceHandler}
                             selectedWorkspace={this.props.selectedWorkspace}
-                        /> */}
-                        <SpaceList
-                            filter={this.state.filter}
-                            workspaceHandler={this.props.workspaceHandler}
-                            workspaces={this.props.workspaces}
-                            display={true}
                         />
                         {/* <SpeedDial 
                             display={this.props.selectedWorkspace === null}
@@ -128,7 +122,7 @@ class NewPage extends Component {
         );
     }
 }
-export default NewPage;
+export default Workspace;
 
 // styled
 const MainArea = styled.div`

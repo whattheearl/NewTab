@@ -35,7 +35,6 @@ class SpaceList extends Component {
     }
 
     sortHandler(action) {
-        console.log(action.type)
         switch(action.type) {
             case 'SELECT_NAME':
                 if(this.state.sortFunction === this.sortByName)   {
