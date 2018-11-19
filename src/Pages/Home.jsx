@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // Assets
 import COLORS from '../styles/colors';
@@ -14,7 +15,7 @@ import SearchBar from '../component/Input/SearchBar';
 import SpaceList from '../component/Workspace/SpaceList';
 import WorkspaceEditModal from '../component/Modal/WorkspaceEdit';
 
-class NewPage extends Component {
+class Page extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -81,54 +82,60 @@ class NewPage extends Component {
 
     render() {
         return (
-            <div className="newpage">
-                <WorkspaceEditModal
-                    selectedWorkspace={this.props.selectedWorkspace}
-                    workspaceHandler={this.props.workspaceHandler}
-                />
-                <Header>
-                    <BreadCrumb
-                        workspace={this.props.selectedWorkspace}
+            <Router>
+                <div className="page">
+                    <WorkspaceEditModal
+                        selectedWorkspace={this.props.selectedWorkspace}
                         workspaceHandler={this.props.workspaceHandler}
                     />
-                    <SearchBar filterHandler={this.filterHandler} />
-                    <div>&nbsp;</div>
-                </Header>
-                <Row>
-                    <LeftCol>
-                        <NavPanel
-                            display={true}
-                            workspaces={this.props.workspaces.filter(space => !!space.saved)}
-                            selectedWorkspace={this.props.selectedWorkspace}
+                    <Header>
+                        <BreadCrumb
+                            workspace={this.props.selectedWorkspace}
                             workspaceHandler={this.props.workspaceHandler}
                         />
-                    </LeftCol>
-                    <MainArea>
-                        {/* <DetailList
-                            sitesHandler={this.sitesHandler}
-                            workspaceHandler={this.props.workspaceHandler}
-                            selectedWorkspace={this.props.selectedWorkspace}
-                        /> */}
-                        <SpaceList
-                            filter={this.state.filter}
-                            workspaceHandler={this.props.workspaceHandler}
-                            workspaces={this.props.workspaces}
-                            display={true}
-                        />
-                        {/* <SpeedDial 
-                            display={this.props.selectedWorkspace === null}
-                        /> */}
-                    </MainArea>
-                    <RightCol>
-                        <NameInput workspaceHandler={this.props.workspaceHandler} />
-                        <ChromeTabArea sitesHandler={this.sitesHandler} selectedWorkspace={this.props.selectedWorkspace} />
-                    </RightCol>
-                </Row>
-            </div>
+                        <SearchBar filterHandler={this.filterHandler} />
+                        <div>&nbsp;</div>
+                    </Header>
+                    <Row>
+                        <LeftCol>
+                            <NavPanel
+                                display={true}
+                                workspaces={this.props.workspaces.filter(space => !!space.saved)}
+                                selectedWorkspace={this.props.selectedWorkspace}
+                                workspaceHandler={this.props.workspaceHandler}
+                            />
+                        </LeftCol>
+                        <MainArea>
+                            <Route exact path='/' render={(props) => (
+                                <SpaceList
+                                    {...props}
+                                    selectedWorkspace={this.props.selectedWorkspace}
+                                    filter={this.state.filter}
+                                    workspaceHandler={this.props.workspaceHandler}
+                                    workspaces={this.props.workspaces}
+                                    display={true}
+                                />
+                            )} />
+                            <Route path='/workspace/:workspaceid' render={(props) => (
+                                <DetailList
+                                    {...props}
+                                    sitesHandler={this.sitesHandler}
+                                    workspaceHandler={this.props.workspaceHandler}
+                                    selectedWorkspace={this.props.selectedWorkspace}
+                                />
+                            )} />
+                        </MainArea>
+                        <RightCol>
+                            <NameInput workspaceHandler={this.props.workspaceHandler} />
+                            <ChromeTabArea sitesHandler={this.sitesHandler} selectedWorkspace={this.props.selectedWorkspace} />
+                        </RightCol>
+                    </Row>
+                </div>
+            </Router>
         );
     }
 }
-export default NewPage;
+export default Page;
 
 // styled
 const MainArea = styled.div`

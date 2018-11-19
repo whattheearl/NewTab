@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 
 // Assets
 import COLOR from '../../../styles/colors';
@@ -17,7 +18,7 @@ class Space extends Component {
         const { name, sites, lastModified } = this.props;
         return (
             <Container>
-                <Row>
+                <Row onClick={this.props.select}>
                     <Favorite
                         display={true}
                         isFull={this.props.workspace.saved}

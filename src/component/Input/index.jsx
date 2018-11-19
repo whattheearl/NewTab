@@ -87,7 +87,7 @@ const Border = styled.div`
     /* background-color: ${COLORS.darkWhite}; */
     transition: all 0.4s;
     :focus-within {
-        border: 1px solid ${COLORS.red};
+        border: 1px solid ${COLORS.babyBlue};
         transform: translate(-50%, -50%) scale(1.01);
     }
 `;

@@ -15,9 +15,8 @@ class SpaceContainer extends Component {
         super(props);
         this.openAllLinks = this.openAllLinks.bind(this);
         this.selectWorkspace = this.selectWorkspace.bind(this);
+        this.editWorkspace = this.editWorkspace.bind(this);
         this.removeWorkspace = this.removeWorkspace.bind(this);
-        this.favoriteWorkspace = this.favoriteWorkspace.bind(this);
-        this.renameWorkspace = this.renameWorkspace.bind(this);
     }
 
     openAllLinks = (e) => {
@@ -42,8 +41,8 @@ class SpaceContainer extends Component {
     }
 
     getSites() {
-        return this.props.sites.map((site) => {
-            let image = site.image || site.favIconUrl
+        const sites = this.props.workspace.sites.map((site) => {
+            let image = site.image || site.favIconUrl;
             return (<a key={site.url} href={site.url} target="_blank" style={{ display: 'block' }}>
                 <Thumbnail
                     image={image}
@@ -55,13 +54,22 @@ class SpaceContainer extends Component {
                 />
             </a>);
         })
+        return sites;
     }
 
     selectWorkspace(e) {
         e.stopPropagation();
-        this.props.workspaceHandler('SELECT_WORKSPACE', this.props.workspace);
-        console.log(this.props.toggleWorkspaceModal);
+        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: this.props.workspace });
+        console.log(this.props, this.state);
+    }
+
+    editWorkspace(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.props.history.push(`Workspace/${this.props.workspace.name}`);
         this.props.toggleWorkspaceModal();
+        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: this.props.workspace });
+        console.log(this.props.toggleWorkspaceModal);
     }
 
     removeWorkspace(e) {
@@ -69,7 +77,7 @@ class SpaceContainer extends Component {
         this.props.workspaceHandler('REMOVE_WORKSPACE', { workspace: this.props.workspace });
     }
 
-    favoriteWorkspace(e) {
+    favoriteWorkspace = (e) => {
         e.stopPropagation()
         const saved = this.props.workspace.saved ? null : Date.now();
         const updatedWorkspace = {
@@ -79,26 +87,17 @@ class SpaceContainer extends Component {
         this.props.workspaceHandler('REPLACE_WORKSPACE', { workspace: this.props.workspace, updatedWorkspace });
     }
 
-    renameWorkspace(e, name) {
-        e.preventDefault();
-        e.stopPropagation();
-        const payload = {
-            workspace: this.props.workspace,
-            updatedWorkspace: {
-                ...this.props.workspace,
-                name: 'bob1',
-            }
-        }
-        this.props.workspaceHandler('REPLACE_WORKSPACE', payload);
-    }
-
     render() {
+        if (!this.props.workspace) return;
+        const sites = this.getSites();
         return (
             <Space
                 {...this.props}
-                sites={this.getSites()}
+                {...this.props.workspace}
+                sites={sites}
                 openAllLinks={this.openAllLinks}
-                edit={this.selectWorkspace}
+                select={this.selectWorkspace}
+                edit={this.editWorkspace}
                 remove={this.removeWorkspace}
                 favorite={this.favoriteWorkspace}
                 rename={this.renameWorkspace}

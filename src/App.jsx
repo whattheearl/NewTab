@@ -1,15 +1,13 @@
 /* global chrome */
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 // Assets
 import colors from './styles/colors';
 import defaultWorkspaces from './assets/data/ws'; // New user state
 
 // Components
-import Home from './Pages/Home';
-import Workspace from './Pages/Workspace';
+import Page from './Pages/Home';
 
 // Redux
 import { createStore } from 'redux';
@@ -118,26 +116,15 @@ class App extends Component {
     render() {
         return (<div>
             <Provider store={store}>
-                <Router>
-                    <AppContainer className={"App"}>
-                        <Row>
-                            <Route exact path='/' render={() => (
-                                <Home
-                                    workspaces={this.state.workspaces}
-                                    selectedWorkspace={this.state.selectedWorkspace}
-                                    workspaceHandler={this.workspaceHandler}
-                                />
-                            )} />
-                            <Route path='/workspace/:workspaceid' render={() => (
-                                <Workspace
-                                    workspaces={this.state.workspaces}
-                                    selectedWorkspace={this.state.selectedWorkspace}
-                                    workspaceHandler={this.workspaceHandler}
-                                />
-                            )} />
-                        </Row>
-                    </AppContainer>
-                </Router>
+                <AppContainer className={"App"}>
+                    <Row>
+                        <Page
+                            workspaces={this.state.workspaces}
+                            selectedWorkspace={this.state.selectedWorkspace}
+                            workspaceHandler={this.workspaceHandler}
+                        />
+                    </Row>
+                </AppContainer>
             </Provider>
         </div>);
     }

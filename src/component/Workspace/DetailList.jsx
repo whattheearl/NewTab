@@ -52,7 +52,6 @@ class Detail extends Component {
     }
 
     render() {
-        console.log(this.props);
         const { selectedWorkspace } = this.props;
         if (!selectedWorkspace) return null;
         return (

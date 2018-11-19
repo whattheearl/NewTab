@@ -28,7 +28,7 @@ class WorkspaceEditModal extends Component {
             updatedWorkspace
         })
         // unselect workspace
-        this.props.workspaceHandler('SELECT_WORKSPACE', null);
+        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null });
         // close modal
         this.props.toggleWorkspaceModal();
     }
