@@ -2,6 +2,8 @@
 // - used to edit the name of a workspace
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { toggleWorkspaceModal } from '../../actions/toggleWorkspaceModal';
 
 // Component
 import Modal from './Modal';
@@ -10,27 +12,30 @@ import Input from '../Input';
 class WorkspaceEditModal extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            display: false,
-        }
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    // Change the name of the current selected workspace
     onSubmit({ value: name }) {
+        // create new workspace with current name
         let updatedWorkspace = {
             ...this.props.selectedWorkspace,
             name
         }
+        // replace the workspace with current
         this.props.workspaceHandler('REPLACE_WORKSPACE', {
             workspace: this.props.selectedWorkspace,
             updatedWorkspace
         })
-        this.setState({ display: false });
+        // unselect workspace
         this.props.workspaceHandler('SELECT_WORKSPACE', null);
+        // close modal
+        this.props.toggleWorkspaceModal();
     }
 
     render() {
-        if (!this.props.selectedWorkspace || !this.state.display) {
+        // do not render if no workspace selected or display is off
+        if (!this.props.selectedWorkspace || !this.props.display) {
             return null;
         }
         return (
@@ -47,10 +52,14 @@ class WorkspaceEditModal extends Component {
     }
 
 }
-export default WorkspaceEditModal;
+const mapStateToProps = (state) => {
+    return { display: state.displayWorkspaceModal };
+};
+
+export default connect(mapStateToProps, { toggleWorkspaceModal })(WorkspaceEditModal);
 
 const Label = styled.label`
     display: inline-block;
     margin-bottom: .5rem;
-`
+`;
 

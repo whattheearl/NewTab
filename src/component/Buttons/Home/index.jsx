@@ -1,6 +1,7 @@
 // Gear button
-import React  from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom';
 import { IoMdHome } from 'react-icons/io'
 import COLORS from '../../../styles/colors'
 
@@ -26,7 +27,7 @@ const Container = styled.div`
     background-position: left center;
     transition: background-position .2s cubic-bezier(0.55, 0.055, 0.675, 0.19), color .3s .2s;
 
-    ${props => props.selected? `background-position: right center; color : ${COLORS.white};` : css`
+    ${props => props.selected ? `background-position: right center; color : ${COLORS.white};` : css`
         :hover{
             background: ${COLORS.darkWhite};
         }
@@ -35,18 +36,20 @@ const Container = styled.div`
 `
 
 const HomeButton = ({ onClick, display, selected }) => {
-    if(display !== null && !display) return null
+    if (display !== null && !display) return null
     // change color base on selection
-    if(!selected) {
+    if (!selected) {
         style.color = COLORS.black;
     } else {
         style.color = COLORS.white;
     }
 
     return (
-        <Container selected={selected} onClick={onClick}>
-            <IoMdHome style={style}/> Home
-        </Container>
+        <Link to="/">
+            <Container selected={selected} onClick={onClick}>
+                <IoMdHome style={style} /> Home
+            </Container>
+        </Link>
     );
 
 }

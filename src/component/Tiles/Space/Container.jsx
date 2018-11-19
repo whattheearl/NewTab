@@ -1,5 +1,7 @@
 /* global chrome */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { toggleWorkspaceModal } from '../../../actions/toggleWorkspaceModal';
 
 // Assets
 import bookmark from '../../../assets/image/bookmark.png';
@@ -58,6 +60,8 @@ class SpaceContainer extends Component {
     selectWorkspace(e) {
         e.stopPropagation();
         this.props.workspaceHandler('SELECT_WORKSPACE', this.props.workspace);
+        console.log(this.props.toggleWorkspaceModal);
+        this.props.toggleWorkspaceModal();
     }
 
     removeWorkspace(e) {
@@ -102,4 +106,4 @@ class SpaceContainer extends Component {
         );
     }
 }
-export default SpaceContainer;
+export default connect(null, { toggleWorkspaceModal })(SpaceContainer);

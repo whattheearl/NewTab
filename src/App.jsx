@@ -1,8 +1,7 @@
 /* global chrome */
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 // Assets
 import colors from './styles/colors';
@@ -11,6 +10,13 @@ import defaultWorkspaces from './assets/data/ws'; // New user state
 // Components
 import Home from './Pages/Home';
 import Workspace from './Pages/Workspace';
+
+// Redux
+import { createStore } from 'redux';
+import rootReducer from './reducers';
+import { Provider } from 'react-redux';
+const store = createStore(rootReducer);
+// import Workspace from './Pages/Workspace';
 
 const AppContainer = styled.div`
     color: ${colors.black};
@@ -69,7 +75,7 @@ class App extends Component {
             case 'SELECT_WORKSPACE':
                 // const { workspace: selectedWorkspace } = payload;
                 this.setState({
-                    selectedWorkspace: payload
+                    selectedWorkspace: payload.workspace
                 });
                 return;
             // probably dont want workspace logic and workspaces logic in the same handler
@@ -111,20 +117,28 @@ class App extends Component {
 
     render() {
         return (<div>
-            <AppContainer className={"App"}>
-                <Row>
-                    <Home
-                        workspaces={this.state.workspaces}
-                        selectedWorkspace={this.state.selectedWorkspace}
-                        workspaceHandler={this.workspaceHandler}
-                    />
-                    <Workspace
-                        workspaces={this.state.workspaces}
-                        selectedWorkspace={this.state.selectedWorkspace}
-                        workspaceHandler={this.workspaceHandler}
-                    />
-                </Row>
-            </AppContainer>
+            <Provider store={store}>
+                <Router>
+                    <AppContainer className={"App"}>
+                        <Row>
+                            <Route exact path='/' render={() => (
+                                <Home
+                                    workspaces={this.state.workspaces}
+                                    selectedWorkspace={this.state.selectedWorkspace}
+                                    workspaceHandler={this.workspaceHandler}
+                                />
+                            )} />
+                            <Route path='/workspace/:workspaceid' render={() => (
+                                <Workspace
+                                    workspaces={this.state.workspaces}
+                                    selectedWorkspace={this.state.selectedWorkspace}
+                                    workspaceHandler={this.workspaceHandler}
+                                />
+                            )} />
+                        </Row>
+                    </AppContainer>
+                </Router>
+            </Provider>
         </div>);
     }
 }

@@ -8,4 +8,4 @@ export default {
     lightBlue: '#2998ffda',
     darkBlue: '#5643fada',
     red: '#DD352E',
-} 
+}

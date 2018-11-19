@@ -109,9 +109,6 @@ class Workspace extends Component {
                             workspaceHandler={this.props.workspaceHandler}
                             selectedWorkspace={this.props.selectedWorkspace}
                         />
-                        {/* <SpeedDial 
-                            display={this.props.selectedWorkspace === null}
-                        /> */}
                     </MainArea>
                     <RightCol>
                         <NameInput workspaceHandler={this.props.workspaceHandler} />

@@ -13,14 +13,14 @@ import DetailHeader from './DetailHeader';
 
 class Detail extends Component {
     renderSiteList() {
-        const workspace = this.props.selectedWorkspace
-        return workspace.sites.slice()
+        const { selectedWorkspace } = this.props;
+        return selectedWorkspace.sites.slice()
             .sort((a, b) => {
                 return ('' + a.title).localeCompare(b.title);
             })
             .map((site, index) => {
                 return (
-                    <SiteContainer key={index}>
+                    <SiteContainer key={site.url}>
                         <Row href={site.url} target={'_blank'}>
                             <Thumbnail
                                 image={site.favIconUrl}
@@ -52,8 +52,9 @@ class Detail extends Component {
     }
 
     render() {
-        const workspace = this.props.selectedWorkspace;
-        if (!workspace) return null;
+        console.log(this.props);
+        const { selectedWorkspace } = this.props;
+        if (!selectedWorkspace) return null;
         return (
             <Container>
                 <SpaceContainer>
