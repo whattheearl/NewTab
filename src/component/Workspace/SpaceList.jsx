@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 // Assets
 import colors from '../../styles/colors';
@@ -15,7 +13,7 @@ class SpaceList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sortFunction: this.sortByCreate,
+            sortFunction: this.sortByName,
         }
         this.sortHandler = this.sortHandler.bind(this);
     }
@@ -64,10 +62,10 @@ class SpaceList extends Component {
         if (!this.props.filter) {
             return workspaces.slice()
                 .sort(this.state.sortFunction) // need to select which sor to use
-                .map((space, index) =>
+                .map((space) =>
                     (<Space
                         {...this.props}
-                        key={index}
+                        key={space.uuid}
                         workspace={space}
                         workspaceHandler={this.props.workspaceHandler}
                     />)
@@ -86,10 +84,13 @@ class SpaceList extends Component {
             );
     }
 
-    render() {
+    componentDidMount() {
         if (!!this.props.selectedWorkspace) {
-            return (<Redirect to={`/Workspace/${this.props.selectedWorkspace}`} />)
+            this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null });
         }
+    }
+
+    render() {
         const { workspaces, display } = this.props;
         if (!workspaces || !display) return null;
         const spaces = this.renderSpaces();

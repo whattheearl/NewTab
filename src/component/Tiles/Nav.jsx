@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 // Assets
 import colors from '../../styles/colors';
 
-// Components
-import Text from '../Text';
-
 let style = {
     position: 'relative',
     marginRight: '.6rem',
@@ -32,19 +29,18 @@ const Container = styled.div`
 
 // Use to navigate between workspaces on nav panel
 const NavTile = (props) => {
-    const { name, onClick, selected } = props;
     // change color base on selection
-    if (!selected) {
+    if (!props.selected) {
         style.color = colors.black;
     } else {
         style.color = colors.white;
     }
-    let url = `/Workspace/${name.replace(' ', '')}`;
+    let url = `/Workspace/${props.uuid}`;
     return (
         <Link to={url}>
-            <Container selected={selected} onClick={onClick}>
+            <Container selected={props.selected}>
                 {/* <Text text={name} maxLength={19} /> */}
-                {name}
+                {props.name}
             </Container>
         </Link>
     );

@@ -1,6 +1,7 @@
 // Component for navigating between open workspaces and start newtab page
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Components
 import Text from '../../Text';
@@ -44,7 +45,9 @@ class BreadCrumbNav extends Component {
         }
         return (
             <Row>
-                <Bkmrkr style={style} onClick={this.back.bind(this)}>bkmrkr</Bkmrkr>
+                <Link to='/'>
+                    <Bkmrkr style={style}>bkmrkr</Bkmrkr>
+                </Link>
                 {/* show bread crumb for currently selected workspace */}
                 {isWorkspaceSelected ?
                     (<Name>

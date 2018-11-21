@@ -1,5 +1,5 @@
 export default [{
-    "id": 10,
+    "uuid": 10,
     "created": 1542329664042,
     "lastModified": 1542329664042,
     "name": "Diane: Gift Ideas",
@@ -69,7 +69,7 @@ export default [{
     }],
     "saved": 1542329669062
 }, {
-    "id": 11,
+    "uuid": 11,
     "created": 1542328718155,
     "lastModified": 1542328718155,
     "name": "Dinner: Thursday Night",
@@ -139,7 +139,7 @@ export default [{
     }],
     "saved": 1542328722285
 }, {
-    "id": 11,
+    "uuid": 9,
     "created": 1542328597272,
     "lastModified": 1542328597272,
     "name": "Portfolio: Inspiration",
@@ -249,7 +249,7 @@ export default [{
         "windowId": 12595669
     }]
 }, {
-    "id": 11,
+    "uuid": 8,
     "created": 1542328556470,
     "lastModified": 1542328556470,
     "name": "CSS: Animations",
@@ -319,7 +319,7 @@ export default [{
     }],
     "saved": null
 }, {
-    "id": 10,
+    "uuid": 7,
     "created": 1542261193556,
     "lastModified": 1542261193556,
     "name": "Job Search",
@@ -578,7 +578,7 @@ export default [{
     }],
     "saved": null
 }, {
-    "id": 7,
+    "uuid": 6,
     "created": 1541799630697,
     "lastModified": 1541799639377,
     "name": "Stock Photos",
@@ -668,7 +668,7 @@ export default [{
         "windowId": 12592242
     }]
 }, {
-    "id": 5,
+    "uuid": 5,
     "created": 1541731289728,
     "lastModified": 1541731415262,
     "name": "Javascript study",
@@ -757,7 +757,7 @@ export default [{
         "windowId": 12592242
     }]
 }, {
-    "id": 4,
+    "uuid": 4,
     "created": 1541555199296,
     "lastModified": 1541555206292,
     "name": "Guitar",
@@ -806,7 +806,7 @@ export default [{
     }],
     "saved": 1542329681144
 }, {
-    "id": 4,
+    "uuid": 3,
     "created": 1541541343251,
     "lastModified": 1541733086801,
     "name": "Chrome Extension Dev",

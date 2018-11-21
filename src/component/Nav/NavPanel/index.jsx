@@ -11,7 +11,6 @@ import HomeButton from '../../Buttons/Home';
 import WorkspaceNavTile from '../../Tiles/Nav'
 
 class NavPanel extends Component {
-    clickHomeButton = this.clickHomeButton.bind(this);
 
     clearCache() {
         console.log('clearing cache');
@@ -24,11 +23,6 @@ class NavPanel extends Component {
         window.location.reload();
     }
 
-    // unselects current workspace
-    clickHomeButton() {
-        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null });
-    }
-
     // using workspaces as "pages" to sort work
     render() {
         if (!this.props.display) return null;
@@ -37,20 +31,17 @@ class NavPanel extends Component {
         let spaces = this.props.workspaces.slice().sort((a, b) => { return a.saved - b.saved })
             .map((space, index) => {
                 return <WorkspaceNavTile
-                    key={index}
-                    onClick={() => { this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: space }) }}
+                    key={space.uuid}
                     name={space.name}
+                    uuid={space.uuid}
                     selected={this.props.selectedWorkspace === space}
                 />;
             })
-
-
         return (
             <Container>
                 <HomeButton
                     display={true}
-                    onClick={this.clickHomeButton}
-                    selected={!this.props.selectedWorkspace}
+                    selected={window.location.pathname === '/'}
                 />
                 <VerticalScrollArea>
                     {spaces}

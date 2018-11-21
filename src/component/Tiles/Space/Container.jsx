@@ -20,6 +20,7 @@ class SpaceContainer extends Component {
     }
 
     openAllLinks = (e) => {
+        console.log('open all links');
         e.preventDefault()
         e.stopPropagation()
         if (process && process.env.NODE_ENV === 'development') {
@@ -27,23 +28,23 @@ class SpaceContainer extends Component {
                 chrome.extensionId,
                 {
                     type: 'OPEN_TABS',
-                    tabs: this.props.sites
+                    tabs: this.props.workspace.sites
                 }
             );
         } else {
             chrome.runtime.sendMessage(
                 {
                     type: 'OPEN_TABS',
-                    tabs: this.props.sites
+                    tabs: this.props.workspace.sites
                 }
             );
         }
     }
 
     getSites() {
-        const sites = this.props.workspace.sites.map((site) => {
+        const sites = this.props.workspace.sites.map((site, index) => {
             let image = site.image || site.favIconUrl;
-            return (<a key={site.url} href={site.url} target="_blank" style={{ display: 'block' }}>
+            return (<a key={index} href={site.url} target="_blank" style={{ display: 'block' }}>
                 <Thumbnail
                     image={image}
                     backupImage={bookmark}
@@ -59,17 +60,14 @@ class SpaceContainer extends Component {
 
     selectWorkspace(e) {
         e.stopPropagation();
-        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: this.props.workspace });
-        console.log(this.props, this.state);
+        this.props.history.push(`Workspace/${this.props.workspace.uuid}`);
     }
 
     editWorkspace(e) {
         e.stopPropagation();
         e.preventDefault();
-        this.props.history.push(`Workspace/${this.props.workspace.name}`);
         this.props.toggleWorkspaceModal();
         this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: this.props.workspace });
-        console.log(this.props.toggleWorkspaceModal);
     }
 
     removeWorkspace(e) {
@@ -92,7 +90,7 @@ class SpaceContainer extends Component {
         const sites = this.getSites();
         return (
             <Space
-                {...this.props}
+                // {...this.props}
                 {...this.props.workspace}
                 sites={sites}
                 openAllLinks={this.openAllLinks}
@@ -100,7 +98,6 @@ class SpaceContainer extends Component {
                 edit={this.editWorkspace}
                 remove={this.removeWorkspace}
                 favorite={this.favoriteWorkspace}
-                rename={this.renameWorkspace}
             />
         );
     }

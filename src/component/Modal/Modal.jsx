@@ -2,15 +2,16 @@
 // -name: can change name of site
 // -url: sets the site url
 // -image: custom image can be used instead of default favicon
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 class Modal extends Component {
     render() {
-        if(!this.props.display) return null;
+        if (!this.props.display) return null;
+        console.log('modal props', this.props);
         return (
-            <ModalTint onClick={this.closeModal}>
-                <ModalDisplay onClick={(e) => { e.stopPropagation()}}>
+            <ModalTint onClick={this.props.handleClose}>
+                <ModalDisplay onClick={(e) => { e.stopPropagation() }}>
                     <TitleContainer>
                         <h1>{this.props.title}</h1>
                     </TitleContainer>
@@ -21,7 +22,7 @@ class Modal extends Component {
             </ModalTint>
         );
     }
-    
+
 }
 export default Modal;
 

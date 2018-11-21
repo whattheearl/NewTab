@@ -10,9 +10,9 @@ class SpaceHeader extends Component {
         return (
             <Container>
                 <Row>
-                    <WorkspaceHeading onClick={() => {this.props.sortHandler({type: 'SELECT_NAME'})}}>Workspace Title</WorkspaceHeading>
+                    <WorkspaceHeading onClick={() => { this.props.sortHandler({ type: 'SELECT_NAME' }) }}>Workspace Title</WorkspaceHeading>
                     <SitesHeading>Sites</SitesHeading>
-                    <CreatedAtHeading onClick={() => {this.props.sortHandler({type: 'SELECT_CREATED'})}}>Created At</CreatedAtHeading>
+                    <ModifiedHeading onClick={() => { this.props.sortHandler({ type: 'SELECT_CREATED' }) }}>Created At</ModifiedHeading>
                 </Row>
             </Container>
         )
@@ -51,7 +51,7 @@ const SitesHeading = styled.div`
 `;
 
 // margin-right: 1rem padding + 7px for scrollbar
-const CreatedAtHeading = styled.div`
+const ModifiedHeading = styled.div`
     width: 5rem;
     margin-right: calc(1rem + 7px); 
     cursor: pointer;
