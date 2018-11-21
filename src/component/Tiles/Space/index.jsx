@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
 
 // Assets
 import COLOR from '../../../styles/colors';
@@ -15,19 +14,19 @@ import Edit from '../../Buttons/Edit';
 
 class Space extends Component {
     render() {
-        const { name, sites, lastModified } = this.props;
         return (
             <Container>
                 <Row onClick={this.props.select}>
                     <Favorite
                         display={true}
-                        isFull={this.props.workspace.saved}
+                        isFull={this.props.saved}
                         onClick={this.props.favorite} />
                     <Name >
-                        <Text
-                            onClick={this.props.openAllLinks}
-                            text={name}
-                            maxLength={33} />
+                        <div onClick={this.props.openAllLinks}>
+                            <Text
+                                text={this.props.name}
+                                maxLength={33} />
+                        </div>
                         <EditContainer>
                             <Edit
                                 display={true}
@@ -37,11 +36,11 @@ class Space extends Component {
                     </Name>
                     <RightCol>
                         <Grid numColumns={10}>
-                            {sites}
+                            {this.props.sites}
                         </Grid>
                     </RightCol>
                     <DateContainer>
-                        <LocalDate date={lastModified} />
+                        <LocalDate date={this.props.created} />
                     </DateContainer>
                     <IconContainer>
                         <CloseButton display={true} onClick={this.props.remove} />
@@ -75,7 +74,8 @@ const EditContainer = styled.div`
 `;
 
 const IconContainer = styled.div`
-    display: none;
+    display: flex;
+    opacity: 0;
     justify-content: flex-end;
     position: absolute;
     background-color: ${COLOR.white};
@@ -84,7 +84,7 @@ const IconContainer = styled.div`
     transform: translateY(-50%);
     width: 96px;
     ${Container}:hover & {
-        display: flex;
+        opacity: 1;
     }
 `;
 

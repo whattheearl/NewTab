@@ -1,7 +1,3 @@
-const initialState = {
-    open: false
-};
-
 export default function displayWorkspaceModal(state = false, action) {
     switch (action.type) {
         case 'TOGGLE_WORKSPACE_MODAL':

@@ -12,6 +12,15 @@ import DetailHeader from './DetailHeader';
 
 
 class Detail extends Component {
+    componentDidUpdate() {
+        if (!this.props.selectedWorkspace || String(this.props.selectedWorkspace.uuid) !== String(this.props.match.params.workspaceid)) {
+            this.props.workspaceHandler('SELECT_WORKSPACE', { uuid: this.props.match.params.workspaceid });
+        }
+    }
+    componentDidMount() {
+        this.props.workspaceHandler('SELECT_WORKSPACE', { uuid: this.props.match.params.workspaceid });
+    }
+
     renderSiteList() {
         const { selectedWorkspace } = this.props;
         return selectedWorkspace.sites.slice()
@@ -32,7 +41,6 @@ class Detail extends Component {
                             />
                             <div>
                                 <Title>{site.title}</Title>
-                                {/* <Url>{site.url}</Url> */}
                             </div>
                             {site.content}
                             <div style={{ marginLeft: 'auto' }}>
@@ -52,8 +60,7 @@ class Detail extends Component {
     }
 
     render() {
-        const { selectedWorkspace } = this.props;
-        if (!selectedWorkspace) return null;
+        if (!this.props.selectedWorkspace) return null;
         return (
             <Container>
                 <SpaceContainer>
@@ -109,11 +116,4 @@ const Row = styled.a`
 const Title = styled.div`
     margin-left: .66rem;
     margin-bottom: .2rem;
-    /* color: #202124; */
-`;
-
-const Url = styled.div`
-    margin-left: .66rem;
-    color: ${colors.gray};
-    font-size: .66rem;
 `;

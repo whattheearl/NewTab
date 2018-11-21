@@ -1,10 +1,11 @@
 /* global chrome */
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import uuidv1 from 'uuid/v1';
 
 // Assets
 import colors from './styles/colors';
-import defaultWorkspaces from './assets/data/ws'; // New user state
+import defaultWorkspaces from './assets/data/ws'; // Sample user state
 
 // Components
 import Page from './Pages/Home';
@@ -14,17 +15,6 @@ import { createStore } from 'redux';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 const store = createStore(rootReducer);
-// import Workspace from './Pages/Workspace';
-
-const AppContainer = styled.div`
-    color: ${colors.black};
-`;
-
-const Row = styled.div`
-    margin: 0 auto;
-    max-width: 1980px;
-    height: 100vh;
-`;
 
 // ChromeExtension ID, need it for communication while developing
 chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf";
@@ -33,7 +23,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         const localWorkspaces = window.localStorage.getItem('workspace');
-        const workspaces = localWorkspaces ? JSON.parse(localWorkspaces) : defaultWorkspaces;
+        let workspaces = localWorkspaces ? JSON.parse(localWorkspaces) : defaultWorkspaces;
+        workspaces = this.ensureUUID(workspaces);
         this.state = {
             workspaces,
             selectedWorkspace: null,
@@ -41,40 +32,69 @@ class App extends Component {
         this.workspaceHandler = this.workspaceHandler.bind(this);
     }
 
+    ensureUUID(workspaces) {
+        let missingUUID = workspaces.filter(space => !space.uuid);
+        let complete = workspaces.filter(space => !!space.uuid);
+        missingUUID.forEach(space => {
+            space.uuid = this.getUUID(complete);
+            complete.push(space);
+        });
+        return complete;
+    }
+
     // Store changes to local storage
     exportWorkspace() {
         window.localStorage.setItem('workspace', JSON.stringify(this.state.workspaces));
     }
 
+    getUUID(workspaces) {
+        let uuid = uuidv1();
+        // regenerate uuid if already used
+        while (workspaces.filter(space => !!space.uuid && space.uuid === uuid).length > 0) {
+            uuid = uuidv1();
+        }
+        return uuid;
+    }
+
     // handler deals with state changes, ADD_WORKSPACE, REMOVE_WORKSPACE
     workspaceHandler(action, payload) {
-        console.log('action payload', action, payload);
         switch (action) {
             // adds a new workspace
             case 'ADD_WORKSPACE':
                 // Only add if name is set
+                const uuid = this.getUUID(this.state.workspaces)
                 let {
                     name,
-                    sites
+                    sites,
                 } = payload;
                 // create new workspace and add to state
                 this.setState(state => ({
                     workspaces: [{
-                        id: state.workspaces.length,
                         created: Date.now(),
                         lastModified: Date.now(),
                         name,
                         sites,
+                        uuid,
                     },
                     ...state.workspaces,
                     ]
                 }), this.exportWorkspace);
                 return;
             case 'SELECT_WORKSPACE':
-                // const { workspace: selectedWorkspace } = payload;
-                this.setState({
-                    selectedWorkspace: payload.workspace
-                });
+                if (payload.workspace !== undefined) {
+                    this.setState({
+                        selectedWorkspace: payload.workspace
+                    });
+                    return;
+                }
+                let target = this.state.workspaces.filter(space => String(space.uuid) === String(payload.uuid));
+                if (target.length === 1) {
+                    this.setState({
+                        selectedWorkspace: target[0]
+                    });
+                } else {
+                    console.error('Workspaces with same id', target);
+                }
                 return;
             // probably dont want workspace logic and workspaces logic in the same handler
             case 'REMOVE_WORKSPACE':
@@ -117,17 +137,22 @@ class App extends Component {
         return (<div>
             <Provider store={store}>
                 <AppContainer className={"App"}>
-                    <Row>
-                        <Page
-                            workspaces={this.state.workspaces}
-                            selectedWorkspace={this.state.selectedWorkspace}
-                            workspaceHandler={this.workspaceHandler}
-                        />
-                    </Row>
+                    <Page
+                        workspaces={this.state.workspaces}
+                        selectedWorkspace={this.state.selectedWorkspace}
+                        workspaceHandler={this.workspaceHandler}
+                    />
                 </AppContainer>
             </Provider>
         </div>);
     }
 }
-
 export default App;
+
+// Styles
+const AppContainer = styled.div`
+    color: ${colors.black};
+    margin: 0 auto;
+    max-width: 1980px;
+    height: 100vh;
+`;

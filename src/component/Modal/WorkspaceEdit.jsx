@@ -12,25 +12,42 @@ import Input from '../Input';
 class WorkspaceEditModal extends Component {
     constructor(props) {
         super(props);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.inputRef = React.createRef();
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     // Change the name of the current selected workspace
-    onSubmit({ value: name }) {
+    handleSubmit() {
         // create new workspace with current name
         let updatedWorkspace = {
             ...this.props.selectedWorkspace,
-            name
+            name: this.inputRef.current.value
         }
         // replace the workspace with current
         this.props.workspaceHandler('REPLACE_WORKSPACE', {
             workspace: this.props.selectedWorkspace,
             updatedWorkspace
         })
+        this.handleClose();
+    }
+
+    handleClose() {
         // unselect workspace
         this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null });
         // close modal
         this.props.toggleWorkspaceModal();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!this.props.display) {
+            return;
+        }
+        if (prevProps !== this.props) {
+            this.inputRef.current.focus();
+            this.inputRef.current.setSelectionRange(0, this.inputRef.current.value.length)
+        }
     }
 
     render() {
@@ -39,14 +56,20 @@ class WorkspaceEditModal extends Component {
             return null;
         }
         return (
-            <Modal title={"Editing..."} display={true}>
+            <Modal
+                title={"Editing..."}
+                display={true}
+                handleClose={this.handleClose}
+            >
                 <Label htmlFor="workspace-name-input">Name</Label>
-                <Input
-                    id="workspace-name-input"
-                    placeholder={'Workspace Name'}
-                    value={this.props.selectedWorkspace.name}
-                    onSubmit={this.onSubmit}
-                />
+                <Form onSubmit={this.handleSubmit}>
+                    <Input
+                        id={"workspace-name-input"}
+                        placeholder={'Workspace Name'}
+                        inputRef={this.inputRef}
+                        value={this.props.selectedWorkspace.name}
+                    />
+                </Form>
             </Modal>
         );
     }
@@ -63,3 +86,6 @@ const Label = styled.label`
     margin-bottom: .5rem;
 `;
 
+const Form = styled.form`
+    width: 100%;
+`;

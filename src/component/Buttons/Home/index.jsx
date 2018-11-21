@@ -26,7 +26,7 @@ const Container = styled.div`
     background-size: 220%;
     background-position: left center;
     transition: background-position .2s cubic-bezier(0.55, 0.055, 0.675, 0.19), color .3s .2s;
-
+    transition-delay: .2s;
     ${props => props.selected ? `background-position: right center; color : ${COLORS.white};` : css`
         :hover{
             background: ${COLORS.darkWhite};
@@ -46,7 +46,7 @@ const HomeButton = ({ onClick, display, selected }) => {
 
     return (
         <Link to="/">
-            <Container selected={selected} onClick={onClick}>
+            <Container selected={selected}>
                 <IoMdHome style={style} /> Home
             </Container>
         </Link>
