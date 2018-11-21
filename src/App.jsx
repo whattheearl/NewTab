@@ -4,17 +4,26 @@ import styled from 'styled-components';
 
 // Assets
 import colors from './styles/colors';
-import defaultWorkspaces from './data/workspaces'; // New user state
+import defaultWorkspaces from './assets/data/ws'; // New user state
 
 // Components
-import Home from './Pages/Home';
+import Page from './Pages/Home';
 
-const AppContainer = styled.div `
+// Redux
+import { createStore } from 'redux';
+import rootReducer from './reducers';
+import { Provider } from 'react-redux';
+const store = createStore(rootReducer);
+// import Workspace from './Pages/Workspace';
+
+const AppContainer = styled.div`
     color: ${colors.black};
 `;
 
-const Row = styled.div `
-    display: flex;
+const Row = styled.div`
+    margin: 0 auto;
+    max-width: 1980px;
+    height: 100vh;
 `;
 
 // ChromeExtension ID, need it for communication while developing
@@ -39,32 +48,40 @@ class App extends Component {
 
     // handler deals with state changes, ADD_WORKSPACE, REMOVE_WORKSPACE
     workspaceHandler(action, payload) {
+        console.log('action payload', action, payload);
         switch (action) {
             // adds a new workspace
             case 'ADD_WORKSPACE':
                 // Only add if name is set
-                let { name, sites } = payload;
+                let {
+                    name,
+                    sites
+                } = payload;
                 // create new workspace and add to state
                 this.setState(state => ({
                     workspaces: [{
-                            id: state.workspaces.length,
-                            created: Date.now(),
-                            lastModified: Date.now(),
-                            name,
-                            sites,
-                        },
-                        ...state.workspaces,
+                        id: state.workspaces.length,
+                        created: Date.now(),
+                        lastModified: Date.now(),
+                        name,
+                        sites,
+                    },
+                    ...state.workspaces,
                     ]
                 }), this.exportWorkspace);
                 return;
             case 'SELECT_WORKSPACE':
-                const { workspace: selectedWorkspace } = payload;
-                this.setState({ selectedWorkspace });
+                // const { workspace: selectedWorkspace } = payload;
+                this.setState({
+                    selectedWorkspace: payload.workspace
+                });
                 return;
             // probably dont want workspace logic and workspaces logic in the same handler
             case 'REMOVE_WORKSPACE':
                 // remove target workspace
-                const { workspace } = payload;
+                const {
+                    workspace
+                } = payload;
                 const index = this.state.workspaces.indexOf(workspace);
                 this.setState(state => ({
                     workspaces: [
@@ -75,9 +92,13 @@ class App extends Component {
                 }), this.exportWorkspace);
                 return;
             case 'REPLACE_WORKSPACE':
-                const { workspace: prevWorkspace, updatedWorkspace } = payload;
+                const {
+                    workspace: prevWorkspace,
+                    updatedWorkspace
+                } = payload;
                 const indexToBeReplaced = this.state.workspaces.indexOf(prevWorkspace);
-                const selected = prevWorkspace === this.state.selectedWorkspace? updatedWorkspace : null;
+                // reset the current workspace as selected if already selected
+                const selected = prevWorkspace === this.state.selectedWorkspace ? updatedWorkspace : null;
                 this.setState(state => ({
                     workspaces: [
                         ...state.workspaces.slice(0, indexToBeReplaced),
@@ -93,19 +114,19 @@ class App extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <AppContainer className = "App" >
+        return (<div>
+            <Provider store={store}>
+                <AppContainer className={"App"}>
                     <Row>
-                        <Home 
+                        <Page
                             workspaces={this.state.workspaces}
-                            selectedWorkspace={ this.state.selectedWorkspace }
-                            workspaceHandler={ this.workspaceHandler } 
+                            selectedWorkspace={this.state.selectedWorkspace}
+                            workspaceHandler={this.workspaceHandler}
                         />
-                    </Row> 
-                </AppContainer> 
-            </div>
-        );
+                    </Row>
+                </AppContainer>
+            </Provider>
+        </div>);
     }
 }
 

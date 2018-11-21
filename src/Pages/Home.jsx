@@ -1,40 +1,39 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // Assets
 import COLORS from '../styles/colors';
 
 // Components
-import BreadCrumb from '../component/BreadcrumbNav';
+import BreadCrumb from '../component/Nav/BreadcrumbNav';
 import ChromeTabArea from '../component/ChromeTabArea';
 import DetailList from '../component/Workspace/DetailList';
 import NameInput from '../component/Workspace/name.input';
-import NavPanel from '../component/NavPanel';
-import SearchBar from '../component/SearchBar';
+import NavPanel from '../component/Nav/NavPanel';
+import SearchBar from '../component/Input/SearchBar';
 import SpaceList from '../component/Workspace/SpaceList';
+import WorkspaceEditModal from '../component/Modal/WorkspaceEdit';
 
-
-class NewPage extends Component {
+class Page extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter:'',
+            filter: '',
         }
-
         this.sitesHandler = this.sitesHandler.bind(this);
         this.filterHandler = this.filterHandler.bind(this);
     }
 
     filterHandler(action, payload) {
-        console.log(action, payload);
-        switch(action.type) {
-            case 'SET_FILTER': 
-                this.setState({filter: payload.filter});
+        switch (action.type) {
+            case 'SET_FILTER':
+                this.setState({ filter: payload.filter });
                 return;
             case 'CLEAR_FILTER':
-                this.setState({filter: ''});
+                this.setState({ filter: '' });
                 return;
-            default: 
+            default:
                 console.error('error unreachable switch case filter');
                 return;
         }
@@ -42,23 +41,23 @@ class NewPage extends Component {
 
     sitesHandler(action, payload) {
         // check if workspace is selected (should throw some visable error)
-        if(!this.props.selectedWorkspace) return;
+        if (!this.props.selectedWorkspace) return;
         const { site } = payload;
         const { sites } = this.props.selectedWorkspace;
         let updatedWorkspace = {
             ...this.props.selectedWorkspace,
             lastModified: Date.now()
         };
-        switch(action.type) {
+        switch (action.type) {
             case 'REMOVE_SITE_FROM_SELECTED_WORKSPACE':
                 const index = sites.indexOf(site)
                 updatedWorkspace.sites = [
                     ...sites.slice(0, index),
-                    ...sites.slice(index+1)
+                    ...sites.slice(index + 1)
                 ];
                 // Replace selectedWorkspace with updatedWorkspace
-                this.props.workspaceHandler('REPLACE_WORKSPACE', { 
-                    workspace: this.props.selectedWorkspace, 
+                this.props.workspaceHandler('REPLACE_WORKSPACE', {
+                    workspace: this.props.selectedWorkspace,
                     updatedWorkspace
                 });
                 return;
@@ -68,8 +67,8 @@ class NewPage extends Component {
                     site,
                 ];
                 // Replace selectedWorkspace with updatedWorkspace
-                this.props.workspaceHandler('REPLACE_WORKSPACE', { 
-                    workspace: this.props.selectedWorkspace, 
+                this.props.workspaceHandler('REPLACE_WORKSPACE', {
+                    workspace: this.props.selectedWorkspace,
                     updatedWorkspace
                 });
                 return;
@@ -83,50 +82,60 @@ class NewPage extends Component {
 
     render() {
         return (
-            <div className="newpage">
-                <Header>
-                    <BreadCrumb 
-                        workspace={this.props.selectedWorkspace} 
+            <Router>
+                <div className="page">
+                    <WorkspaceEditModal
+                        selectedWorkspace={this.props.selectedWorkspace}
                         workspaceHandler={this.props.workspaceHandler}
                     />
-                    <SearchBar filterHandler={this.filterHandler} />
-                    <div>&nbsp;</div>
-                </Header>
-                <Row>
-                    <LeftCol>
-                        <NavPanel 
-                            display={ true } 
-                            workspaces={ this.props.workspaces.filter(space => !!space.saved) } 
-                            selectedWorkspace={ this.props.selectedWorkspace }
-                            workspaceHandler={ this.props.workspaceHandler }
-                        /> 
-                    </LeftCol>
-                    <MainArea>
-                        <DetailList
-                            sitesHandler={this.sitesHandler}
+                    <Header>
+                        <BreadCrumb
+                            workspace={this.props.selectedWorkspace}
                             workspaceHandler={this.props.workspaceHandler}
-                            selectedWorkspace={this.props.selectedWorkspace}
                         />
-                        <SpaceList
-                            filter={this.state.filter}
-                            workspaceHandler={this.props.workspaceHandler}
-                            workspaces={this.props.workspaces}
-                            display={this.props.selectedWorkspace === null}
-                        />
-                        {/* <SpeedDial 
-                            display={this.props.selectedWorkspace === null}
-                        /> */}
-                    </MainArea>
-                    <RightCol>
-                        <NameInput workspaceHandler={this.props.workspaceHandler}/>
-                        <ChromeTabArea sitesHandler={this.sitesHandler} selectedWorkspace={this.props.selectedWorkspace}/>
-                    </RightCol>
-                </Row>
-            </div>
+                        <SearchBar filterHandler={this.filterHandler} />
+                        <div>&nbsp;</div>
+                    </Header>
+                    <Row>
+                        <LeftCol>
+                            <NavPanel
+                                display={true}
+                                workspaces={this.props.workspaces.filter(space => !!space.saved)}
+                                selectedWorkspace={this.props.selectedWorkspace}
+                                workspaceHandler={this.props.workspaceHandler}
+                            />
+                        </LeftCol>
+                        <MainArea>
+                            <Route exact path='/' render={(props) => (
+                                <SpaceList
+                                    {...props}
+                                    selectedWorkspace={this.props.selectedWorkspace}
+                                    filter={this.state.filter}
+                                    workspaceHandler={this.props.workspaceHandler}
+                                    workspaces={this.props.workspaces}
+                                    display={true}
+                                />
+                            )} />
+                            <Route path='/workspace/:workspaceid' render={(props) => (
+                                <DetailList
+                                    {...props}
+                                    sitesHandler={this.sitesHandler}
+                                    workspaceHandler={this.props.workspaceHandler}
+                                    selectedWorkspace={this.props.selectedWorkspace}
+                                />
+                            )} />
+                        </MainArea>
+                        <RightCol>
+                            <NameInput workspaceHandler={this.props.workspaceHandler} />
+                            <ChromeTabArea sitesHandler={this.sitesHandler} selectedWorkspace={this.props.selectedWorkspace} />
+                        </RightCol>
+                    </Row>
+                </div>
+            </Router>
         );
     }
 }
-export default NewPage;
+export default Page;
 
 // styled
 const MainArea = styled.div`
@@ -138,9 +147,9 @@ const MainArea = styled.div`
 `;
 
 const Row = styled.div`
-    height: calc(100vh - 64px);
+    height: calc(100vh - 65px);
     display: flex;
-    width: 100vw;
+    width: 100%;
 `;
 
 const Header = styled.div`
@@ -148,7 +157,7 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100vw;
+    width: 100%;
     padding: 1rem;
     border-bottom: 1px solid ${COLORS.darkWhite};
     box-sizing: border-box;

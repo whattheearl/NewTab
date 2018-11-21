@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Assets
 import colors from '../../styles/colors';
@@ -35,22 +37,21 @@ class SpaceList extends Component {
     }
 
     sortHandler(action) {
-        console.log(action.type)
-        switch(action.type) {
+        switch (action.type) {
             case 'SELECT_NAME':
-                if(this.state.sortFunction === this.sortByName)   {
-                    this.setState({sortFunction: this.sortByNameReverse});
+                if (this.state.sortFunction === this.sortByName) {
+                    this.setState({ sortFunction: this.sortByNameReverse });
                 }
                 else {
-                    this.setState({sortFunction: this.sortByName});
+                    this.setState({ sortFunction: this.sortByName });
                 }
                 break;
             case 'SELECT_CREATED':
-                if(this.state.sortFunction === this.sortByCreate)   {
-                    this.setState({sortFunction: this.sortByCreateReverse});
+                if (this.state.sortFunction === this.sortByCreate) {
+                    this.setState({ sortFunction: this.sortByCreateReverse });
                 }
                 else {
-                    this.setState({sortFunction: this.sortByCreate});
+                    this.setState({ sortFunction: this.sortByCreate });
                 }
                 break;
             default:
@@ -60,34 +61,37 @@ class SpaceList extends Component {
 
     renderSpaces() {
         const { workspaces } = this.props;
-        if(!this.props.filter) {
+        if (!this.props.filter) {
             return workspaces.slice()
                 .sort(this.state.sortFunction) // need to select which sor to use
                 .map((space, index) =>
                     (<Space
+                        {...this.props}
                         key={index}
-                        workspace={space} 
-                        workspaceHandler={this.props.workspaceHandler} 
-                        {...space} 
+                        workspace={space}
+                        workspaceHandler={this.props.workspaceHandler}
                     />)
                 );
-        } 
+        }
         return workspaces.slice()
             .sort(this.state.sortFunction) // need to select which sor to use
-            .filter(space => {return space.name.toLowerCase().includes(this.props.filter.toLowerCase())})
+            .filter(space => { return space.name.toLowerCase().includes(this.props.filter.toLowerCase()) })
             .map((space, index) =>
                 (<Space
                     key={index}
-                    workspace={space} 
-                    workspaceHandler={this.props.workspaceHandler} 
-                    {...space} 
+                    workspace={space}
+                    workspaceHandler={this.props.workspaceHandler}
+                    {...space}
                 />)
             );
     }
 
     render() {
+        if (!!this.props.selectedWorkspace) {
+            return (<Redirect to={`/Workspace/${this.props.selectedWorkspace}`} />)
+        }
         const { workspaces, display } = this.props;
-        if(!workspaces || !display) return null;
+        if (!workspaces || !display) return null;
         const spaces = this.renderSpaces();
         return (
             <Container className="SpaceList">
@@ -97,10 +101,10 @@ class SpaceList extends Component {
                 </VerticalScrollArea>
                 <InfoContainer>{`${spaces.length.toString()} workspaces created`}</InfoContainer>
             </Container>
-        )
+        );
     }
 }
-export default SpaceList
+export default SpaceList;
 
 const Container = styled.div`
     display: flex;
@@ -109,9 +113,9 @@ const Container = styled.div`
     width: 100%;
     border-bottom: 1px solid ${colors.darkWhite};
     box-sizing: border-box;
-`
+`;
 
 const InfoContainer = styled.div`
     margin-bottom: auto;
     text-align: center;
-`
+`;

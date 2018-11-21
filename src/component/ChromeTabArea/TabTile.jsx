@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 // Assets
 import colors from '../../styles/colors'
-import bookmarkIcon from '../../image/bookmark.png'
+import bookmarkIcon from '../../assets/image/bookmark.png'
 
 // Component
 import Thumbnail from '../Thumbnail'
@@ -23,30 +23,30 @@ class TabTile extends Component {
     async save(e) {
         e.stopPropagation()
         try {
-            this.props.sitesHandler({type: 'ADD_SITE_TO_SELECTED_WORKSPACE'}, {site: this.props.tab});
+            this.props.sitesHandler({ type: 'ADD_SITE_TO_SELECTED_WORKSPACE' }, { site: this.props.tab });
 
-        } catch(error) {
+        } catch (error) {
             console.log(error);
         }
     }
 
     close(e) {
         e.stopPropagation()
-        if(process && process.env.NODE_ENV === 'development') {
+        if (process && process.env.NODE_ENV === 'development') {
             chrome.runtime.sendMessage(
                 chrome.extensionId,
-                {type: "CLOSE_TAB", tab: this.props.tab.id}
+                { type: "CLOSE_TAB", tab: this.props.tab.id }
             )
         } else {
             chrome.runtime.sendMessage(
-                {type: "CLOSE_TAB", tab: this.props.tab.id}
+                { type: "CLOSE_TAB", tab: this.props.tab.id }
             )
         }
     }
 
     getSite() {
-        let {tab} = this.props
-        if(!tab) return
+        let { tab } = this.props
+        if (!tab) return
         let site = {
             title: this.props.name,
             url: this.props.tab.url,
@@ -54,16 +54,16 @@ class TabTile extends Component {
         }
         return new Promise((resolve, reject) => {
             chrome.runtime.sendMessage(
-                chrome.extensionId, 
+                chrome.extensionId,
                 {
                     type: "GET_SITE",
                     to: tab.id,
                 },
                 response => {
-                    site.icons = response && response.icons? response.icons : []
-                    site.content = response && response.content? response.content : ""
-                    if(site.icons && site.icons.length > 0) site.favIconUrl = site.icons[0]
-                    if(response) {
+                    site.icons = response && response.icons ? response.icons : []
+                    site.content = response && response.content ? response.content : ""
+                    if (site.icons && site.icons.length > 0) site.favIconUrl = site.icons[0]
+                    if (response) {
                         resolve(site);
                     } else {
                         reject('sendMessage Failure');
@@ -74,45 +74,45 @@ class TabTile extends Component {
     }
 
     onMouseEnter() {
-        if(this.state.overlayVisibility === 'visible') return
-        this.setState({overlayVisibility: 'visible'})
+        if (this.state.overlayVisibility === 'visible') return
+        this.setState({ overlayVisibility: 'visible' })
     }
 
     onMouseLeave() {
-        if(this.state.overlayVisibility === 'hidden') return
-        this.setState({overlayVisibility: 'hidden'}) 
+        if (this.state.overlayVisibility === 'hidden') return
+        this.setState({ overlayVisibility: 'hidden' })
     }
 
     onClick() {
         this.props.select(this.props.tab)
     }
 
-    renderOverlay () {
+    renderOverlay() {
         return (
-            <Overlay style={{visibility: this.state.overlayVisibility}}>
-                <SaveButton 
-                    style={{visibility: !!this.props.selectedWorkspace && this.state.overlayVisibility === 'visible'? 'visible' : 'hidden'}}
+            <Overlay style={{ visibility: this.state.overlayVisibility }}>
+                <SaveButton
+                    style={{ visibility: !!this.props.selectedWorkspace && this.state.overlayVisibility === 'visible' ? 'visible' : 'hidden' }}
                     onClick={this.save}>
                     Save
                 </SaveButton>
                 {/* <SaveAsButton onClick={this.saveAs.bind(this)}>As</SaveAsButton> */}
                 <CloseButton onClick={this.close}>X</CloseButton>
-            </Overlay> 
+            </Overlay>
         )
     }
 
     render() {
-        let {name, image} = this.props;
+        let { name, image } = this.props;
         return (
             <Row>
-                <Container 
-                    onMouseOver={this.onMouseEnter.bind(this)} 
+                <Container
+                    onMouseOver={this.onMouseEnter.bind(this)}
                     onMouseLeave={this.onMouseLeave.bind(this)}
                     onClick={this.onClick.bind(this)}
                 >
                     <ThumbnailContainer>
-                        <Thumbnail 
-                            image={image} 
+                        <Thumbnail
+                            image={image}
                             alt={name}
                             width={'25px'}
                             height={'25px'}

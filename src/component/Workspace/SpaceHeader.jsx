@@ -50,9 +50,9 @@ const SitesHeading = styled.div`
     margin-left: auto;
 `;
 
-// margin-right icon 40px + 1rem padding + 7px for scrollbar
+// margin-right: 1rem padding + 7px for scrollbar
 const CreatedAtHeading = styled.div`
     width: 5rem;
-    margin-right: calc(40px + 1rem + 7px); 
+    margin-right: calc(1rem + 7px); 
     cursor: pointer;
 `;

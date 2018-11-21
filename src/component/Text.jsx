@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TextDisplay = ({text, maxLength}) => {
+const Text = ({text, maxLength}) => {
     let display = text;
     if(text.length > maxLength) {
         display = `${text.slice(0, maxLength)}...`;
@@ -9,4 +9,4 @@ const TextDisplay = ({text, maxLength}) => {
         <div>{display}</div>
     );
 }
-export default TextDisplay;
+export default Text;

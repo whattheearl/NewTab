@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)https://jsfiddle.net/zinoui/757vx21m/embedded/result,css,js,html/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <meta http-equiv="edit-Type" edit="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CSS Transitions - JSFiddle</title>
+
+      <meta name="robots" content="index, follow">
+      <meta name="googlebot" content="index, follow">
+
+      <script src="./highlight.pack.js"></script>
+      <script src="./embed.js"></script>
+      <link rel="stylesheet" media="screen" href="./embed-light.css">
+
+      <script type="text/javascript">
+        var height;
+        var force_height = null;
+        var slug = "757vx21m";
+        var show_src = "//fiddle.jshell.net/zinoui/757vx21m/show/light/";
+        var resize_element_counter = 0;
+        var shell_edit_url = "/zinoui/757vx21m/light/";
+
+      </script>
+
+    <link rel="stylesheet" media="screen" href="./css">
+
+    <style type="text/css" media="screen">
+    </style>
+
+  </head>
+  <body>
+    <div id="wrapper">
+        <header>
+          <h1><a href="https://jsfiddle.net/zinoui/757vx21m/?utm_source=website&amp;utm_medium=embed&amp;utm_campaign=757vx21m" target="_blank">Edit in JSFiddle</a></h1>
+          <div id="actions">
+            <ul class="normalRes">
+                <li class="&quot;active&quot;">
+                  <a data-trigger-type="result" href="https://jsfiddle.net/zinoui/757vx21m/embedded/result,css,js,html/#Result">Result</a>
+                </li>
+                <li>
+                  <a data-trigger-type="css" href="https://jsfiddle.net/zinoui/757vx21m/embedded/result,css,js,html/#CSS">CSS</a>
+                </li>
+                <li>
+                  <a data-trigger-type="js" href="https://jsfiddle.net/zinoui/757vx21m/embedded/result,css,js,html/#JavaScript">JavaScript</a>
+                </li>
+                <li>
+                  <a data-trigger-type="html" href="https://jsfiddle.net/zinoui/757vx21m/embedded/result,css,js,html/#HTML">HTML</a>
+                </li>
+            </ul>
+            <div class="hl" style="left: 0px; width: 59.6307px;"></div>
+          </div>
+        </header>
+
+        <div id="tabs">
+              <div class="tCont result active" id="result"><iframe src="./saved_resource.html" frameborder="0" sandbox="allow-forms allow-scripts allow-same-origin allow-modals allow-popups" allow="midi; geolocation; microphone; camera; encrypted-media;"></iframe></div>
+                <script type="text/javascript">
+                  window.addEventListener('load', function(){
+                    if (typeof(EmbedManager) === undefined){
+                        EmbedManager.loadResult();
+                    }
+                  }, false);
+                </script>
+              <pre class="tCont hljs css"><span class="hljs-selector-id">#example_1</span> {
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#cfad70</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">50px</span>;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;
+    <span class="hljs-attribute">-webkit-transition</span>: background-color <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">-moz-transition</span>: background-color <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">-o-transition</span>: background-color <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">transition</span>: background-color <span class="hljs-number">1s</span>;
+}
+<span class="hljs-selector-id">#example_1</span><span class="hljs-selector-pseudo">:hover</span> {
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#957030</span>;
+}
+<span class="hljs-selector-id">#example_2</span> {
+    <span class="hljs-attribute">background</span>: <span class="hljs-number">#b3e1f3</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">50px</span>;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;
+    <span class="hljs-attribute">-webkit-transition</span>: all <span class="hljs-number">1s</span> ease <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-moz-transition</span>: all <span class="hljs-number">1s</span> ease <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-o-transition</span>: all <span class="hljs-number">1s</span> ease <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease <span class="hljs-number">0.5s</span>;
+}
+<span class="hljs-selector-tag">p</span> {
+    <span class="hljs-attribute">float</span>: right;
+}
+<span class="hljs-selector-tag">h5</span> {
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">15px</span> <span class="hljs-number">0</span> <span class="hljs-number">5px</span>;
+    <span class="hljs-attribute">font-family</span>: <span class="hljs-string">'Open Sans'</span>, Arial, sans-serif;
+}
+<span class="hljs-selector-tag">button</span> {
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">10px</span>;
+}</pre>
+              <pre class="tCont hljs javascript"><span class="hljs-keyword">var</span> div = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#example_2"</span>),
+    p = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"p"</span>),
+    str = <span class="hljs-string">''</span>;
+
+div.addEventListener(<span class="hljs-string">"transitionend"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+    str = [
+        <span class="hljs-string">'propertyName: '</span>, event.propertyName, <span class="hljs-string">'&lt;br&gt;'</span>,
+        <span class="hljs-string">'elapsedTime: '</span>, event.elapsedTime, <span class="hljs-string">'&lt;br&gt;'</span>,
+        <span class="hljs-string">'pseudoElement: '</span>, event.pseudoElement, <span class="hljs-string">'&lt;br&gt;'</span>,
+        <span class="hljs-string">'----------------&lt;br&gt;'</span>].join(<span class="hljs-string">''</span>);
+    p.innerHTML += str;
+}, <span class="hljs-literal">true</span>);
+
+<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#expand"</span>).addEventListener(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+    div.style.width = <span class="hljs-string">'150px'</span>;
+    div.style.height = <span class="hljs-string">'100px'</span>;
+    str = <span class="hljs-string">''</span>;
+    p.innerHTML = <span class="hljs-string">''</span>;
+}, <span class="hljs-literal">true</span>);
+
+<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">"#shrink"</span>).addEventListener(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+    div.style.width = <span class="hljs-string">'50px'</span>;
+    div.style.height = <span class="hljs-string">'50px'</span>;
+    str = <span class="hljs-string">''</span>;
+    p.innerHTML = <span class="hljs-string">''</span>;
+}, <span class="hljs-literal">true</span>);</pre>
+              <pre class="tCont hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">h5</span>&gt;</span>Example 1: Background color (hover the square to start)<span class="hljs-tag">&lt;/<span class="hljs-name">h5</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"example_1"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">h5</span>&gt;</span>Example 2: Width &amp; Height<span class="hljs-tag">&lt;/<span class="hljs-name">h5</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"expand"</span>&gt;</span>Expand<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"shrink"</span>&gt;</span>Shrink<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"example_2"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></pre>
+        </div>
+    </div>
+  
+
+</body></html>

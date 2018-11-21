@@ -1,5 +1,6 @@
-import React  from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Assets
 import colors from '../../styles/colors';
@@ -15,7 +16,7 @@ let style = {
     width: '1.4rem',
 };
 
-const Container = styled.div `
+const Container = styled.div`
     padding: .5rem 1rem .5rem 2rem;
     overflow: hidden;
     white-space: nowrap;
@@ -23,9 +24,9 @@ const Container = styled.div `
     font-size: .9rem;
     font-weight: 300;
     cursor: pointer;
-    ${props => props.selected? `background-color: ${colors.red}; color : ${colors.white};` : ''};
+    ${props => props.selected ? `background-color: ${colors.red}; color : ${colors.white};` : ''};
     :hover {
-        ${props => !props.selected? `background-color: ${colors.darkWhite};` : ``}
+        ${props => !props.selected ? `background-color: ${colors.darkWhite};` : ``}
     }
 `;
 
@@ -33,17 +34,19 @@ const Container = styled.div `
 const NavTile = (props) => {
     const { name, onClick, selected } = props;
     // change color base on selection
-    if(!selected) {
+    if (!selected) {
         style.color = colors.black;
     } else {
         style.color = colors.white;
     }
-
+    let url = `/Workspace/${name.replace(' ', '')}`;
     return (
-        <Container selected={selected} onClick={onClick}>
-            {/* <Text text={name} maxLength={19} /> */}
-            {name}
-        </Container>
+        <Link to={url}>
+            <Container selected={selected} onClick={onClick}>
+                {/* <Text text={name} maxLength={19} /> */}
+                {name}
+            </Container>
+        </Link>
     );
 
 }

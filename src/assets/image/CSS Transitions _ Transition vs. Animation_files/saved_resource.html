@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://fiddle.jshell.net/zinoui/757vx21m/show/light/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>CSS Transitions</title>
+  
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script type="text/javascript" src="./dummy.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="./result-light.css">
+
+  <style type="text/css">
+    #example_1 {
+    background-color: #cfad70;
+    width: 50px;
+    height: 50px;
+    -webkit-transition: background-color 1s;
+    -moz-transition: background-color 1s;
+    -o-transition: background-color 1s;
+    transition: background-color 1s;
+}
+#example_1:hover {
+    background-color: #957030;
+}
+#example_2 {
+    background: #b3e1f3;
+    width: 50px;
+    height: 50px;
+    -webkit-transition: all 1s ease 0.5s;
+    -moz-transition: all 1s ease 0.5s;
+    -o-transition: all 1s ease 0.5s;
+    transition: all 1s ease 0.5s;
+}
+p {
+    float: right;
+}
+h5 {
+    margin: 15px 0 5px;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+button {
+    margin: 0 0 10px;
+}
+  </style>
+  <!-- TODO: Missing CoffeeScript 2 -->
+
+  <script type="text/javascript">
+
+
+    window.onload=function(){
+      
+var div = document.querySelector("#example_2"),
+    p = document.querySelector("p"),
+    str = '';
+
+div.addEventListener("transitionend", function (event) {
+    str = [
+        'propertyName: ', event.propertyName, '<br>',
+        'elapsedTime: ', event.elapsedTime, '<br>',
+        'pseudoElement: ', event.pseudoElement, '<br>',
+        '----------------<br>'].join('');
+    p.innerHTML += str;
+}, true);
+
+document.querySelector("#expand").addEventListener("click", function (e) {
+    div.style.width = '150px';
+    div.style.height = '100px';
+    str = '';
+    p.innerHTML = '';
+}, true);
+
+document.querySelector("#shrink").addEventListener("click", function (e) {
+    div.style.width = '50px';
+    div.style.height = '50px';
+    str = '';
+    p.innerHTML = '';
+}, true);
+
+    }
+
+</script>
+
+</head>
+<body>
+  <p></p>
+
+<h5>Example 1: Background color (hover the square to start)</h5>
+<div id="example_1"></div>
+
+<h5>Example 2: Width &amp; Height</h5>
+<button id="expand">Expand</button>
+<button id="shrink">Shrink</button>
+<div id="example_2"></div>
+  
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "757vx21m"
+      }], "*")
+    }
+  </script>
+
+
+</body></html>
