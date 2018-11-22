@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 // Assets
 import defaultPage from '../../../assets/data/speeddial';
@@ -11,7 +12,6 @@ import HomeButton from '../../Buttons/Home';
 import WorkspaceNavTile from '../../Tiles/Nav'
 
 class NavPanel extends Component {
-
     clearCache() {
         console.log('clearing cache');
         window.localStorage.clear();
@@ -55,7 +55,14 @@ class NavPanel extends Component {
         );
     }
 }
-export default NavPanel;
+
+function mapStateToProps(state) {
+    return {
+        selectedWorkspace: state.selectedWorkspace
+    }
+}
+
+export default connect(mapStateToProps)(NavPanel);
 
 const Container = styled.div`
     height: 100%;
