@@ -15,6 +15,7 @@ import { createStore } from 'redux';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 const store = createStore(rootReducer);
+console.log(store.getState());
 
 // ChromeExtension ID, need it for communication while developing
 chrome.extensionId = "defhcjlegcaebjcnomoegkhiaaiienpf";

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 // Assets
 import colors from '../../styles/colors';
@@ -58,9 +59,9 @@ class SpaceList extends Component {
     }
 
     renderSpaces() {
-        const { workspaces } = this.props;
+        const { workspace } = this.props;
         if (!this.props.filter) {
-            return workspaces.slice()
+            return workspace.slice()
                 .sort(this.state.sortFunction) // need to select which sor to use
                 .map((space) =>
                     (<Space
@@ -71,12 +72,12 @@ class SpaceList extends Component {
                     />)
                 );
         }
-        return workspaces.slice()
+        return workspace.slice()
             .sort(this.state.sortFunction) // need to select which sor to use
             .filter(space => { return space.name.toLowerCase().includes(this.props.filter.toLowerCase()) })
             .map((space, index) =>
                 (<Space
-                    key={index}
+                    key={space.uuid}
                     workspace={space}
                     workspaceHandler={this.props.workspaceHandler}
                     {...space}
@@ -91,8 +92,9 @@ class SpaceList extends Component {
     }
 
     render() {
-        const { workspaces, display } = this.props;
-        if (!workspaces || !display) return null;
+        console.log('spacelist', this.props);
+        const { workspace, display } = this.props;
+        if (!workspace || !display) return null;
         const spaces = this.renderSpaces();
         return (
             <Container className="SpaceList">
@@ -100,12 +102,25 @@ class SpaceList extends Component {
                 <VerticalScrollArea className="VerticalScrollArea">
                     {spaces}
                 </VerticalScrollArea>
-                <InfoContainer>{`${spaces.length.toString()} workspaces created`}</InfoContainer>
+                <InfoContainer>{`${spaces.length.toString()} spaces created`}</InfoContainer>
             </Container>
         );
     }
 }
-export default SpaceList;
+const mapStateToProps = state => {
+    return { workspace: state.workspace };
+};
+
+export default connect(mapStateToProps)(SpaceList);
+
+
+
+// const mapStateToProps = (state) => {
+//     return { display: state.displayWorkspaceModal };
+// };
+
+
+
 
 const Container = styled.div`
     display: flex;

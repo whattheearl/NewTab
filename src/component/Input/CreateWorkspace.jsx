@@ -1,6 +1,9 @@
 /* global chrome */
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { addWorkspace } from '../../actions/workspace';
+
 
 // Components
 import Input from './index';
@@ -17,14 +20,9 @@ class CreateWorkspace extends Component {
 
     addWorkspace(res) {
         // rename filtered tabs
-        console.log('addworkspace');
-        console.log('response', res)
         let { filtered: sites } = res
-        if (sites.length === 0) return
         let name = !!this.inputRef.current.value ? this.inputRef.current.value : 'Unnamed'
-        // pass sites to handler
-        this.props.workspaceHandler('ADD_WORKSPACE', { sites, name })
-        this.inputRef.current.value = ''
+        this.props.addWorkspace({ sites, name });
         this.closeAllTabs();
     }
 
@@ -60,6 +58,7 @@ class CreateWorkspace extends Component {
     }
 
     render() {
+        console.log('creatws', this.props);
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Input
@@ -71,7 +70,7 @@ class CreateWorkspace extends Component {
         );
     }
 }
-export default CreateWorkspace;
+export default connect(null, { addWorkspace })(CreateWorkspace);
 
 const Form = styled.form`
     display: block;
