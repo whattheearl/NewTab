@@ -1,5 +1,7 @@
+import ACTIONS from './types';
+
 export function toggleWorkspaceModal() {
     return {
-        type: 'TOGGLE_WORKSPACE_MODAL'
+        type: ACTIONS.TOGGLE_WORKSPACE_MODAL,
     }
 }

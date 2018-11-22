@@ -1,8 +1,6 @@
 import defaultWorkspace from '../assets/data/ws'; // Sample user state
 import uuidv1 from 'uuid/v1';
-import {
-    ACTIONS
-} from '../actions/workspace';
+import ACTIONS from '../actions/types';
 
 let initialState = loadWorkspace(defaultWorkspace);
 // loads from local storage, if not found loads preconstructed example workspace from app

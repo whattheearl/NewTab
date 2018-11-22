@@ -1,8 +1,4 @@
-export const ACTIONS = {
-    ADD_WORKSPACE: "ADD_WORKSPACE",
-    REMOVE_WORKSPACE: "REMOVE_WORKSPACE",
-    UPDATE_WORKSPACE: "UPDATE_WORKSPACE",
-}
+import ACTIONS from './types';
 
 export const addWorkspace = workspace => {
     return {

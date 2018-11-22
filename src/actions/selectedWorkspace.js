@@ -1,7 +1,4 @@
-export const ACTIONS = {
-    SELECT_WORKSPACE: 'SELECT_WORKSPACE',
-    UNSELECT_WORKSPACE: 'UNSELECT_WORKSPACE',
-}
+import ACTIONS from './types';
 
 export const selectWorkspace = (space) => {
     return {
