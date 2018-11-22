@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Actions
-import { unselectWorkspace } from '../../actions/selectedWorkspace';
+import { unselectWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';

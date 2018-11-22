@@ -1,8 +1,7 @@
 /* global chrome */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleWorkspaceModal } from '../../../actions/toggleWorkspaceModal';
-import { removeWorkspace } from '../../../actions/workspace';
+import { toggleWorkspaceModal, removeWorkspace } from '../../../actions';
 // Assets
 import bookmark from '../../../assets/image/bookmark.png';
 

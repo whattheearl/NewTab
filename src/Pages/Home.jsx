@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-d
 import { connect } from 'react-redux';
 
 // Actions
-import { updateWorkspace } from '../actions/workspace';
-import { selectWorkspace } from '../actions/selectedWorkspace';
+import { updateWorkspace, selectWorkspace } from '../actions';
+
 
 // Assets
 import COLORS from '../styles/colors';

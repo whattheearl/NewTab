@@ -10,7 +10,6 @@ import bookmarkIcon from '../../assets/image/bookmark.png';
 // Component
 import Thumbnail from '../Thumbnail';
 
-
 class TabTile extends Component {
     constructor(props) {
         super(props)

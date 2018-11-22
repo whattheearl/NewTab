@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Actions
-import { toggleWorkspaceModal } from '../../actions/toggleWorkspaceModal';
-import { updateWorkspace } from '../../actions/workspace';
+import { toggleWorkspaceModal, updateWorkspace } from '../../actions';
 
 // Component
 import Modal from './Modal';
