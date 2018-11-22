@@ -7,8 +7,10 @@ export default function (state = null, action) {
                 console.error('no workspace', action);
             }
             return action.payload;
+
         case ACTIONS.UNSELECT_WORKSPACE:
             return null;
+
         case ACTIONS.ADD_SITE_TO_SELECTED_WORKSPACE:
             if (!action.payload) {
                 console.error('no site', action);
