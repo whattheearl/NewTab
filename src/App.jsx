@@ -82,6 +82,7 @@ class App extends Component {
                 }), this.exportWorkspace);
                 return;
             case 'SELECT_WORKSPACE':
+                throw new Error('BOOM!');
                 if (payload.workspace !== undefined) {
                     this.setState({
                         selectedWorkspace: payload.workspace

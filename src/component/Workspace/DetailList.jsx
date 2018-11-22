@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+
+// Actions
+import { selectWorkspace } from '../../actions/selectedWorkspace';
 
 // Assets
 import colors from '../../styles/colors';
@@ -14,12 +17,16 @@ import DetailHeader from './DetailHeader';
 
 class Detail extends Component {
     componentDidUpdate() {
+        // select the correct workspace if not selected already
         if (!this.props.selectedWorkspace || String(this.props.selectedWorkspace.uuid) !== String(this.props.match.params.workspaceid)) {
-            this.props.workspaceHandler('SELECT_WORKSPACE', { uuid: this.props.match.params.workspaceid });
+            console.log('Detail props', this.props);
+            this.props.selectWorkspace(this.props.workspace.filter(space => String(space.uuid) === (this.props.match.params.workspaceid))[0])
         }
     }
     componentDidMount() {
-        this.props.workspaceHandler('SELECT_WORKSPACE', { uuid: this.props.match.params.workspaceid });
+        // select the correct workspace if not selected already
+        this.props.selectWorkspace(this.props.workspace.filter(space => String(space.uuid) === (this.props.match.params.workspaceid))[0])
+
     }
 
     renderSiteList() {
@@ -72,8 +79,10 @@ class Detail extends Component {
         );
     }
 }
-
-export default Detail;
+function mapStateToProps(state) {
+    return { workspace: state.workspace, selectedWorkspace: state.selectedWorkspace };
+}
+export default connect(mapStateToProps, { selectWorkspace })(Detail);
 
 const Container = styled.div`
     display: flex;

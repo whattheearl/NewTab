@@ -4,8 +4,10 @@ import {
 
 import displayWorkspaceModal from './displayWorkspaceModal';
 import workspace from './workspace';
+import selectedWorkspace from './selectedWorkspace';
 
 export default combineReducers({
     displayWorkspaceModal,
-    workspace
+    workspace,
+    selectedWorkspace
 });

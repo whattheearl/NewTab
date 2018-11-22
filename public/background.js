@@ -14,7 +14,6 @@ const messageHandler = (request, sender, sendResponse) => {
             chrome.tabs.query({},
                 (tabs) => {
                     let filtered = filterTabs(tabs)
-                    console.log(filtered);
                     sendResponse({
                         filtered
                     })
