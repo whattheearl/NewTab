@@ -86,6 +86,17 @@ export default function (state = initialState, action) {
                     ...state.slice(indexToBeReplaced + 1)
                 ];
             }
+
+            // case 'REMOVE_SITE_FROM_SELECTED_WORKSPACE':
+            //     const index = sites.indexOf(site)
+            //     updatedWorkspace.sites = [
+            //         ...sites.slice(0, index),
+            //         ...sites.slice(index + 1)
+            //     ];
+            //     // Replace selectedWorkspace with updatedWorkspace
+            //     this.props.updateWorkspace(updatedWorkspace);
+            //     this.props.selectWorkspace(updatedWorkspace);
+            //     return;
         default:
             return state;
     }

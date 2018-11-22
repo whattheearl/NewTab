@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { addSiteToSelectedWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -23,7 +24,9 @@ class TabTile extends Component {
     async save(e) {
         e.stopPropagation()
         try {
-            this.props.sitesHandler({ type: 'ADD_SITE_TO_SELECTED_WORKSPACE' }, { site: this.props.tab });
+            console.log(this.props);
+            this.props.addSiteToSelectedWorkspace(this.props.tab);
+            // this.props.sitesHandler({ type: 'ADD_SITE_TO_SELECTED_WORKSPACE' }, { site: this.props.tab });
         } catch (error) {
             console.log(error);
         }
@@ -132,7 +135,7 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(TabTile);
+export default connect(mapStateToProps, { addSiteToSelectedWorkspace })(TabTile);
 
 const Row = styled.div`
     margin-bottom: 2px;

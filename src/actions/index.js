@@ -42,3 +42,17 @@ export const unselectWorkspace = () => {
         type: ACTIONS.UNSELECT_WORKSPACE
     }
 }
+
+export const addSiteToSelectedWorkspace = (site) => {
+    return {
+        type: ACTIONS.ADD_SITE_TO_SELECTED_WORKSPACE,
+        payload: site
+    }
+}
+
+export const removeSitefromSelectedWorkspace = (site) => {
+    return {
+        type: ACTIONS.REMOVE_SITE_FROM_SELECTED_WORKSPACE,
+        payload: site
+    }
+}
