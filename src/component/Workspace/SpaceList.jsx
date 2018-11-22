@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
+// Actions
+import { unselectWorkspace } from '../../actions/selectedWorkspace';
+
 // Assets
 import colors from '../../styles/colors';
 
@@ -85,9 +88,14 @@ class SpaceList extends Component {
             );
     }
 
+    componentDidUpdate() {
+        this.props.unselectWorkspace();
+    }
+
     componentDidMount() {
         if (!!this.props.selectedWorkspace) {
-            this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null });
+            // this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null });
+            this.props.unselectWorkspace();
         }
     }
 
@@ -108,10 +116,13 @@ class SpaceList extends Component {
     }
 }
 const mapStateToProps = state => {
-    return { workspace: state.workspace };
+    return {
+        workspace: state.workspace,
+        selectedWorkspace: state.selectedWorkspace
+    };
 };
 
-export default connect(mapStateToProps)(SpaceList);
+export default connect(mapStateToProps, { unselectWorkspace })(SpaceList);
 
 
 

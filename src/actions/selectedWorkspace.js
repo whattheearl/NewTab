@@ -3,14 +3,14 @@ export const ACTIONS = {
     UNSELECT_WORKSPACE: 'UNSELECT_WORKSPACE',
 }
 
-export const selectWorkspace = space => {
+export const selectWorkspace = (space) => {
     return {
         type: ACTIONS.SELECT_WORKSPACE,
         payload: space
     }
 }
 
-export const unselectWorkspace = space => {
+export const unselectWorkspace = () => {
     return {
         type: ACTIONS.UNSELECT_WORKSPACE
     }

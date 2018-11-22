@@ -25,6 +25,7 @@ class NavPanel extends Component {
 
     // using workspaces as "pages" to sort work
     render() {
+        console.log('navpanel', this.props);
         if (!this.props.display) return null;
         const displayTempArea = process.env.NODE_ENV === 'development';
         // sort by descending saved time
@@ -41,7 +42,7 @@ class NavPanel extends Component {
             <Container>
                 <HomeButton
                     display={true}
-                    selected={window.location.pathname === '/'}
+                    selected={this.props.selectedWorkspace === null}
                 />
                 <VerticalScrollArea>
                     {spaces}
@@ -58,7 +59,7 @@ class NavPanel extends Component {
 
 function mapStateToProps(state) {
     return {
-        selectedWorkspace: state.selectedWorkspace
+        selectedWorkspace: state.selectedWorkspace,
     }
 }
 

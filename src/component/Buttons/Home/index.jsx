@@ -35,7 +35,7 @@ const Container = styled.div`
     
 `
 
-const HomeButton = ({ onClick, display, selected }) => {
+const HomeButton = ({ display, selected }) => {
     if (display !== null && !display) return null
     // change color base on selection
     if (!selected) {

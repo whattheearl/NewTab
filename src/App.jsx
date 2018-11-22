@@ -139,11 +139,12 @@ class App extends Component {
         return (<div>
             <Provider store={store}>
                 <AppContainer className={"App"}>
-                    <Page
-                        workspaces={this.state.workspaces}
-                        selectedWorkspace={this.state.selectedWorkspace}
-                        workspaceHandler={this.workspaceHandler}
-                    />
+                    {/* <Page
+                    // workspaces={this.state.workspaces}
+                    // selectedWorkspace={this.state.selectedWorkspace}
+                    // workspaceHandler={this.workspaceHandler}
+                    /> */}
+                    <Page />
                 </AppContainer>
             </Provider>
         </div>);

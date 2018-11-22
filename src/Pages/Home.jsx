@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { connect } from 'react-redux';
 
 // Assets
 import COLORS from '../styles/colors';
@@ -91,14 +92,14 @@ class Page extends Component {
                     <Route render={(props) => (
                         <WorkspaceEditModal
                             {...props}
-                            selectedWorkspace={this.props.selectedWorkspace}
-                            workspaceHandler={this.props.workspaceHandler}
+                        // selectedWorkspace={this.props.selectedWorkspace}
+                        // workspaceHandler={this.props.workspaceHandler}
                         />)}
                     />
                     <Header>
                         <BreadCrumb
-                            workspace={this.props.selectedWorkspace}
-                            workspaceHandler={this.props.workspaceHandler}
+                        // workspace={this.props.selectedWorkspace}
+                        // workspaceHandler={this.props.workspaceHandler}
                         />
                         <SearchBar filterHandler={this.filterHandler} />
                         <div>&nbsp;</div>
@@ -107,9 +108,10 @@ class Page extends Component {
                         <LeftCol>
                             <NavPanel
                                 display={true}
-                                workspaces={this.props.workspaces.filter(space => !!space.saved)}
-                                selectedWorkspace={this.props.selectedWorkspace}
-                                workspaceHandler={this.props.workspaceHandler}
+
+                                workspaces={this.props.workspace.filter(space => !!space.saved)}
+                            // selectedWorkspace={this.props.selectedWorkspace}
+                            // workspaceHandler={this.props.workspaceHandler}
                             />
                         </LeftCol>
                         <MainArea>
@@ -117,10 +119,10 @@ class Page extends Component {
                                 <Route exact path='/' render={(props) => (
                                     <SpaceList
                                         {...props}
-                                        selectedWorkspace={this.props.selectedWorkspace}
+                                        // selectedWorkspace={this.props.selectedWorkspace}
                                         filter={this.state.filter}
                                         workspaceHandler={this.props.workspaceHandler}
-                                        workspaces={this.props.workspaces}
+                                        // workspaces={this.props.workspaces}
                                         display={true}
                                     />
                                 )} />
@@ -129,7 +131,7 @@ class Page extends Component {
                                         {...props}
                                         sitesHandler={this.sitesHandler}
                                         workspaceHandler={this.props.workspaceHandler}
-                                        selectedWorkspace={this.props.selectedWorkspace}
+                                    // selectedWorkspace={this.props.selectedWorkspace}
                                     />
                                 )} />
                                 <Route render={() => (<Redirect to='/' />)} />
@@ -145,7 +147,15 @@ class Page extends Component {
         );
     }
 }
-export default Page;
+
+function mapStateToProps(state) {
+    return {
+        workspace: state.workspace,
+        selectedWorkspace: state.selectedWorkspace,
+    }
+}
+
+export default connect(mapStateToProps)(Page);
 
 // styled
 const MainArea = styled.div`
