@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { connect } from 'react-redux';
 
+// Actions
+import { updateWorkspace } from '../actions/workspace';
+import { selectWorkspace } from '../actions/selectedWorkspace';
+
 // Assets
 import COLORS from '../styles/colors';
 
@@ -57,10 +61,8 @@ class Page extends Component {
                     ...sites.slice(index + 1)
                 ];
                 // Replace selectedWorkspace with updatedWorkspace
-                this.props.workspaceHandler('REPLACE_WORKSPACE', {
-                    workspace: this.props.selectedWorkspace,
-                    updatedWorkspace
-                });
+                this.props.updateWorkspace(updatedWorkspace);
+                this.props.selectWorkspace(updatedWorkspace);
                 return;
             case 'ADD_SITE_TO_SELECTED_WORKSPACE':
                 // return if site exists
@@ -72,13 +74,8 @@ class Page extends Component {
                     site,
                 ];
                 // Replace selectedWorkspace with updatedWorkspace
-                this.props.workspaceHandler('REPLACE_WORKSPACE', {
-                    workspace: this.props.selectedWorkspace,
-                    updatedWorkspace
-                });
-                return;
-
-            case 'REPLACE_SITE':
+                this.props.updateWorkspace(updatedWorkspace);
+                this.props.selectWorkspace(updatedWorkspace);
                 return;
             default:
                 return;
@@ -89,18 +86,14 @@ class Page extends Component {
         return (
             <Router>
                 <div className="page">
+                    {/* pass route props to access history */}
                     <Route render={(props) => (
                         <WorkspaceEditModal
                             {...props}
-                        // selectedWorkspace={this.props.selectedWorkspace}
-                        // workspaceHandler={this.props.workspaceHandler}
                         />)}
                     />
                     <Header>
-                        <BreadCrumb
-                        // workspace={this.props.selectedWorkspace}
-                        // workspaceHandler={this.props.workspaceHandler}
-                        />
+                        <BreadCrumb />
                         <SearchBar filterHandler={this.filterHandler} />
                         <div>&nbsp;</div>
                     </Header>
@@ -108,10 +101,7 @@ class Page extends Component {
                         <LeftCol>
                             <NavPanel
                                 display={true}
-
                                 workspaces={this.props.workspace.filter(space => !!space.saved)}
-                            // selectedWorkspace={this.props.selectedWorkspace}
-                            // workspaceHandler={this.props.workspaceHandler}
                             />
                         </LeftCol>
                         <MainArea>
@@ -119,10 +109,7 @@ class Page extends Component {
                                 <Route exact path='/' render={(props) => (
                                     <SpaceList
                                         {...props}
-                                        // selectedWorkspace={this.props.selectedWorkspace}
                                         filter={this.state.filter}
-                                        workspaceHandler={this.props.workspaceHandler}
-                                        // workspaces={this.props.workspaces}
                                         display={true}
                                     />
                                 )} />
@@ -130,16 +117,14 @@ class Page extends Component {
                                     <DetailList
                                         {...props}
                                         sitesHandler={this.sitesHandler}
-                                        workspaceHandler={this.props.workspaceHandler}
-                                    // selectedWorkspace={this.props.selectedWorkspace}
                                     />
                                 )} />
                                 <Route render={() => (<Redirect to='/' />)} />
                             </Switch>
                         </MainArea>
                         <RightCol>
-                            <NameInput workspaceHandler={this.props.workspaceHandler} />
-                            <ChromeTabArea sitesHandler={this.sitesHandler} selectedWorkspace={this.props.selectedWorkspace} />
+                            <NameInput />
+                            <ChromeTabArea sitesHandler={this.sitesHandler} />
                         </RightCol>
                     </Row>
                 </div>
@@ -155,7 +140,7 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Page);
+export default connect(mapStateToProps, { updateWorkspace, selectWorkspace })(Page);
 
 // styled
 const MainArea = styled.div`

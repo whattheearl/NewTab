@@ -71,7 +71,6 @@ class SpaceList extends Component {
                         {...this.props}
                         key={space.uuid}
                         workspace={space}
-                        workspaceHandler={this.props.workspaceHandler}
                     />)
                 );
         }
@@ -80,27 +79,20 @@ class SpaceList extends Component {
             .filter(space => { return space.name.toLowerCase().includes(this.props.filter.toLowerCase()) })
             .map((space, index) =>
                 (<Space
+                    {...this.props}
                     key={space.uuid}
                     workspace={space}
-                    workspaceHandler={this.props.workspaceHandler}
-                    {...space}
                 />)
             );
     }
 
-    componentDidUpdate() {
-        this.props.unselectWorkspace();
-    }
-
     componentDidMount() {
         if (!!this.props.selectedWorkspace) {
-            // this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null });
             this.props.unselectWorkspace();
         }
     }
 
     render() {
-        console.log('spacelist', this.props);
         const { workspace, display } = this.props;
         if (!workspace || !display) return null;
         const spaces = this.renderSpaces();
@@ -115,6 +107,7 @@ class SpaceList extends Component {
         );
     }
 }
+// Redux State
 const mapStateToProps = state => {
     return {
         workspace: state.workspace,
@@ -124,15 +117,7 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, { unselectWorkspace })(SpaceList);
 
-
-
-// const mapStateToProps = (state) => {
-//     return { display: state.displayWorkspaceModal };
-// };
-
-
-
-
+// Styled components
 const Container = styled.div`
     display: flex;
     flex-direction: column;

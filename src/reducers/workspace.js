@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
         // adds a new workspace
         case ACTIONS.ADD_WORKSPACE:
             {
-                let workspace = action.payload;
+                let workspace = Object.assign({}, action.payload);
                 if (!workspace.createdAt) {
                     workspace.createdAt = Date.now();
                 }
@@ -64,7 +64,6 @@ export default function (state = initialState, action) {
                 if (!workspace.uuid) {
                     workspace.uuid = getUUID(state);
                 }
-                console.log(action);
                 return [
                     ...state,
                     workspace,
@@ -74,11 +73,10 @@ export default function (state = initialState, action) {
             {
                 // remove target workspace
                 const index = state.indexOf(action.payload);
-                const workspace = [
+                return [
                     ...state.slice(0, index),
                     ...state.slice(index + 1)
                 ];
-                return workspace;
             }
         case ACTIONS.UPDATE_WORKSPACE:
             {

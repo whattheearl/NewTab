@@ -58,7 +58,6 @@ class CreateWorkspace extends Component {
     }
 
     render() {
-        console.log('creatws', this.props);
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Input

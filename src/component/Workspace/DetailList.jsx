@@ -16,17 +16,25 @@ import DetailHeader from './DetailHeader';
 
 
 class Detail extends Component {
+    // select the workspace in url
+    selectWorkspaceFromParam() {
+        this.props.selectWorkspace(
+            this.props.workspace.filter(space => String(space.uuid) === (this.props.match.params.workspaceid))[0]
+        )
+    }
+
     componentDidUpdate() {
+        console.log('detail did update', this.props);
         // select the correct workspace if not selected already
         if (!this.props.selectedWorkspace || String(this.props.selectedWorkspace.uuid) !== String(this.props.match.params.workspaceid)) {
-            console.log('Detail props', this.props);
-            this.props.selectWorkspace(this.props.workspace.filter(space => String(space.uuid) === (this.props.match.params.workspaceid))[0])
+            this.selectWorkspaceFromParam();
         }
     }
-    componentDidMount() {
-        // select the correct workspace if not selected already
-        this.props.selectWorkspace(this.props.workspace.filter(space => String(space.uuid) === (this.props.match.params.workspaceid))[0])
 
+    componentDidMount() {
+        console.log('detail did mount');
+        // select the correct workspace if not selected already
+        this.selectWorkspaceFromParam();
     }
 
     renderSiteList() {
@@ -68,6 +76,7 @@ class Detail extends Component {
     }
 
     render() {
+        console.log('detaillist', this.props);
         if (!this.props.selectedWorkspace) return null;
         return (
             <Container>

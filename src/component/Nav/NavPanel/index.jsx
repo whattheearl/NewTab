@@ -25,7 +25,6 @@ class NavPanel extends Component {
 
     // using workspaces as "pages" to sort work
     render() {
-        console.log('navpanel', this.props);
         if (!this.props.display) return null;
         const displayTempArea = process.env.NODE_ENV === 'development';
         // sort by descending saved time

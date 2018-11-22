@@ -28,7 +28,7 @@ class ChromeTabArea extends Component {
     // Update Tabs in development environment
     // TODO rewrite this to recieve message direct from background script
     handleEvent(event) {
-        if(process.env.NODE_ENV === 'production') return
+        if (process.env.NODE_ENV === 'production') return
         // We only accept messages from ourselves
         if (event.source !== window)
             return
@@ -39,9 +39,9 @@ class ChromeTabArea extends Component {
 
     // Updates Tabs in production
     chromeTabHandler(request, sender, sendResponse) {
-        switch(request.type) {
-            case 'UPDATE_TABS': 
-                this.setState({chromeTabs: request.tabs})
+        switch (request.type) {
+            case 'UPDATE_TABS':
+                this.setState({ chromeTabs: request.tabs })
                 return
             default:
                 return
@@ -50,7 +50,7 @@ class ChromeTabArea extends Component {
 
     // add event handler to listen for tab updates from background script
     componentDidMount() {
-        if(process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'development') {
             window.addEventListener('message', this.handleEvent.bind(this))
         } else {
             chrome.runtime.onMessage.addListener(this.chromeTabHandler.bind(this))
@@ -59,7 +59,7 @@ class ChromeTabArea extends Component {
 
     // remove listener
     componentWillUnmount() {
-        if(process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'development') {
             window.removeEventListener('message', this.handleEvent.bind(this))
         } else {
             chrome.runtime.onMessage.removeListener(this.chromeTabHandler)
@@ -68,7 +68,7 @@ class ChromeTabArea extends Component {
 
     // Tells chrome to focus tab in browser
     selectTab(tab) {
-        chrome.runtime.sendMessage(chrome.extensionId, {type: 'FOCUS_TAB', tab})
+        chrome.runtime.sendMessage(chrome.extensionId, { type: 'FOCUS_TAB', tab })
     }
 
     // Create Tiles for tab display
@@ -81,7 +81,6 @@ class ChromeTabArea extends Component {
                 image={tab.favIconUrl}
                 select={this.selectTab}
                 sitesHandler={this.props.sitesHandler}
-                selectedWorkspace={this.props.selectedWorkspace}
             />
         })
     }
@@ -91,11 +90,11 @@ class ChromeTabArea extends Component {
         let d = new Date(this.state.lastActivity)
         let h = d.getHours()
         let timeOfDay = 'AM'
-        if(h > 12) {
+        if (h > 12) {
             h -= 12
             timeOfDay = 'PM'
         }
-        return(
+        return (
             <div>{`Session start: ${h}:${d.getMinutes()}${timeOfDay}`}</div>
         )
     }
@@ -114,12 +113,13 @@ class ChromeTabArea extends Component {
                     </LastActivity>
                 </VerticalScrollArea>
             </Container>
-            
+
         )
     }
 }
-export default ChromeTabArea
+export default ChromeTabArea;
 
+// Styled Components
 const Container = styled.div`
     box-sizing: border-box;
     width: 300px;

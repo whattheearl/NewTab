@@ -75,7 +75,10 @@ class WorkspaceEditModal extends Component {
 
 }
 const mapStateToProps = (state) => {
-    return { display: state.displayWorkspaceModal };
+    return {
+        display: state.displayWorkspaceModal,
+        selectedWorkspace: state.selectedWorkspace,
+    };
 };
 
 export default connect(mapStateToProps, { toggleWorkspaceModal, updateWorkspace })(WorkspaceEditModal);

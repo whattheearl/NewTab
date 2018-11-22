@@ -18,6 +18,7 @@ class DetailHeader extends Component {
 }
 export default DetailHeader;
 
+// Styled Components
 const Container = styled.div`
     font-weight: 600;
     display: flex;

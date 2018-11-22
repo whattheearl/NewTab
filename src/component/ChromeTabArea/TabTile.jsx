@@ -1,13 +1,14 @@
 /* global chrome */
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 // Assets
-import colors from '../../styles/colors'
-import bookmarkIcon from '../../assets/image/bookmark.png'
+import colors from '../../styles/colors';
+import bookmarkIcon from '../../assets/image/bookmark.png';
 
 // Component
-import Thumbnail from '../Thumbnail'
+import Thumbnail from '../Thumbnail';
 
 
 class TabTile extends Component {
@@ -17,14 +18,13 @@ class TabTile extends Component {
             overlayVisibility: 'hidden',
         }
         this.save = this.save.bind(this);
-        this.close = this.close.bind(this)
+        this.close = this.close.bind(this);
     }
 
     async save(e) {
         e.stopPropagation()
         try {
             this.props.sitesHandler({ type: 'ADD_SITE_TO_SELECTED_WORKSPACE' }, { site: this.props.tab });
-
         } catch (error) {
             console.log(error);
         }
@@ -127,7 +127,13 @@ class TabTile extends Component {
     }
 }
 
-export default TabTile
+function mapStateToProps(state) {
+    return {
+        selectedWorkspace: state.selectedWorkspace
+    };
+}
+
+export default connect(mapStateToProps)(TabTile);
 
 const Row = styled.div`
     margin-bottom: 2px;
