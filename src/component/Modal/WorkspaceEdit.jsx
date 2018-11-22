@@ -3,7 +3,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+
+// Actions
 import { toggleWorkspaceModal } from '../../actions/toggleWorkspaceModal';
+import { updateWorkspace } from '../../actions/workspace';
 
 // Component
 import Modal from './Modal';
@@ -13,37 +16,33 @@ class WorkspaceEditModal extends Component {
     constructor(props) {
         super(props);
         this.inputRef = React.createRef();
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClose = this.handleClose.bind(this);
     }
 
     // Change the name of the current selected workspace
     handleSubmit() {
-        // create new workspace with current name
-        let updatedWorkspace = {
+        // update workspace and close modal
+        this.props.updateWorkspace({
             ...this.props.selectedWorkspace,
             name: this.inputRef.current.value
-        }
-        // replace the workspace with current
-        this.props.workspaceHandler('REPLACE_WORKSPACE', {
-            workspace: this.props.selectedWorkspace,
-            updatedWorkspace
         })
         this.handleClose();
     }
 
     handleClose() {
-        // unselect workspace
-        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null });
+        // return home
+        this.props.history.goBack();
         // close modal
         this.props.toggleWorkspaceModal();
     }
 
     componentDidUpdate(prevProps) {
-        if (!this.props.display) {
+        // do no update if no workspace selected (need to move this into editWorkspaceModal)
+        if (!this.props.display || !this.props.selectedWorkspace) {
             return;
         }
+        // select all text
         if (prevProps !== this.props) {
             this.inputRef.current.focus();
             this.inputRef.current.setSelectionRange(0, this.inputRef.current.value.length)
@@ -79,7 +78,7 @@ const mapStateToProps = (state) => {
     return { display: state.displayWorkspaceModal };
 };
 
-export default connect(mapStateToProps, { toggleWorkspaceModal })(WorkspaceEditModal);
+export default connect(mapStateToProps, { toggleWorkspaceModal, updateWorkspace })(WorkspaceEditModal);
 
 const Label = styled.label`
     display: inline-block;

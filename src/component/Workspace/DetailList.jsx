@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+// import { connect } from 'react-redux';
 
 // Assets
 import colors from '../../styles/colors';
@@ -71,6 +72,7 @@ class Detail extends Component {
         );
     }
 }
+
 export default Detail;
 
 const Container = styled.div`

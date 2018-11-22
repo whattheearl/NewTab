@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toggleWorkspaceModal } from '../../../actions/toggleWorkspaceModal';
-
+import { removeWorkspace } from '../../../actions/workspace';
 // Assets
 import bookmark from '../../../assets/image/bookmark.png';
 
@@ -66,13 +66,14 @@ class SpaceContainer extends Component {
     editWorkspace(e) {
         e.stopPropagation();
         e.preventDefault();
+        this.props.history.push(`Workspace/${this.props.workspace.uuid}`);
         this.props.toggleWorkspaceModal();
-        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: this.props.workspace });
     }
 
     removeWorkspace(e) {
         e.stopPropagation();
-        this.props.workspaceHandler('REMOVE_WORKSPACE', { workspace: this.props.workspace });
+        // this.props.workspaceHandler('REMOVE_WORKSPACE', { workspace: this.props.workspace });
+        this.props.removeWorkspace(this.props.workspace);
     }
 
     favoriteWorkspace = (e) => {
@@ -82,7 +83,8 @@ class SpaceContainer extends Component {
             ...this.props.workspace,
             saved,
         };
-        this.props.workspaceHandler('REPLACE_WORKSPACE', { workspace: this.props.workspace, updatedWorkspace });
+        this.props.updateWorkspace(updatedWorkspace);
+        // this.props.workspaceHandler('REPLACE_WORKSPACE', { workspace: this.props.workspace, updatedWorkspace });
     }
 
     render() {
@@ -92,6 +94,7 @@ class SpaceContainer extends Component {
             <Space
                 // {...this.props}
                 {...this.props.workspace}
+
                 sites={sites}
                 openAllLinks={this.openAllLinks}
                 select={this.selectWorkspace}
@@ -102,4 +105,4 @@ class SpaceContainer extends Component {
         );
     }
 }
-export default connect(null, { toggleWorkspaceModal })(SpaceContainer);
+export default connect(null, { toggleWorkspaceModal, removeWorkspace })(SpaceContainer);

@@ -88,9 +88,12 @@ class Page extends Component {
         return (
             <Router>
                 <div className="page">
-                    <WorkspaceEditModal
-                        selectedWorkspace={this.props.selectedWorkspace}
-                        workspaceHandler={this.props.workspaceHandler}
+                    <Route render={(props) => (
+                        <WorkspaceEditModal
+                            {...props}
+                            selectedWorkspace={this.props.selectedWorkspace}
+                            workspaceHandler={this.props.workspaceHandler}
+                        />)}
                     />
                     <Header>
                         <BreadCrumb
