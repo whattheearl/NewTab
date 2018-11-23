@@ -19,8 +19,9 @@ class CreateWorkspace extends Component {
 
     addWorkspace(res) {
         // rename filtered tabs
-        let { filtered: sites } = res
-        let name = !!this.inputRef.current.value ? this.inputRef.current.value : 'Unnamed'
+        console.log('addworkspace', res);
+        let { filtered: sites } = res;
+        let name = this.inputRef.current.value || 'Unnamed';
         this.props.addWorkspace({ sites, name });
         this.closeAllTabs();
     }

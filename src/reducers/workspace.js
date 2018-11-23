@@ -30,8 +30,11 @@ function ensureUUID(state) {
 // ensures UUID is unique to workspace
 function getUUID(state) {
     let uuid = uuidv1();
-    // regenerate uuid if already used
-    while (state.filter(space => !!space.uuid && space.uuid === uuid).length > 0) {
+    // find unused UUID
+    const filterByUUID = (space) => {
+        return !!space.uuid && space.uuid === uuid;
+    }
+    while (state.filter(filterByUUID).length > 0) {
         uuid = uuidv1();
     }
     return uuid;
@@ -86,17 +89,6 @@ export default function (state = initialState, action) {
                     ...state.slice(indexToBeReplaced + 1)
                 ];
             }
-
-            // case 'REMOVE_SITE_FROM_SELECTED_WORKSPACE':
-            //     const index = sites.indexOf(site)
-            //     updatedWorkspace.sites = [
-            //         ...sites.slice(0, index),
-            //         ...sites.slice(index + 1)
-            //     ];
-            //     // Replace selectedWorkspace with updatedWorkspace
-            //     this.props.updateWorkspace(updatedWorkspace);
-            //     this.props.selectWorkspace(updatedWorkspace);
-            //     return;
         default:
             return state;
     }

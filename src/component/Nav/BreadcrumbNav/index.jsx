@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components
 import Text from '../../Text';
@@ -32,14 +33,9 @@ const Bkmrkr = styled.div`
 `;
 
 class BreadCrumbNav extends Component {
-    back() {
-        this.props.workspaceHandler('SELECT_WORKSPACE', { workspace: null })
-    }
-
     render() {
-        const isWorkspaceSelected = !!this.props.workspace
         let style = {}
-        if (isWorkspaceSelected) {
+        if (!!this.props.selectedWorkspace) {
             style.color = colors.lightGray
             style.cursor = 'pointer'
         }
@@ -49,13 +45,20 @@ class BreadCrumbNav extends Component {
                     <Bkmrkr style={style}>bkmrkr</Bkmrkr>
                 </Link>
                 {/* show bread crumb for currently selected workspace */}
-                {isWorkspaceSelected ?
+                {this.props.selectedWorkspace ?
                     (<Name>
-                        <Text text={` / ${this.props.workspace.name}`} maxLength={28} />
+                        <Text text={` / ${this.props.selectedWorkspace.name}`} maxLength={28} />
                     </Name>)
                     : null}
             </Row>
         )
     }
 }
-export default BreadCrumbNav
+
+const mapStateToProps = (state) => {
+    return {
+        selectedWorkspace: state.selectedWorkspace,
+    }
+}
+
+export default connect(mapStateToProps)(BreadCrumbNav);

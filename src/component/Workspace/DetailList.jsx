@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Actions
-import { selectWorkspace } from '../../actions';
+import { selectWorkspace, removeSitefromSelectedWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -18,13 +18,16 @@ import DetailHeader from './DetailHeader';
 class Detail extends Component {
     // select the workspace in url
     selectWorkspaceFromParam() {
-        this.props.selectWorkspace(
-            this.props.workspace.filter(space => String(space.uuid) === (this.props.match.params.workspaceid))[0]
+        const workspaces = this.props.workspace.filter(
+            space => String(space.uuid) === (this.props.match.params.workspaceid)
         )
+        if (workspaces.length !== 1) {
+            return console.error('Cannot find workspace', this.props.match.params.workspaceid);
+        }
+        this.props.selectWorkspace(workspaces[0])
     }
 
     componentDidUpdate() {
-        console.log('detail did update', this.props);
         // select the correct workspace if not selected already
         if (!this.props.selectedWorkspace || String(this.props.selectedWorkspace.uuid) !== String(this.props.match.params.workspaceid)) {
             this.selectWorkspaceFromParam();
@@ -32,8 +35,6 @@ class Detail extends Component {
     }
 
     componentDidMount() {
-        console.log('detail did mount');
-        // select the correct workspace if not selected already
         this.selectWorkspaceFromParam();
     }
 
@@ -65,7 +66,8 @@ class Detail extends Component {
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        this.props.sitesHandler({ type: 'REMOVE_SITE_FROM_SELECTED_WORKSPACE' }, { site });
+                                        this.props.removeSitefromSelectedWorkspace(site);
+                                        // this.props.sitesHandler({ type: 'REMOVE_SITE_FROM_SELECTED_WORKSPACE' }, { site });
                                     }
                                     } />
                             </div>
@@ -76,7 +78,6 @@ class Detail extends Component {
     }
 
     render() {
-        console.log('detaillist', this.props);
         if (!this.props.selectedWorkspace) return null;
         return (
             <Container>
@@ -91,7 +92,7 @@ class Detail extends Component {
 function mapStateToProps(state) {
     return { workspace: state.workspace, selectedWorkspace: state.selectedWorkspace };
 }
-export default connect(mapStateToProps, { selectWorkspace })(Detail);
+export default connect(mapStateToProps, { removeSitefromSelectedWorkspace, selectWorkspace })(Detail);
 
 const Container = styled.div`
     display: flex;

@@ -8,7 +8,6 @@ import styled from 'styled-components';
 class Modal extends Component {
     render() {
         if (!this.props.display) return null;
-        console.log('modal props', this.props);
         return (
             <ModalTint onClick={this.props.handleClose}>
                 <ModalDisplay onClick={(e) => { e.stopPropagation() }}>

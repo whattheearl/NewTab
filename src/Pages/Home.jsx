@@ -26,7 +26,6 @@ class Page extends Component {
         this.state = {
             filter: '',
         }
-        this.sitesHandler = this.sitesHandler.bind(this);
         this.filterHandler = this.filterHandler.bind(this);
     }
 
@@ -40,44 +39,6 @@ class Page extends Component {
                 return;
             default:
                 console.error('error unreachable switch case filter');
-                return;
-        }
-    }
-
-    sitesHandler(action, payload) {
-        // check if workspace is selected (should throw some visable error)
-        if (!this.props.selectedWorkspace) return;
-        const { site } = payload;
-        const { sites } = this.props.selectedWorkspace;
-        let updatedWorkspace = {
-            ...this.props.selectedWorkspace,
-            lastModified: Date.now()
-        };
-        switch (action.type) {
-            case 'REMOVE_SITE_FROM_SELECTED_WORKSPACE':
-                const index = sites.indexOf(site)
-                updatedWorkspace.sites = [
-                    ...sites.slice(0, index),
-                    ...sites.slice(index + 1)
-                ];
-                // Replace selectedWorkspace with updatedWorkspace
-                this.props.updateWorkspace(updatedWorkspace);
-                this.props.selectWorkspace(updatedWorkspace);
-                return;
-            case 'ADD_SITE_TO_SELECTED_WORKSPACE':
-                // return if site exists
-                if (sites.filter(s => s.url === site.url).length > 0) {
-                    return;
-                }
-                updatedWorkspace.sites = [
-                    ...sites,
-                    site,
-                ];
-                // Replace selectedWorkspace with updatedWorkspace
-                this.props.updateWorkspace(updatedWorkspace);
-                this.props.selectWorkspace(updatedWorkspace);
-                return;
-            default:
                 return;
         }
     }
@@ -116,7 +77,6 @@ class Page extends Component {
                                 <Route path='/workspace/:workspaceid' render={(props) => (
                                     <DetailList
                                         {...props}
-                                        sitesHandler={this.sitesHandler}
                                     />
                                 )} />
                                 <Route render={() => (<Redirect to='/' />)} />
