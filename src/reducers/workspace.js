@@ -55,15 +55,11 @@ export default function (state = initialState, action) {
         // adds a new workspace
         case ACTIONS.ADD_WORKSPACE:
             {
-                let workspace = Object.assign({}, action.payload);
-                if (!workspace.createdAt) {
-                    workspace.createdAt = Date.now();
-                }
-                if (!workspace.modified) {
-                    workspace.modified = Date.now();
-                }
-                if (!workspace.uuid) {
-                    workspace.uuid = getUUID(state);
+                let workspace = {
+                    ...action.payload,
+                    created: action.payload.created || Date.now(),
+                    modified: action.payload.modified || Date.now(),
+                    uuid: action.payload.uuid || getUUID(state)
                 }
                 return [
                     ...state,

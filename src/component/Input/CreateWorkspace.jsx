@@ -22,6 +22,14 @@ class CreateWorkspace extends Component {
         console.log('addworkspace', res);
         let { filtered: sites } = res;
         let name = this.inputRef.current.value || 'Unnamed';
+        sites = sites.map(site => {
+            return {
+                title: site.title,
+                favIconUrl: site.favIconUrl,
+                url: site.url,
+                created: Date.now(),
+            }
+        });
         this.props.addWorkspace({ sites, name });
         this.closeAllTabs();
     }

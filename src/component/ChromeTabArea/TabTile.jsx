@@ -26,7 +26,6 @@ class TabTile extends Component {
         try {
             console.log(this.props);
             this.props.addSiteToSelectedWorkspace(this.props.tab);
-            // this.props.sitesHandler({ type: 'ADD_SITE_TO_SELECTED_WORKSPACE' }, { site: this.props.tab });
         } catch (error) {
             console.log(error);
         }
