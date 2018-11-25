@@ -10,18 +10,11 @@ import bookmarkIcon from '../../assets/image/bookmark.png';
 
 // Component
 import Thumbnail from '../Thumbnail';
+import CloseButton from '../Buttons/Close';
 
 class TabTile extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            overlayVisibility: 'hidden',
-        }
-        this.save = this.save.bind(this);
-        this.close = this.close.bind(this);
-    }
-
-    save(e) {
+    // save site to currently selected workspace
+    save = (e) => {
         e.stopPropagation()
         if (this.props.selectedWorkspace.sites.filter(site => site.url === this.props.tab.url).length >= 1) {
             return;
@@ -37,7 +30,8 @@ class TabTile extends Component {
         this.props.selectWorkspace(workspace);
     }
 
-    close(e) {
+    // close tab in chrome
+    close = (e) => {
         e.stopPropagation()
         if (process && process.env.NODE_ENV === 'development') {
             chrome.runtime.sendMessage(
@@ -80,17 +74,7 @@ class TabTile extends Component {
         })
     }
 
-    onMouseEnter() {
-        if (this.state.overlayVisibility === 'visible') return
-        this.setState({ overlayVisibility: 'visible' })
-    }
-
-    onMouseLeave() {
-        if (this.state.overlayVisibility === 'hidden') return
-        this.setState({ overlayVisibility: 'hidden' })
-    }
-
-    onClick() {
+    onClick = () => {
         this.props.select(this.props.tab)
     }
 
@@ -103,7 +87,9 @@ class TabTile extends Component {
                     Save
                 </SaveButton>
                 {/* <SaveAsButton onClick={this.saveAs.bind(this)}>As</SaveAsButton> */}
-                <CloseButton onClick={this.close}>X</CloseButton>
+                <CloseButton
+                    display={true}
+                    onClick={this.close} />
             </Overlay>
         )
     }
@@ -113,9 +99,7 @@ class TabTile extends Component {
         return (
             <Row>
                 <Container
-                    onMouseOver={this.onMouseEnter.bind(this)}
-                    onMouseLeave={this.onMouseLeave.bind(this)}
-                    onClick={this.onClick.bind(this)}
+                    onClick={this.onClick}
                 >
                     <ThumbnailContainer>
                         <Thumbnail
@@ -152,7 +136,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     border-radius: 4px;
-    padding: .5rem;
+    padding: .33rem;
     box-sizing: border-box;
     cursor: pointer;
 `
@@ -166,9 +150,9 @@ const Overlay = styled.div`
     background-color: none;
     z-index: 1;
     box-sizing: border-box;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    display: flex;
     visibility: hidden;
     ${Row}:hover & {
         visibility: visible;
@@ -187,15 +171,6 @@ const SaveButton = styled.button`
     }
 `
 
-const CloseButton = styled.button`
-    margin-left: auto;
-    padding: .5rem;
-    border-radius: 4px;
-    background-color: #000000AA;
-    color: ${colors.white};
-    cursor: pointer;
-`
-
 const ThumbnailContainer = styled.div`
     height: 25px;
     width: 25px;
@@ -203,6 +178,12 @@ const ThumbnailContainer = styled.div`
 
 const Title = styled.h1`
     margin-left: .75rem;
-    max-height: 2rem;
+    font-size: .8rem;
     overflow: hidden;
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 2.3rem;
+    line-height: 1.1rem;
 `
