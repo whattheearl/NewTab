@@ -20,13 +20,6 @@ import SpaceList from '../component/list/Space';
 import WorkspaceEditModal from '../component/modal/WorkspaceEdit';
 
 class Page extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            filter: '',
-        }
-        this.filterHandler = this.filterHandler.bind(this);
-    }
 
     filterHandler(action, payload) {
         switch (action.type) {
@@ -54,7 +47,7 @@ class Page extends Component {
                     />
                     <Header>
                         <BreadCrumb />
-                        <SearchBar filterHandler={this.filterHandler} />
+                        <SearchBar />
                         <div>&nbsp;</div>
                     </Header>
                     <Row>
@@ -69,7 +62,6 @@ class Page extends Component {
                                 <Route exact path='/' render={(props) => (
                                     <SpaceList
                                         {...props}
-                                        filter={this.state.filter}
                                         display={true}
                                     />
                                 )} />

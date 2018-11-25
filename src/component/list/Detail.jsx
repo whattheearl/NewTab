@@ -14,7 +14,6 @@ import CloseButton from '../button/Close';
 import Thumbnail from '../container/Image';
 import DetailHeader from './DetailHeader';
 
-
 class Detail extends Component {
     // select the workspace in url
     selectWorkspaceFromParam = () => {

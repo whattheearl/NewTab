@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+
+// Actions
+import { setSearchFilter } from '../../../actions';
 
 // Components
 import Input from '../index';
@@ -14,7 +18,7 @@ class SearchBarContainer extends Component {
 
     // maintain searchTerm state
     handleChange(e) {
-        this.props.filterHandler({ type: 'SET_FILTER' }, { filter: e.target.value });
+        this.props.setSearchFilter(e.target.value);
     }
 
     handleSubmit(e) {
@@ -34,7 +38,8 @@ class SearchBarContainer extends Component {
         );
     }
 }
-export default SearchBarContainer;
+
+export default connect(null, { setSearchFilter })(SearchBarContainer);
 
 const Form = styled.form`
     display: block;
