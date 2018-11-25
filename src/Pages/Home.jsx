@@ -12,12 +12,12 @@ import COLORS from '../styles/colors';
 
 // Components
 import BreadCrumb from '../component/Nav/BreadcrumbNav';
-import ChromeTabArea from '../component/ChromeTabArea';
-import DetailList from '../component/Workspace/DetailList';
+import ChromeTabList from '../component/Lists/ChromeTab';
+import DetailList from '../component/Lists/Detail';
 import NameInput from '../component/Input/CreateWorkspace';
 import NavPanel from '../component/Nav/NavPanel';
 import SearchBar from '../component/Input/SearchBar';
-import SpaceList from '../component/Workspace/SpaceList';
+import SpaceList from '../component/Lists/Space';
 import WorkspaceEditModal from '../component/Modal/WorkspaceEdit';
 
 class Page extends Component {
@@ -84,7 +84,7 @@ class Page extends Component {
                         </MainArea>
                         <RightCol>
                             <NameInput />
-                            <ChromeTabArea sitesHandler={this.sitesHandler} />
+                            <ChromeTabList />
                         </RightCol>
                     </Row>
                 </div>

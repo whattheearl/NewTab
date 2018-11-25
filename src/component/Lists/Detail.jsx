@@ -10,7 +10,7 @@ import colors from '../../styles/colors';
 import bookmarkIcon from '../../assets/image/bookmark.png';
 
 // components
-import CloseButton from '../../component/Buttons/Close';
+import CloseButton from '../Buttons/Close';
 import Thumbnail from '../Thumbnail';
 import DetailHeader from './DetailHeader';
 
