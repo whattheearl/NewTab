@@ -7,7 +7,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 // Components
-import TiledTab from './TabTile'
+import ChromeTab from './ChromeTab'
 import VerticalScrollArea from '../ContentContainers/VerticalScroll'
 
 // Styled
@@ -74,7 +74,7 @@ class ChromeTabArea extends Component {
     // Create Tiles for tab display
     renderTiles() {
         return this.state.chromeTabs.map(tab => {
-            return <TiledTab
+            return <ChromeTab
                 key={tab.id}
                 tab={tab}
                 name={tab.title}
