@@ -18,7 +18,6 @@ import DetailHeader from './DetailHeader';
 class Detail extends Component {
     // select the workspace in url
     selectWorkspaceFromParam = () => {
-
         const workspaces = this.props.workspace.filter(
             space => String(space.uuid) === (this.props.match.params.workspaceid)
         )
@@ -28,6 +27,18 @@ class Detail extends Component {
         this.props.selectWorkspace(workspaces[0]);
         console.log()
         return workspaces[0];
+    }
+
+    remove = (e, site) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const sites = this.props.selectedWorkspace.sites.filter(s => s.url !== site.url);
+        const workspace = {
+            ...this.props.selectedWorkspace,
+            sites
+        }
+        this.props.updateWorkspace(workspace);
+        this.props.selectWorkspace(workspace);
     }
 
     componentDidUpdate() {
@@ -41,8 +52,8 @@ class Detail extends Component {
         this.selectWorkspaceFromParam();
     }
 
-    renderSiteList(selectedWorkspace) {
-        return selectedWorkspace.sites.slice()
+    renderSiteList() {
+        return this.props.selectedWorkspace.sites.slice()
             .sort((a, b) => {
                 return ('' + a.title).localeCompare(b.title);
             })
@@ -65,19 +76,7 @@ class Detail extends Component {
                             <div style={{ marginLeft: 'auto' }}>
                                 <CloseButton
                                     display={true}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        const sites = this.props.selectedWorkspace.sites.filter(s => s.url !== site.url);
-                                        const workspace = {
-                                            ...this.props.selectedWorkspace,
-                                            sites
-                                        }
-                                        this.props.updateWorkspace(workspace);
-                                        this.props.selectWorkspace(workspace);
-
-                                        // this.props.removeSitefromSelectedWorkspace(site);
-                                    }}
+                                    onClick={(e) => this.remove(e, site)}
                                 />
                             </div>
                         </Row>
@@ -87,15 +86,12 @@ class Detail extends Component {
     }
 
     render() {
-        const selectedWorkspace = this.props.workspace.filter(
-            space => String(space.uuid) === (this.props.match.params.workspaceid)
-        )[0];
-        if (!selectedWorkspace) return null;
+        if (!this.props.selectedWorkspace) return null;
         return (
             <Container>
                 <SpaceContainer>
                     <DetailHeader />
-                    {this.renderSiteList(selectedWorkspace)}
+                    {this.renderSiteList()}
                 </SpaceContainer>
             </Container>
         );
