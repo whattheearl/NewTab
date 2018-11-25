@@ -9,8 +9,8 @@ import { unselectWorkspace } from '../../actions';
 import colors from '../../styles/colors';
 
 // Components
-import Space from '../Tiles/Space/Container';
-import VerticalScrollArea from '../ContentContainers/VerticalScroll';
+import Space from '../listItem/Space/Container';
+import VerticalScrollArea from '../container/VerticalScroll';
 import Header from './SpaceHeader';
 
 class SpaceList extends Component {

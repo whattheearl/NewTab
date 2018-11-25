@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
-import Text from '../../Text';
+import Text from '../container/Text';
 
-// Colors
-import colors from '../../../styles/colors';
+// Colors../../styles/colors
+import colors from '../../styles/colors';
 
 // Styled
 const Row = styled.div`

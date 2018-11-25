@@ -10,8 +10,8 @@ import colors from '../../styles/colors';
 import bookmarkIcon from '../../assets/image/bookmark.png';
 
 // components
-import CloseButton from '../Buttons/Close';
-import Thumbnail from '../Thumbnail';
+import CloseButton from '../button/Close';
+import Thumbnail from '../container/Image';
 import DetailHeader from './DetailHeader';
 
 

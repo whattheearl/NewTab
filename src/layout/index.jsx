@@ -6,19 +6,18 @@ import { connect } from 'react-redux';
 // Actions
 import { updateWorkspace, selectWorkspace } from '../actions';
 
-
 // Assets
 import COLORS from '../styles/colors';
 
 // Components
-import BreadCrumb from '../component/Nav/BreadcrumbNav';
-import ChromeTabList from '../component/Lists/ChromeTab';
-import DetailList from '../component/Lists/Detail';
-import NameInput from '../component/Input/CreateWorkspace';
-import NavPanel from '../component/Nav/NavPanel';
-import SearchBar from '../component/Input/SearchBar';
-import SpaceList from '../component/Lists/Space';
-import WorkspaceEditModal from '../component/Modal/WorkspaceEdit';
+import BreadCrumb from '../component/nav/BreadcrumbNav';
+import ChromeTabList from '../component/list/ChromeTab';
+import DetailList from '../component/list/Detail';
+import NameInput from '../component/input/CreateWorkspace';
+import NavPanel from '../component/nav/NavPanel';
+import SearchBar from '../component/input/SearchBar';
+import SpaceList from '../component/list/Space';
+import WorkspaceEditModal from '../component/modal/WorkspaceEdit';
 
 class Page extends Component {
     constructor(props) {

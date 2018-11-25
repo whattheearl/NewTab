@@ -7,7 +7,7 @@ import bookmark from '../../../assets/image/bookmark.png';
 
 // components
 import Space from './index';
-import Thumbnail from '../../Thumbnail';
+import Thumbnail from '../../container/Image';
 
 class SpaceContainer extends Component {
     constructor(props) {
