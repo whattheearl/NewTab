@@ -3,15 +3,15 @@
 // - contextually save tabs to your workspace
 // - Focus tabs
 // - Close tabs
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 // Components
-import TiledTab from './TabTile'
-import VerticalScrollArea from '../ContentContainers/VerticalScroll'
+import ChromeTab from '../Tiles/ChromeTab';
+import VerticalScrollArea from '../ContentContainers/VerticalScroll';
 
 // Styled
-import colors from '../../styles/colors'
+import colors from '../../styles/colors';
 
 class ChromeTabArea extends Component {
     constructor(props) {
@@ -74,7 +74,7 @@ class ChromeTabArea extends Component {
     // Create Tiles for tab display
     renderTiles() {
         return this.state.chromeTabs.map(tab => {
-            return <TiledTab
+            return <ChromeTab
                 key={tab.id}
                 tab={tab}
                 name={tab.title}
