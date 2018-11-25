@@ -9,8 +9,8 @@ import { unselectWorkspace } from '../../actions';
 import colors from '../../styles/colors';
 
 // Components
-import Space from '../Tiles/Space/Container';
-import VerticalScrollArea from '../ContentContainers/VerticalScroll';
+import Space from '../listItem/Space/Container';
+import VerticalScrollArea from '../container/VerticalScroll';
 import Header from './SpaceHeader';
 
 class SpaceList extends Component {
@@ -63,7 +63,7 @@ class SpaceList extends Component {
 
     renderSpaces() {
         const { workspace } = this.props;
-        if (!this.props.filter) {
+        if (!this.props.searchFilter) {
             return workspace.slice()
                 .sort(this.state.sortFunction) // need to select which sor to use
                 .map((space) =>
@@ -76,7 +76,7 @@ class SpaceList extends Component {
         }
         return workspace.slice()
             .sort(this.state.sortFunction) // need to select which sor to use
-            .filter(space => { return space.name.toLowerCase().includes(this.props.filter.toLowerCase()) })
+            .filter(space => { return space.name.toLowerCase().includes(this.props.searchFilter.toLowerCase()) })
             .map((space, index) =>
                 (<Space
                     {...this.props}
@@ -93,6 +93,7 @@ class SpaceList extends Component {
     }
 
     render() {
+        console.log(this.props);
         const { workspace, display } = this.props;
         if (!workspace || !display) return null;
         const spaces = this.renderSpaces();
@@ -111,7 +112,8 @@ class SpaceList extends Component {
 const mapStateToProps = state => {
     return {
         workspace: state.workspace,
-        selectedWorkspace: state.selectedWorkspace
+        selectedWorkspace: state.selectedWorkspace,
+        searchFilter: state.searchFilter
     };
 };
 

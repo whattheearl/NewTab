@@ -9,8 +9,8 @@ import colors from '../../styles/colors';
 import bookmarkIcon from '../../assets/image/bookmark.png';
 
 // Component
-import Thumbnail from '../Thumbnail';
-import CloseButton from '../Buttons/Close';
+import Thumbnail from '../container/Image';
+import CloseButton from '../button/Close';
 
 class TabTile extends Component {
     // save site to currently selected workspace

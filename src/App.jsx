@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import colors from './styles/colors';
 
 // Components
-import Page from './Pages/Home';
+import PageLayout from './layout';
 
 // Redux
 import { createStore } from 'redux';
@@ -27,7 +27,7 @@ class App extends Component {
         return (<div>
             <Provider store={store}>
                 <AppContainer className={"App"}>
-                    <Page />
+                    <PageLayout />
                 </AppContainer>
             </Provider>
         </div>);
