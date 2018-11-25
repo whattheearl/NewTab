@@ -96,9 +96,9 @@ class TabTile extends Component {
 
     renderOverlay() {
         return (
-            <Overlay style={{ visibility: this.state.overlayVisibility }}>
+            <Overlay>
                 <SaveButton
-                    style={{ visibility: !!this.props.selectedWorkspace && this.state.overlayVisibility === 'visible' ? 'visible' : 'hidden' }}
+                    selectedWorkspace={!!this.props.selectedWorkspace}
                     onClick={this.save}>
                     Save
                 </SaveButton>
@@ -170,6 +170,9 @@ const Overlay = styled.div`
     justify-content: space-between;
     display: flex;
     visibility: hidden;
+    ${Row}:hover & {
+        visibility: visible;
+    }
 `
 
 const SaveButton = styled.button`
@@ -179,15 +182,10 @@ const SaveButton = styled.button`
     background-color: #000000AA;
     color: ${colors.white};
     cursor: pointer;
+    ${Row}:hover & {
+        visibility: ${props => props.selectedWorkspace ? 'visible' : 'hidden'};
+    }
 `
-
-// const SaveAsButton = styled.button`
-//     padding: .5rem;
-//     border-radius: 4px;
-//     background-color: #000000AA;
-//     color: ${colors.white};
-//     cursor: pointer;
-// `
 
 const CloseButton = styled.button`
     margin-left: auto;
