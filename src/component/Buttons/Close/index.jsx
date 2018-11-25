@@ -1,13 +1,13 @@
 // Trashcan button used to remove elements
 
-import React  from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { FaTrash } from 'react-icons/fa'
 
 let style = {
-    cursor: 'pointer', 
-    paddingTop: '.15rem', 
-    height: '1rem', 
+    cursor: 'pointer',
+    paddingTop: '.15rem',
+    height: '1rem',
     width: '1rem'
 }
 
@@ -18,6 +18,7 @@ const Container = styled.div`
     height: 40px;
     width: 40px;
     border-radius: 50%;
+    background-color: #fff;
     color: #444;
     :hover {
         background-color: #eee;
@@ -26,10 +27,10 @@ const Container = styled.div`
 `
 
 const Close = ({ onClick, display }) => {
-    if(!display) return null
-        return <Container onClick={onClick}>
-            <FaTrash style={style}/>
-        </Container>;
+    if (!display) return null
+    return <Container onClick={onClick}>
+        <FaTrash style={style} />
+    </Container>;
 
 }
 export default Close
