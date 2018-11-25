@@ -9,7 +9,7 @@ import { toggleWorkspaceModal, updateWorkspace } from '../../actions';
 
 // Component
 import Modal from './Modal';
-import Input from '../Input';
+import Input from '../input';
 
 class WorkspaceEditModal extends Component {
     constructor(props) {

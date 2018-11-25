@@ -56,3 +56,11 @@ export const removeSitefromSelectedWorkspace = (site) => {
         payload: site
     }
 }
+
+// Search Filter
+export const setSearchFilter = (value) => {
+    return {
+        type: ACTIONS.SET_SEARCH_FILTER,
+        payload: value
+    }
+}

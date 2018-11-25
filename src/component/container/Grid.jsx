@@ -4,7 +4,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Grid = ({ children, numColumns}) => {
+const Grid = ({ children, numColumns }) => {
     let cols = Math.min(numColumns, children.length)
     const Container = styled.div`
         display: grid;

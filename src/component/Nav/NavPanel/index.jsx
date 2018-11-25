@@ -7,9 +7,9 @@ import defaultPage from '../../../assets/data/speeddial';
 import colors from '../../../styles/colors';
 
 // Components
-import VerticalScrollArea from '../../ContentContainers/VerticalScroll';
-import HomeButton from '../../Buttons/Home';
-import WorkspaceNavTile from '../../Tiles/Nav'
+import VerticalScrollArea from '../../container/VerticalScroll';
+import HomeButton from '../../button/Home';
+import NavItem from '../../listItem/Nav'
 
 class NavPanel extends Component {
     clearCache() {
@@ -30,7 +30,7 @@ class NavPanel extends Component {
         // sort by descending saved time
         let spaces = this.props.workspaces.slice().sort((a, b) => { return a.saved - b.saved })
             .map((space, index) => {
-                return <WorkspaceNavTile
+                return <NavItem
                     key={space.uuid}
                     name={space.name}
                     uuid={space.uuid}

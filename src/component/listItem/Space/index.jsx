@@ -6,11 +6,11 @@ import COLOR from '../../../styles/colors';
 
 // Components
 import LocalDate from './LocalDate';
-import Grid from '../../Grid';
-import CloseButton from '../../Buttons/Close';
-import Favorite from '../../Buttons/Favorite';
-import Text from '../../Text';
-import Edit from '../../Buttons/Edit';
+import Grid from '../../container/Grid';
+import CloseButton from '../../button/Close';
+import Favorite from '../../button/Favorite';
+import Text from '../../container/Text';
+import Edit from '../../button/Edit';
 
 class Space extends Component {
     render() {

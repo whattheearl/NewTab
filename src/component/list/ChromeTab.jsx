@@ -7,8 +7,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // Components
-import ChromeTab from '../Tiles/ChromeTab';
-import VerticalScrollArea from '../ContentContainers/VerticalScroll';
+import ChromeTab from '../listItem/ChromeTab';
+import VerticalScrollArea from '../container/VerticalScroll';
 
 // Styled
 import colors from '../../styles/colors';

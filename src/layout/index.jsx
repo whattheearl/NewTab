@@ -6,28 +6,20 @@ import { connect } from 'react-redux';
 // Actions
 import { updateWorkspace, selectWorkspace } from '../actions';
 
-
 // Assets
 import COLORS from '../styles/colors';
 
 // Components
-import BreadCrumb from '../component/Nav/BreadcrumbNav';
-import ChromeTabArea from '../component/ChromeTabArea';
-import DetailList from '../component/Workspace/DetailList';
-import NameInput from '../component/Input/CreateWorkspace';
-import NavPanel from '../component/Nav/NavPanel';
-import SearchBar from '../component/Input/SearchBar';
-import SpaceList from '../component/Workspace/SpaceList';
-import WorkspaceEditModal from '../component/Modal/WorkspaceEdit';
+import BreadCrumb from '../component/nav/BreadcrumbNav';
+import ChromeTabList from '../component/list/ChromeTab';
+import DetailList from '../component/list/Detail';
+import NameInput from '../component/input/CreateWorkspace';
+import NavPanel from '../component/nav/NavPanel';
+import SearchBar from '../component/input/SearchBar';
+import SpaceList from '../component/list/Space';
+import WorkspaceEditModal from '../component/modal/WorkspaceEdit';
 
 class Page extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            filter: '',
-        }
-        this.filterHandler = this.filterHandler.bind(this);
-    }
 
     filterHandler(action, payload) {
         switch (action.type) {
@@ -55,7 +47,7 @@ class Page extends Component {
                     />
                     <Header>
                         <BreadCrumb />
-                        <SearchBar filterHandler={this.filterHandler} />
+                        <SearchBar />
                         <div>&nbsp;</div>
                     </Header>
                     <Row>
@@ -70,7 +62,6 @@ class Page extends Component {
                                 <Route exact path='/' render={(props) => (
                                     <SpaceList
                                         {...props}
-                                        filter={this.state.filter}
                                         display={true}
                                     />
                                 )} />
@@ -84,7 +75,7 @@ class Page extends Component {
                         </MainArea>
                         <RightCol>
                             <NameInput />
-                            <ChromeTabArea sitesHandler={this.sitesHandler} />
+                            <ChromeTabList />
                         </RightCol>
                     </Row>
                 </div>
