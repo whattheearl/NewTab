@@ -17,14 +17,17 @@ import DetailHeader from './DetailHeader';
 
 class Detail extends Component {
     // select the workspace in url
-    selectWorkspaceFromParam() {
+    selectWorkspaceFromParam = () => {
+
         const workspaces = this.props.workspace.filter(
             space => String(space.uuid) === (this.props.match.params.workspaceid)
         )
         if (workspaces.length !== 1) {
             return console.error('Cannot find workspace', this.props.match.params.workspaceid);
         }
-        this.props.selectWorkspace(workspaces[0])
+        this.props.selectWorkspace(workspaces[0]);
+        console.log()
+        return workspaces[0];
     }
 
     componentDidUpdate() {
@@ -38,8 +41,7 @@ class Detail extends Component {
         this.selectWorkspaceFromParam();
     }
 
-    renderSiteList() {
-        const { selectedWorkspace } = this.props;
+    renderSiteList(selectedWorkspace) {
         return selectedWorkspace.sites.slice()
             .sort((a, b) => {
                 return ('' + a.title).localeCompare(b.title);
@@ -78,12 +80,15 @@ class Detail extends Component {
     }
 
     render() {
-        if (!this.props.selectedWorkspace) return null;
+        const selectedWorkspace = this.props.workspace.filter(
+            space => String(space.uuid) === (this.props.match.params.workspaceid)
+        )[0];
+        if (!selectedWorkspace) return null;
         return (
             <Container>
                 <SpaceContainer>
                     <DetailHeader />
-                    {this.renderSiteList()}
+                    {this.renderSiteList(selectedWorkspace)}
                 </SpaceContainer>
             </Container>
         );

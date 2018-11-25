@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { addSiteToSelectedWorkspace } from '../../actions';
+import { selectWorkspace, updateWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -24,8 +24,18 @@ class TabTile extends Component {
     async save(e) {
         e.stopPropagation()
         try {
-            console.log(this.props);
-            this.props.addSiteToSelectedWorkspace(this.props.tab);
+            if (this.props.selectedWorkspace.sites.filter(site => site.url === this.props.tab.url).length >= 1) {
+                return;
+            }
+            let workspace = {
+                ...this.props.selectedWorkspace,
+                sites: [
+                    ...this.props.selectedWorkspace.sites,
+                    this.props.tab,
+                ]
+            }
+            this.props.updateWorkspace(workspace);
+            this.props.selectWorkspace(workspace);
         } catch (error) {
             console.log(error);
         }
@@ -134,7 +144,7 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { addSiteToSelectedWorkspace })(TabTile);
+export default connect(mapStateToProps, { selectWorkspace, updateWorkspace })(TabTile);
 
 const Row = styled.div`
     margin-bottom: 2px;

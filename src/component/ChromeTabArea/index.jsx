@@ -80,7 +80,6 @@ class ChromeTabArea extends Component {
                 name={tab.title}
                 image={tab.favIconUrl}
                 select={this.selectTab}
-                sitesHandler={this.props.sitesHandler}
             />
         })
     }

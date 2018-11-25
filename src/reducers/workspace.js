@@ -11,11 +11,6 @@ function loadWorkspace(defaultWorkspace) {
     return workspace
 }
 
-// saves workspace to localstorage
-function saveState(state) {
-    window.localStorage.setItem('workspace', JSON.stringify(state.workspace));
-}
-
 // ensures UUID are located on each space (was not present in previous versions)
 function ensureUUID(state) {
     let missingUUID = state.filter(space => !space.uuid);
@@ -25,6 +20,11 @@ function ensureUUID(state) {
         complete.push(space);
     });
     return complete;
+}
+
+// saves workspace to localstorage
+function saveState(state) {
+    window.localStorage.setItem('workspace', JSON.stringify(state));
 }
 
 // ensures UUID is unique to workspace
@@ -55,35 +55,41 @@ export default function (state = initialState, action) {
         // adds a new workspace
         case ACTIONS.ADD_WORKSPACE:
             {
-                let workspace = {
+                const space = {
                     ...action.payload,
                     created: action.payload.created || Date.now(),
                     modified: action.payload.modified || Date.now(),
                     uuid: action.payload.uuid || getUUID(state)
-                }
-                return [
+                };
+                const workspaceState = [
                     ...state,
-                    workspace,
+                    space,
                 ];
+                saveState(workspaceState);
+                return workspaceState;
             }
         case ACTIONS.REMOVE_WORKSPACE:
             {
                 // remove target workspace
                 const index = state.indexOf(action.payload);
-                return [
+                const workspaceState = [
                     ...state.slice(0, index),
                     ...state.slice(index + 1)
                 ];
+                saveState(workspaceState);
+                return workspaceState;
             }
         case ACTIONS.UPDATE_WORKSPACE:
             {
                 let indexToBeReplaced = getIndexOfSpace(state, action.payload.uuid);
                 // resplace the workspace with updated version
-                return [
+                const workspaceState = [
                     ...state.slice(0, indexToBeReplaced),
                     action.payload,
                     ...state.slice(indexToBeReplaced + 1)
                 ];
+                saveState(workspaceState);
+                return workspaceState;
             }
         default:
             return state;
