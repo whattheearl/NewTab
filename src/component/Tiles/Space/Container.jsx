@@ -71,7 +71,6 @@ class SpaceContainer extends Component {
 
     removeWorkspace(e) {
         e.stopPropagation();
-        // this.props.workspaceHandler('REMOVE_WORKSPACE', { workspace: this.props.workspace });
         this.props.removeWorkspace(this.props.workspace);
     }
 
@@ -83,7 +82,6 @@ class SpaceContainer extends Component {
             saved,
         };
         this.props.updateWorkspace(updatedWorkspace);
-        // this.props.workspaceHandler('REPLACE_WORKSPACE', { workspace: this.props.workspace, updatedWorkspace });
     }
 
     render() {
@@ -91,9 +89,7 @@ class SpaceContainer extends Component {
         const sites = this.getSites();
         return (
             <Space
-                // {...this.props}
                 {...this.props.workspace}
-
                 sites={sites}
                 openAllLinks={this.openAllLinks}
                 select={this.selectWorkspace}

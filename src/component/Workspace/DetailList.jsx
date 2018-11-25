@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Actions
-import { selectWorkspace, removeSitefromSelectedWorkspace } from '../../actions';
+import { selectWorkspace, updateWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -68,10 +68,17 @@ class Detail extends Component {
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        this.props.removeSitefromSelectedWorkspace(site);
-                                        // this.props.sitesHandler({ type: 'REMOVE_SITE_FROM_SELECTED_WORKSPACE' }, { site });
-                                    }
-                                    } />
+                                        const sites = this.props.selectedWorkspace.sites.filter(s => s.url !== site.url);
+                                        const workspace = {
+                                            ...this.props.selectedWorkspace,
+                                            sites
+                                        }
+                                        this.props.updateWorkspace(workspace);
+                                        this.props.selectWorkspace(workspace);
+
+                                        // this.props.removeSitefromSelectedWorkspace(site);
+                                    }}
+                                />
                             </div>
                         </Row>
                     </SiteContainer>
@@ -97,7 +104,7 @@ class Detail extends Component {
 function mapStateToProps(state) {
     return { workspace: state.workspace, selectedWorkspace: state.selectedWorkspace };
 }
-export default connect(mapStateToProps, { removeSitefromSelectedWorkspace, selectWorkspace })(Detail);
+export default connect(mapStateToProps, { updateWorkspace, selectWorkspace })(Detail);
 
 const Container = styled.div`
     display: flex;

@@ -21,24 +21,20 @@ class TabTile extends Component {
         this.close = this.close.bind(this);
     }
 
-    async save(e) {
+    save(e) {
         e.stopPropagation()
-        try {
-            if (this.props.selectedWorkspace.sites.filter(site => site.url === this.props.tab.url).length >= 1) {
-                return;
-            }
-            let workspace = {
-                ...this.props.selectedWorkspace,
-                sites: [
-                    ...this.props.selectedWorkspace.sites,
-                    this.props.tab,
-                ]
-            }
-            this.props.updateWorkspace(workspace);
-            this.props.selectWorkspace(workspace);
-        } catch (error) {
-            console.log(error);
+        if (this.props.selectedWorkspace.sites.filter(site => site.url === this.props.tab.url).length >= 1) {
+            return;
         }
+        let workspace = {
+            ...this.props.selectedWorkspace,
+            sites: [
+                ...this.props.selectedWorkspace.sites,
+                this.props.tab,
+            ]
+        }
+        this.props.updateWorkspace(workspace);
+        this.props.selectWorkspace(workspace);
     }
 
     close(e) {
