@@ -17,22 +17,26 @@ import NameInput from '../component/input/CreateWorkspace';
 import NavPanel from '../component/nav/NavPanel';
 import SearchBar from '../component/input/SearchBar';
 import SpaceList from '../component/list/Space';
+import SearchList from '../component/list/Search';
 import WorkspaceEditModal from '../component/modal/WorkspaceEdit';
 
 class Page extends Component {
 
-    filterHandler(action, payload) {
-        switch (action.type) {
-            case 'SET_FILTER':
-                this.setState({ filter: payload.filter });
-                return;
-            case 'CLEAR_FILTER':
-                this.setState({ filter: '' });
-                return;
-            default:
-                console.error('error unreachable switch case filter');
-                return;
+    // confusing but this.props is from Page,
+    // props is from router
+    renderHome(props) {
+        if (this.props.searchFilter) {
+            return (
+                <SearchList
+                    history={props.history}
+                />
+            )
         }
+        return (
+            <SpaceList
+                history={props.history}
+            />
+        )
     }
 
     render() {
@@ -60,10 +64,7 @@ class Page extends Component {
                         <MainArea>
                             <Switch>
                                 <Route exact path='/' render={(props) => (
-                                    <SpaceList
-                                        {...props}
-                                        display={true}
-                                    />
+                                    this.renderHome(props)
                                 )} />
                                 <Route path='/workspace/:workspaceid' render={(props) => (
                                     <DetailList
@@ -88,47 +89,47 @@ function mapStateToProps(state) {
     return {
         workspace: state.workspace,
         selectedWorkspace: state.selectedWorkspace,
-    }
+        searchFilter: state.searchFilter,
+    };
 }
 
 export default connect(mapStateToProps, { updateWorkspace, selectWorkspace })(Page);
 
 // styled
 const MainArea = styled.div`
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        `;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+`;
 
 const Row = styled.div`
-            height: calc(100vh - 65px);
-            display: flex;
-            width: 100%;
-        `;
+    height: calc(100vh - 65px);
+    display: flex;
+`;
 
 const Header = styled.div`
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem;
     border-bottom: 1px solid ${COLORS.darkWhite};
-                box-sizing: border-box;
-            `;
+    box-sizing: border-box;
+`;
 
 const RightCol = styled.div`
-                padding: 2rem;
-                display: flex;
-                flex-direction: column;
-            `;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+`;
 
 const LeftCol = styled.div`
-                padding: 2rem 0;
-                display: flex;
-                flex-direction: column;
-                width: 220px;
-            `;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+`;
 

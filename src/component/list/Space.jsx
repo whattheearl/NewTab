@@ -10,6 +10,7 @@ import colors from '../../styles/colors';
 
 // Components
 import Space from '../listItem/Space/Container';
+import Site from '../listItem/Detail';
 import VerticalScrollArea from '../container/VerticalScroll';
 import Header from './SpaceHeader';
 
@@ -61,23 +62,13 @@ class SpaceList extends Component {
         }
     }
 
+    // Renders all workspaces
+    // sort selected via header
     renderSpaces() {
         const { workspace } = this.props;
-        if (!this.props.searchFilter) {
-            return workspace.slice()
-                .sort(this.state.sortFunction) // need to select which sor to use
-                .map((space) =>
-                    (<Space
-                        {...this.props}
-                        key={space.uuid}
-                        workspace={space}
-                    />)
-                );
-        }
         return workspace.slice()
-            .sort(this.state.sortFunction) // need to select which sor to use
-            .filter(space => { return space.name.toLowerCase().includes(this.props.searchFilter.toLowerCase()) })
-            .map((space, index) =>
+            .sort(this.state.sortFunction)
+            .map((space) =>
                 (<Space
                     {...this.props}
                     key={space.uuid}
@@ -93,10 +84,8 @@ class SpaceList extends Component {
     }
 
     render() {
-        console.log(this.props);
-        const { workspace, display } = this.props;
-        if (!workspace || !display) return null;
-        const spaces = this.renderSpaces();
+        if (!this.props.workspace) return null;
+        let spaces = this.renderSpaces();
         return (
             <Container className="SpaceList">
                 <Header className="Header" sortHandler={this.sortHandler} />
