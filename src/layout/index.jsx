@@ -28,13 +28,13 @@ class Page extends Component {
         if (this.props.searchFilter) {
             return (
                 <SearchList
-                    history={props.history}
+                    match={props.history}
                 />
             )
         }
         return (
             <SpaceList
-                history={props.history}
+                match={props.match}
             />
         )
     }
@@ -69,8 +69,7 @@ class Page extends Component {
                                 <Route path='/workspace/:workspaceid' render={(props) => (
                                     <DetailList
                                         {...props}
-                                    />
-                                )} />
+                                    />)} />
                                 <Route render={() => (<Redirect to='/' />)} />
                             </Switch>
                         </MainArea>

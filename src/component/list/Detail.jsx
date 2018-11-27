@@ -46,16 +46,20 @@ class Detail extends Component {
         }
     }
 
+    // should abstract this to HOC
     componentDidMount() {
         this.selectWorkspaceFromParam();
     }
 
     renderSiteList() {
-        return this.props.selectedWorkspace.sites.slice()
-            .sort((a, b) => {
+        return this.props.selectedWorkspace.sites
+            .filter((site) => // filter sites
+                site.title.includes(this.props.searchFilter)
+            )
+            .sort((a, b) => { // sort by name
                 return ('' + a.title).localeCompare(b.title);
             })
-            .map((site) => {
+            .map((site) => { // create Site elements
                 return (
                     <Site key={site.url} site={site} />
                 );
@@ -77,7 +81,11 @@ class Detail extends Component {
     }
 }
 function mapStateToProps(state) {
-    return { workspace: state.workspace, selectedWorkspace: state.selectedWorkspace };
+    return {
+        workspace: state.workspace,
+        selectedWorkspace: state.selectedWorkspace,
+        searchFilter: state.searchFilter,
+    };
 }
 export default connect(mapStateToProps, { updateWorkspace, selectWorkspace })(Detail);
 
