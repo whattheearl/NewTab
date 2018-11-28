@@ -1,9 +1,9 @@
 // Gear button
-import React from 'react'
-import styled, { css } from 'styled-components'
+import React from 'react';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { IoMdHome } from 'react-icons/io'
-import COLORS from '../../styles/colors'
+import { IoMdHome } from 'react-icons/io';
+import COLORS from '../../styles/colors';
 
 let style = {
     position: 'relative',
@@ -11,14 +11,17 @@ let style = {
     cursor: 'pointer',
     height: '1.4rem',
     width: '1.4rem',
-}
+};
 
 const Container = styled.div`
+    margin-bottom: 1rem;
+`;
+
+const ClickableArea = styled.div`
     padding: .5rem 2rem;
     display: flex;
     align-items: center;
     text-transform: uppercase;
-    margin-bottom: 1rem;
     font-size: 1rem;
     font-weight: 300;
     cursor: pointer;
@@ -31,9 +34,8 @@ const Container = styled.div`
         :hover{
             background: ${COLORS.darkWhite};
         }
-    `};
-    
-`
+    `};  
+`;
 
 const HomeButton = ({ display, selected }) => {
     if (display !== null && !display) return null
@@ -45,11 +47,13 @@ const HomeButton = ({ display, selected }) => {
     }
 
     return (
-        <Link to="/">
-            <Container selected={selected}>
-                <IoMdHome style={style} /> Home
-            </Container>
-        </Link>
+        <Container>
+            <Link to="/">
+                <ClickableArea selected={selected}>
+                    <IoMdHome style={style} /> Home
+                </ClickableArea>
+            </Link>
+        </Container>
     );
 
 }

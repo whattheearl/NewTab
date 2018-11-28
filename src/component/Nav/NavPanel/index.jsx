@@ -8,8 +8,8 @@ import colors from '../../../styles/colors';
 
 // Components
 import VerticalScrollArea from '../../container/VerticalScroll';
-import HomeButton from '../../button/Home';
-import NavItem from '../../listItem/Nav'
+import HomeButton from '../../listItem/Home';
+import NavItem from '../../listItem/Nav';
 
 class NavPanel extends Component {
     clearCache() {
