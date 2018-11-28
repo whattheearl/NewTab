@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { selectWorkspace, updateWorkspace } from '../../actions';
+import uuid from 'uuid/v4';
 
 // Assets
 import colors from '../../styles/colors';
@@ -19,11 +20,15 @@ class TabTile extends Component {
         if (this.props.selectedWorkspace.sites.filter(site => site.url === this.props.tab.url).length >= 1) {
             return;
         }
+        let tab = {
+            ...this.props.tab,
+            uuid: uuid()
+        }
         let workspace = {
             ...this.props.selectedWorkspace,
             sites: [
                 ...this.props.selectedWorkspace.sites,
-                this.props.tab,
+                tab,
             ]
         }
         this.props.updateWorkspace(workspace);

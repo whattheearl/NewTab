@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import debounce from 'lodash.debounce';
 
 // Actions
 import { setSearchFilter } from '../../../actions';
@@ -12,17 +13,29 @@ import Input from '../index';
 class SearchBarContainer extends Component {
     constructor(props) {
         super(props);
+        this.debouncedHandleChange = this.debouncedHandleChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    debouncedHandleChange = debounce((e) => {
+        console.log(e.target);
+        this.props.setSearchFilter(e.target.value)
+    }, 500);
+
     // maintain searchTerm state
     handleChange(e) {
-        this.props.setSearchFilter(e.target.value);
+        e.persist();
+        console.log(e);
+        this.debouncedHandleChange(e);
     }
 
     handleSubmit(e) {
         e.preventDefault();
+    }
+
+    componentDidMount() {
+
     }
 
     render() {

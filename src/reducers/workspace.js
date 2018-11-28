@@ -1,5 +1,5 @@
 import defaultWorkspace from '../assets/data/ws'; // Sample user state
-import uuidv1 from 'uuid/v1';
+import uuid from 'uuid/v4';
 import ACTIONS from '../actions/types';
 
 let initialState = loadWorkspace(defaultWorkspace);
@@ -11,33 +11,22 @@ function loadWorkspace(defaultWorkspace) {
     return workspace
 }
 
-// ensures UUID are located on each space (was not present in previous versions)
-function ensureUUID(state) {
-    let missingUUID = state.filter(space => !space.uuid);
-    let complete = state.filter(space => !!space.uuid);
-    missingUUID.forEach(space => {
-        space.uuid = getUUID(complete);
-        complete.push(space);
-    });
-    return complete;
+// generate uuid for workspace / sites
+function ensureUUID(initialState) {
+    let newState = initialState.slice();
+    for (let i = 0; i < newState.length; i++) {
+        let space = newState[i];
+        space.uuid = uuid();
+        for (let j = 0; j < space.sites.length; j++) {
+            space.sites[j].uuid = uuid();
+        }
+    }
+    return newState;
 }
 
 // saves workspace to localstorage
 function saveState(state) {
     window.localStorage.setItem('workspace', JSON.stringify(state));
-}
-
-// ensures UUID is unique to workspace
-function getUUID(state) {
-    let uuid = uuidv1();
-    // find unused UUID
-    const filterByUUID = (space) => {
-        return !!space.uuid && space.uuid === uuid;
-    }
-    while (state.filter(filterByUUID).length > 0) {
-        uuid = uuidv1();
-    }
-    return uuid;
 }
 
 // find index of workspace based on uuid
@@ -59,7 +48,7 @@ export default function (state = initialState, action) {
                     ...action.payload,
                     created: action.payload.created || Date.now(),
                     modified: action.payload.modified || Date.now(),
-                    uuid: action.payload.uuid || getUUID(state)
+                    uuid: action.payload.uuid || uuid(),
                 };
                 const workspaceState = [
                     ...state,
