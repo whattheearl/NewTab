@@ -23,7 +23,6 @@ class Detail extends Component {
             return console.error('Cannot find workspace', this.props.match.params.workspaceid);
         }
         this.props.selectWorkspace(workspaces[0]);
-        console.log()
         return workspaces[0];
     }
 
@@ -56,7 +55,6 @@ class Detail extends Component {
     }
 
     render() {
-        console.log('detai', this.props);
         if (!this.props.selectedWorkspace) return null;
         return (
             <Container>

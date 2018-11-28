@@ -20,11 +20,10 @@ function ensureUUID(initialState) {
         space.uuid = wsUuid;
         for (let j = 0; j < space.sites.length; j++) {
             let site = space.sites[j];
-            site.uuid = uuid();
+            site.uuid = site.uuid || uuid();
             site.wsUuid = wsUuid;
         }
     }
-    console.log(newState);
     return newState;
 }
 
@@ -35,7 +34,6 @@ function saveState(state) {
 
 // find index of workspace based on uuid
 function getIndexOfSpace(state, uuid) {
-    console.log('find uuid', uuid);
     for (let i = 0; i < state.length; i++) {
         let space = state[i];
         if (space.uuid === uuid) {
