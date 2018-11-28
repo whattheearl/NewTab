@@ -10,7 +10,6 @@ import colors from '../../styles/colors';
 
 // Components
 import Space from '../listItem/Space/Container';
-import Site from '../listItem/Detail';
 import VerticalScrollArea from '../container/VerticalScroll';
 import Header from './SpaceHeader';
 

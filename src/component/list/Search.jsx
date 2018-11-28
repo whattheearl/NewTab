@@ -16,16 +16,16 @@ import Header from './DetailHeader';
 
 class SearchList extends Component {
     // ensure to unselect workspace <- this should be done for every home route move to parent
-    componentDidUpdate(prevProps) {
+    componentDidUpdate() {
         if (!!this.props.selectedWorkspace) {
-            this.unselectWorkspace();
+            this.props.unselectWorkspace();
         }
     }
 
     // ensure to unselect workspace
     componentDidMount() {
         if (!!this.props.selectedWorkspace) {
-            this.unselectWorkspace();
+            this.props.unselectWorkspace();
         }
     }
 
