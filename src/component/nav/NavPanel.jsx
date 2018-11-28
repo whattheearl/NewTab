@@ -8,7 +8,7 @@ import colors from '../../styles/colors';
 // Components
 import VerticalScrollArea from '../container/VerticalScroll';
 import HomeButton from '../listItem/Home';
-import NavItem from '../listItem/Nav';
+import WorkspaceButton from '../listItem/Nav';
 
 // Nav panel allows user to navigate between favorite workspace and home
 class NavPanel extends Component {
@@ -25,8 +25,8 @@ class NavPanel extends Component {
         const displayTempArea = process.env.NODE_ENV === 'development';
         // sort by descending saved time
         let spaces = this.props.workspaces.slice().sort((a, b) => { return a.saved - b.saved })
-            .map((space, index) => {
-                return <NavItem
+            .map((space) => {
+                return <WorkspaceButton
                     key={space.uuid}
                     name={space.name}
                     uuid={space.uuid}
