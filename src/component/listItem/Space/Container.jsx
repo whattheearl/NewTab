@@ -7,14 +7,6 @@ import { toggleFavorite, toggleWorkspaceModal, removeWorkspace } from '../../../
 import Space from './index';
 
 class SpaceContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.openAllLinks = this.openAllLinks.bind(this);
-        this.selectWorkspace = this.selectWorkspace.bind(this);
-        this.editWorkspace = this.editWorkspace.bind(this);
-        this.removeWorkspace = this.removeWorkspace.bind(this);
-    }
-
     openAllLinks = (e) => {
         console.log('open all links');
         e.preventDefault()
@@ -37,19 +29,19 @@ class SpaceContainer extends Component {
         }
     }
 
-    selectWorkspace(e) {
+    selectWorkspace = (e) => {
         e.stopPropagation();
         this.props.history.push(`Workspace/${this.props.workspace.uuid}`);
     }
 
-    editWorkspace(e) {
+    editWorkspace = (e) => {
         e.stopPropagation();
         e.preventDefault();
         this.props.history.push(`Workspace/${this.props.workspace.uuid}`);
         this.props.toggleWorkspaceModal();
     }
 
-    removeWorkspace(e) {
+    removeWorkspace = (e) => {
         e.stopPropagation();
         this.props.removeWorkspace(this.props.workspace);
     }
