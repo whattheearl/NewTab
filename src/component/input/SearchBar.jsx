@@ -4,38 +4,28 @@ import { connect } from 'react-redux';
 import debounce from 'lodash.debounce';
 
 // Actions
-import { setSearchFilter } from '../../../actions';
+import { setSearchFilter } from '../../actions';
 
 // Components
-import Input from '../index';
+import Input from './index';
 
-// input is used for searching workspace
-class SearchBarContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.debouncedHandleChange = this.debouncedHandleChange.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
+// input is used for searching workspace and sites
+class SearchBarInput extends Component {
+    // only search after stop typing for .5sec
     debouncedHandleChange = debounce((e) => {
-        console.log(e.target);
         this.props.setSearchFilter(e.target.value)
     }, 500);
 
     // maintain searchTerm state
-    handleChange(e) {
+    handleChange = (e) => {
+        // turns into regular event (not synthetic)
         e.persist();
-        console.log(e);
         this.debouncedHandleChange(e);
     }
 
-    handleSubmit(e) {
+    // stop page refresh
+    handleSubmit = (e) => {
         e.preventDefault();
-    }
-
-    componentDidMount() {
-
     }
 
     render() {
@@ -52,7 +42,7 @@ class SearchBarContainer extends Component {
     }
 }
 
-export default connect(null, { setSearchFilter })(SearchBarContainer);
+export default connect(null, { setSearchFilter })(SearchBarInput);
 
 const Form = styled.form`
     display: block;
