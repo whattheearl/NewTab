@@ -61,6 +61,12 @@ class SpaceList extends Component {
         }
     }
 
+    componentDidMount() {
+        if (!!this.props.selectedWorkspace) {
+            this.props.unselectWorkspace();
+        }
+    }
+
     // Renders all workspaces
     // sort selected via header
     renderSpaces() {
@@ -74,12 +80,6 @@ class SpaceList extends Component {
                     workspace={space}
                 />)
             );
-    }
-
-    componentDidMount() {
-        if (!!this.props.selectedWorkspace) {
-            this.props.unselectWorkspace();
-        }
     }
 
     render() {

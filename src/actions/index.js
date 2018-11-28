@@ -50,6 +50,20 @@ export const addSiteToSelectedWorkspace = (site) => {
     }
 }
 
+export const addSite = (site) => {
+    return {
+        type: ACTIONS.ADD_SITE,
+        payload: site
+    }
+}
+
+export const removeSite = (site) => {
+    return {
+        type: ACTIONS.REMOVE_SITE,
+        payload: site
+    }
+}
+
 export const removeSitefromSelectedWorkspace = (site) => {
     return {
         type: ACTIONS.REMOVE_SITE_FROM_SELECTED_WORKSPACE,

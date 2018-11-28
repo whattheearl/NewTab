@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { removeSite } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -11,6 +13,7 @@ import Image from '../container/Image';
 
 const DetailItem = (props) => {
     const { site } = props;
+
     return (
         <SiteContainer>
             <Row href={site.url} target={'_blank'}>
@@ -29,7 +32,11 @@ const DetailItem = (props) => {
                 <div style={{ marginLeft: 'auto' }}>
                     <CloseButton
                         display={true}
-                        onClick={(e) => props.remove(e, site)}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            props.removeSite(site);
+                        }}
                     />
                 </div>
             </Row>
@@ -37,7 +44,7 @@ const DetailItem = (props) => {
     );
 };
 
-export default DetailItem;
+export default connect(null, { removeSite })(DetailItem);
 
 const SiteContainer = styled.div`
     box-sizing: border-box;

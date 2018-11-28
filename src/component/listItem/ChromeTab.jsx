@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { selectWorkspace, updateWorkspace } from '../../actions';
+import { selectWorkspace, updateWorkspace, addSite } from '../../actions';
 import uuid from 'uuid/v4';
 
 // Assets
@@ -17,22 +17,17 @@ class TabTile extends Component {
     // save site to currently selected workspace
     save = (e) => {
         e.stopPropagation()
+        // Don't allow duplicates
         if (this.props.selectedWorkspace.sites.filter(site => site.url === this.props.tab.url).length >= 1) {
             return;
         }
-        let tab = {
+
+        let site = {
             ...this.props.tab,
-            uuid: uuid()
+            uuid: uuid(),
+            wsUuid: this.props.selectedWorkspace.uuid,
         }
-        let workspace = {
-            ...this.props.selectedWorkspace,
-            sites: [
-                ...this.props.selectedWorkspace.sites,
-                tab,
-            ]
-        }
-        this.props.updateWorkspace(workspace);
-        this.props.selectWorkspace(workspace);
+        this.props.addSite(site);
     }
 
     // close tab in chrome
@@ -129,7 +124,7 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { selectWorkspace, updateWorkspace })(TabTile);
+export default connect(mapStateToProps, { addSite, selectWorkspace, updateWorkspace })(TabTile);
 
 const Row = styled.div`
     margin-bottom: 2px;

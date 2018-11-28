@@ -16,11 +16,15 @@ function ensureUUID(initialState) {
     let newState = initialState.slice();
     for (let i = 0; i < newState.length; i++) {
         let space = newState[i];
-        space.uuid = uuid();
+        const wsUuid = uuid();
+        space.uuid = wsUuid;
         for (let j = 0; j < space.sites.length; j++) {
-            space.sites[j].uuid = uuid();
+            let site = space.sites[j];
+            site.uuid = uuid();
+            site.wsUuid = wsUuid;
         }
     }
+    console.log(newState);
     return newState;
 }
 
@@ -31,6 +35,7 @@ function saveState(state) {
 
 // find index of workspace based on uuid
 function getIndexOfSpace(state, uuid) {
+    console.log('find uuid', uuid);
     for (let i = 0; i < state.length; i++) {
         let space = state[i];
         if (space.uuid === uuid) {
@@ -78,6 +83,41 @@ export default function (state = initialState, action) {
                     ...state.slice(indexToBeReplaced + 1)
                 ];
                 saveState(workspaceState);
+                return workspaceState;
+            }
+            // remove site from its workspace
+        case ACTIONS.REMOVE_SITE:
+            {
+                let index = getIndexOfSpace(state, action.payload.wsUuid);
+                const workspace = state[index];
+                const workspaceState = [
+                    ...state.slice(0, index),
+                    {
+                        ...workspace,
+                        sites: [
+                            ...workspace.sites.filter(site => site.uuid !== action.payload.uuid)
+                        ]
+                    },
+                    ...state.slice(index + 1)
+                ];
+                return workspaceState;
+            }
+            // add site to workspace
+        case ACTIONS.ADD_SITE:
+            {
+                let index = getIndexOfSpace(state, action.payload.wsUuid);
+                const workspace = state[index];
+                const workspaceState = [
+                    ...state.slice(0, index),
+                    {
+                        ...workspace,
+                        sites: [
+                            ...workspace.sites,
+                            action.payload
+                        ]
+                    },
+                    ...state.slice(index + 1)
+                ];
                 return workspaceState;
             }
         default:

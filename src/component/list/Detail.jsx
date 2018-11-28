@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Actions
-import { selectWorkspace, updateWorkspace } from '../../actions';
+import { selectWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -27,23 +27,12 @@ class Detail extends Component {
         return workspaces[0];
     }
 
-    remove = (e, site) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const sites = this.props.selectedWorkspace.sites.filter(s => s.url !== site.url);
-        const workspace = {
-            ...this.props.selectedWorkspace,
-            sites
-        }
-        this.props.updateWorkspace(workspace);
-        this.props.selectWorkspace(workspace);
+    componentWillUpdate(nextProps) {
+        return nextProps.workspace != this.props.workspace;
     }
 
     componentDidUpdate() {
-        // select the correct workspace if not selected already
-        if (!this.props.selectedWorkspace || String(this.props.selectedWorkspace.uuid) !== String(this.props.match.params.workspaceid)) {
-            this.selectWorkspaceFromParam();
-        }
+        this.selectWorkspaceFromParam();
     }
 
     // should abstract this to HOC
@@ -87,7 +76,7 @@ function mapStateToProps(state) {
         searchFilter: state.searchFilter,
     };
 }
-export default connect(mapStateToProps, { updateWorkspace, selectWorkspace })(Detail);
+export default connect(mapStateToProps, { selectWorkspace })(Detail);
 
 const Container = styled.div`
     display: flex;

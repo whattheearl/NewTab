@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Actions
-import { unselectWorkspace } from '../../actions';
+import { updateWorkspace, unselectWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -16,6 +16,19 @@ import Header from './DetailHeader';
 
 class SearchList extends Component {
     // ensure to unselect workspace <- this should be done for every home route move to parent
+    remove = (e, site) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const sites = this.props.selectedWorkspace.sites.filter(s => s.url !== site.url);
+        const workspace = {
+            ...this.props.selectedWorkspace,
+            sites
+        }
+        this.props.updateWorkspace(workspace);
+        this.props.selectWorkspace(workspace);
+    }
+
+
     componentDidUpdate() {
         if (!!this.props.selectedWorkspace) {
             this.props.unselectWorkspace();

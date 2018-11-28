@@ -28,13 +28,13 @@ class Page extends Component {
         if (this.props.searchFilter) {
             return (
                 <SearchList
-                    match={props.history}
+                    {...props}
                 />
             )
         }
         return (
             <SpaceList
-                match={props.match}
+                {...props}
             />
         )
     }
