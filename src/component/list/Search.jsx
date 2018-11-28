@@ -29,6 +29,11 @@ class SearchList extends Component {
         }
     }
 
+    componentWillUpdate(nextProps) {
+        return nextProps.workspace !== this.props.workspace
+            || nextProps.searchFilter !== this.props.searchFilter;
+    }
+
     renderSearch() {
         // get all sites that match search
         let sites = this.props.workspace
@@ -94,9 +99,4 @@ const Container = styled.div`
     width: 100%;
     border-bottom: 1px solid ${colors.darkWhite};
     box-sizing: border-box;
-`;
-
-const InfoContainer = styled.div`
-    margin-bottom: auto;
-    text-align: center;
 `;

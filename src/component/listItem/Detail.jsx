@@ -10,7 +10,6 @@ import CloseButton from '../button/Close';
 import Image from '../container/Image';
 
 const DetailItem = (props) => {
-
     const { site } = props;
     return (
         <SiteContainer>
