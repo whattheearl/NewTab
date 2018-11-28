@@ -22,9 +22,11 @@ class NavPanel extends Component {
     // using workspaces as "pages" to sort work
     render() {
         if (!this.props.display) return null;
+        // only show this area for manual testing
         const displayTempArea = process.env.NODE_ENV === 'development';
-        // sort by descending saved time
-        let spaces = this.props.workspaces.slice().sort((a, b) => { return a.saved - b.saved })
+        // sort by date saved
+        let spaces = this.props.workspaces.slice()
+            .sort((a, b) => { return a.saved - b.saved })
             .map((space) => {
                 return <WorkspaceButton
                     key={space.uuid}
