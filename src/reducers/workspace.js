@@ -16,7 +16,7 @@ function ensureUUID(initialState) {
     let newState = initialState.slice();
     for (let i = 0; i < newState.length; i++) {
         let space = newState[i];
-        const wsUuid = uuid();
+        const wsUuid = space.uuid || uuid();
         space.uuid = wsUuid;
         for (let j = 0; j < space.sites.length; j++) {
             let site = space.sites[j];

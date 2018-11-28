@@ -56,6 +56,7 @@ class Detail extends Component {
     }
 
     render() {
+        console.log('detai', this.props);
         if (!this.props.selectedWorkspace) return null;
         return (
             <Container>
