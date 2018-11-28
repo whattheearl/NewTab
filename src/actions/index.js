@@ -57,6 +57,13 @@ export const addSite = (site) => {
     }
 }
 
+export const toggleFavorite = (workspace) => {
+    return {
+        type: ACTIONS.TOGGLE_FAVORITE,
+        payload: workspace
+    }
+}
+
 export const removeSite = (site) => {
     return {
         type: ACTIONS.REMOVE_SITE,

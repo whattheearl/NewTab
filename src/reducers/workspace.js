@@ -84,6 +84,19 @@ export default function (state = initialState, action) {
                 return workspaceState;
             }
             // remove site from its workspace
+        case ACTIONS.TOGGLE_FAVORITE:
+            {
+                let indexToBeReplaced = getIndexOfSpace(state, action.payload.uuid);
+                const workspaceState = [
+                    ...state.slice(0, indexToBeReplaced),
+                    {
+                        ...action.payload,
+                        saved: !!action.payload.saved ? false : Date.now(),
+                    },
+                    ...state.slice(indexToBeReplaced + 1)
+                ];
+                return workspaceState;
+            }
         case ACTIONS.REMOVE_SITE:
             {
                 let index = getIndexOfSpace(state, action.payload.wsUuid);
@@ -99,6 +112,7 @@ export default function (state = initialState, action) {
                     ...state.slice(index + 1)
                 ];
                 return workspaceState;
+                saveState(workspaceState);
             }
             // add site to workspace
         case ACTIONS.ADD_SITE:
@@ -117,6 +131,7 @@ export default function (state = initialState, action) {
                     ...state.slice(index + 1)
                 ];
                 return workspaceState;
+                saveState(workspaceState);
             }
         default:
             return state;
