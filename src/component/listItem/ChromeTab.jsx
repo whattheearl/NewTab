@@ -21,7 +21,7 @@ class TabTile extends Component {
         if (this.props.selectedWorkspace.sites.filter(site => site.url === this.props.tab.url).length >= 1) {
             return;
         }
-
+        // add site to currently open workspace
         let site = {
             ...this.props.tab,
             uuid: uuid(),
@@ -43,35 +43,6 @@ class TabTile extends Component {
                 { type: "CLOSE_TAB", tab: this.props.tab.id }
             )
         }
-    }
-
-    getSite() {
-        let { tab } = this.props
-        if (!tab) return
-        let site = {
-            title: this.props.name,
-            url: this.props.tab.url,
-            favIconUrl: this.props.image,
-        }
-        return new Promise((resolve, reject) => {
-            chrome.runtime.sendMessage(
-                chrome.extensionId,
-                {
-                    type: "GET_SITE",
-                    to: tab.id,
-                },
-                response => {
-                    site.icons = response && response.icons ? response.icons : []
-                    site.content = response && response.content ? response.content : ""
-                    if (site.icons && site.icons.length > 0) site.favIconUrl = site.icons[0]
-                    if (response) {
-                        resolve(site);
-                    } else {
-                        reject('sendMessage Failure');
-                    }
-                }
-            )
-        })
     }
 
     onClick = () => {
