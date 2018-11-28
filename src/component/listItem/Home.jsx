@@ -27,14 +27,13 @@ const ClickableArea = styled.div`
     cursor: pointer;
     background: linear-gradient(45deg, ${COLORS.white} 0%, ${COLORS.white} 50%, ${COLORS.red} 50%, ${COLORS.red} 100%);
     background-size: 220%;
-    background-position: left center;
     transition: background-position .2s cubic-bezier(0.55, 0.055, 0.675, 0.19), color .3s .2s;
     transition-delay: .2s;
-    ${props => props.selected ? `background-position: right center; color : ${COLORS.white};` : css`
-        :hover{
-            background: ${COLORS.darkWhite};
-        }
-    `};  
+    background-position: ${props => props.selected ? `right center` : `left center`};
+    color: ${props => props.selected ? `${COLORS.white}` : ``};
+    :hover {
+        background-color: ${props => props.selected ? `${COLORS.darkwhite}` : ``};
+    }
 `;
 
 const HomeButton = ({ display, selected }) => {
