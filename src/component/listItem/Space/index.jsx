@@ -8,7 +8,7 @@ import COLOR from '../../../styles/colors';
 import LocalDate from './LocalDate';
 import Grid from '../../container/Grid';
 import CloseButton from '../../icon/Trash';
-import Favorite from '../../button/Favorite';
+import Favorite from '../../icon/Star';
 import Text from '../../container/Text';
 import Edit from '../../icon/Pencil';
 
