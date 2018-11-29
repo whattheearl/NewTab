@@ -43,7 +43,12 @@ class Page extends Component {
                     />
                     <Header>
                         <BreadCrumb />
-                        <SearchBar />
+                        {/* <SearchBar /> */}
+                        <Route render={(props) => (
+                            <SearchBar
+                                {...props}
+                            />)}
+                        />
                         <div>&nbsp;</div>
                     </Header>
                     <Row>

@@ -11,6 +11,11 @@ import Input from './index';
 
 // input is used for searching workspace and sites
 class SearchBarInput extends Component {
+    constructor(props) {
+        super(props);
+        this.inputRef = React.createRef();
+    }
+
     // only search after stop typing for .5sec
     debouncedHandleChange = debounce((e) => {
         this.props.setSearchFilter(e.target.value)
@@ -28,10 +33,21 @@ class SearchBarInput extends Component {
         e.preventDefault();
     }
 
+    // clear search filter on page change
+    componentDidUpdate(prevProps) {
+        console.log(this.props);
+        if (prevProps.location.pathname !== this.props.location.pathname) {
+            console.log('inside if');
+            this.props.setSearchFilter('');
+            this.inputRef.current.value = '';
+        }
+    }
+
     render() {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Input
+                    inputRef={this.inputRef}
                     scale={1.1}
                     placeholder={'Search...'}
                     handleChange={this.handleChange}
