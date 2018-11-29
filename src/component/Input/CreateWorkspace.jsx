@@ -31,6 +31,11 @@ class CreateWorkspace extends Component {
         });
         this.props.addWorkspace({ sites, name });
         this.closeAllTabs();
+        this.clearInput();
+    }
+
+    clearInput = () => {
+        this.inputRef.current.value = '';
     }
 
     closeAllTabs() {
