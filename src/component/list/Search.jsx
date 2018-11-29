@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Actions
-import { updateWorkspace, unselectWorkspace } from '../../actions';
+import { unselectWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -16,19 +16,6 @@ import Header from './DetailHeader';
 
 class SearchList extends Component {
     // ensure to unselect workspace <- this should be done for every home route move to parent
-    remove = (e, site) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const sites = this.props.selectedWorkspace.sites.filter(s => s.url !== site.url);
-        const workspace = {
-            ...this.props.selectedWorkspace,
-            sites
-        }
-        this.props.updateWorkspace(workspace);
-        this.props.selectWorkspace(workspace);
-    }
-
-
     componentDidUpdate() {
         if (!!this.props.selectedWorkspace) {
             this.props.unselectWorkspace();
@@ -80,7 +67,6 @@ class SearchList extends Component {
     }
 
     render() {
-        console.log('searc', this.props);
         const { workspace, display } = this.props;
         if (!workspace || display === false) return null;
         return (

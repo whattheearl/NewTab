@@ -20,7 +20,6 @@ function ensureUUID(initialState) {
         space.uuid = wsUuid;
         for (let j = 0; j < space.sites.length; j++) {
             let site = space.sites[j];
-            console.log(site);
             if (!site.uuid) site.uuid = uuid();
             site.wsUuid = wsUuid;
         }
@@ -96,6 +95,7 @@ export default function (state = initialState, action) {
                     },
                     ...state.slice(indexToBeReplaced + 1)
                 ];
+                saveState(workspaceState);
                 return workspaceState;
             }
         case ACTIONS.REMOVE_SITE:
@@ -112,8 +112,8 @@ export default function (state = initialState, action) {
                     },
                     ...state.slice(index + 1)
                 ];
-                return workspaceState;
                 saveState(workspaceState);
+                return workspaceState;
             }
             // add site to workspace
         case ACTIONS.ADD_SITE:
@@ -131,8 +131,8 @@ export default function (state = initialState, action) {
                     },
                     ...state.slice(index + 1)
                 ];
-                return workspaceState;
                 saveState(workspaceState);
+                return workspaceState;
             }
         default:
             return state;

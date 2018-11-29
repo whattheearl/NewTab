@@ -29,7 +29,7 @@ class DetailList extends Component {
 
     // Rerender there are changes to workspacestate
     componentWillUpdate(nextProps) {
-        return nextProps.workspace != this.props.workspace;
+        return nextProps.workspace !== this.props.workspace;
     }
 
     componentDidUpdate() {
