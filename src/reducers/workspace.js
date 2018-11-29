@@ -47,16 +47,18 @@ export default function (state = initialState, action) {
         // adds a new workspace
         case ACTIONS.ADD_WORKSPACE:
             {
-                const space = {
+                // make sure uuid is attached to sites/workspace
+                const space = ensureUUID([{
                     ...action.payload,
                     created: action.payload.created || Date.now(),
                     modified: action.payload.modified || Date.now(),
                     uuid: action.payload.uuid || uuid(),
-                };
+                }]);
                 const workspaceState = [
                     ...state,
-                    space,
+                    space[0],
                 ];
+                console.log(space);
                 saveState(workspaceState);
                 return workspaceState;
             }
