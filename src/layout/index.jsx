@@ -20,23 +20,15 @@ import SpaceList from '../component/list/Space';
 import SearchList from '../component/list/Search';
 import WorkspaceEditModal from '../component/modal/WorkspaceEdit';
 
+// Page dictates the layout of the APP
 class Page extends Component {
-
     // confusing but this.props is from Page,
     // props is from router
     renderHome(props) {
         if (this.props.searchFilter) {
-            return (
-                <SearchList
-                    {...props}
-                />
-            )
+            return <SearchList {...props} />;
         }
-        return (
-            <SpaceList
-                {...props}
-            />
-        )
+        return <SpaceList {...props} />;
     }
 
     render() {
@@ -51,7 +43,12 @@ class Page extends Component {
                     />
                     <Header>
                         <BreadCrumb />
-                        <SearchBar />
+                        {/* <SearchBar /> */}
+                        <Route render={(props) => (
+                            <SearchBar
+                                {...props}
+                            />)}
+                        />
                         <div>&nbsp;</div>
                     </Header>
                     <Row>

@@ -13,7 +13,8 @@ import DetailHeader from './DetailHeader';
 import Site from '../listItem/Detail';
 import VerticalScrollArea from '../container/VerticalScroll';
 
-class Detail extends Component {
+// Renders the sites of a workspace as a list
+class DetailList extends Component {
     // select the workspace in url
     selectWorkspaceFromParam = () => {
         const workspaces = this.props.workspace.filter(
@@ -26,8 +27,9 @@ class Detail extends Component {
         return workspaces[0];
     }
 
+    // Rerender there are changes to workspacestate
     componentWillUpdate(nextProps) {
-        return nextProps.workspace != this.props.workspace;
+        return nextProps.workspace !== this.props.workspace;
     }
 
     componentDidUpdate() {
@@ -75,7 +77,7 @@ function mapStateToProps(state) {
         searchFilter: state.searchFilter,
     };
 }
-export default connect(mapStateToProps, { selectWorkspace })(Detail);
+export default connect(mapStateToProps, { selectWorkspace })(DetailList);
 
 const Container = styled.div`
     display: flex;

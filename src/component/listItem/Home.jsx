@@ -1,9 +1,9 @@
 // Gear button
-import React from 'react'
-import styled, { css } from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { IoMdHome } from 'react-icons/io'
-import COLORS from '../../../styles/colors'
+import { IoMdHome } from 'react-icons/io';
+import COLORS from '../../styles/colors';
 
 let style = {
     position: 'relative',
@@ -11,29 +11,30 @@ let style = {
     cursor: 'pointer',
     height: '1.4rem',
     width: '1.4rem',
-}
+};
 
 const Container = styled.div`
+    margin-bottom: 1rem;
+`;
+
+const ClickableArea = styled.div`
     padding: .5rem 2rem;
     display: flex;
     align-items: center;
     text-transform: uppercase;
-    margin-bottom: 1rem;
     font-size: 1rem;
     font-weight: 300;
     cursor: pointer;
     background: linear-gradient(45deg, ${COLORS.white} 0%, ${COLORS.white} 50%, ${COLORS.red} 50%, ${COLORS.red} 100%);
     background-size: 220%;
-    background-position: left center;
     transition: background-position .2s cubic-bezier(0.55, 0.055, 0.675, 0.19), color .3s .2s;
     transition-delay: .2s;
-    ${props => props.selected ? `background-position: right center; color : ${COLORS.white};` : css`
-        :hover{
-            background: ${COLORS.darkWhite};
-        }
-    `};
-    
-`
+    background-position: ${props => props.selected ? `right center` : `left center`};
+    color: ${props => props.selected ? `${COLORS.white}` : ``};
+    :hover {
+        background-color: ${props => props.selected ? `${COLORS.darkwhite}` : ``};
+    }
+`;
 
 const HomeButton = ({ display, selected }) => {
     if (display !== null && !display) return null
@@ -45,11 +46,13 @@ const HomeButton = ({ display, selected }) => {
     }
 
     return (
-        <Link to="/">
-            <Container selected={selected}>
-                <IoMdHome style={style} /> Home
-            </Container>
-        </Link>
+        <Container>
+            <Link to="/">
+                <ClickableArea selected={selected}>
+                    <IoMdHome style={style} /> Home
+                </ClickableArea>
+            </Link>
+        </Container>
     );
 
 }

@@ -8,7 +8,7 @@ import colors from '../../styles/colors';
 import bookmarkIcon from '../../assets/image/bookmark.png';
 
 // components
-import CloseButton from '../button/Close';
+import CloseButton from '../icon/Trash';
 import Image from '../container/Image';
 
 const DetailItem = (props) => {

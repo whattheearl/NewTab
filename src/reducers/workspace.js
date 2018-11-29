@@ -1,4 +1,4 @@
-import defaultWorkspace from '../assets/data/ws'; // Sample user state
+import defaultWorkspace from '../assets/data/ws2'; // Sample user state
 import uuid from 'uuid/v4';
 import ACTIONS from '../actions/types';
 
@@ -20,7 +20,7 @@ function ensureUUID(initialState) {
         space.uuid = wsUuid;
         for (let j = 0; j < space.sites.length; j++) {
             let site = space.sites[j];
-            site.uuid = site.uuid || uuid();
+            if (!site.uuid) site.uuid = uuid();
             site.wsUuid = wsUuid;
         }
     }
@@ -84,6 +84,20 @@ export default function (state = initialState, action) {
                 return workspaceState;
             }
             // remove site from its workspace
+        case ACTIONS.TOGGLE_FAVORITE:
+            {
+                let indexToBeReplaced = getIndexOfSpace(state, action.payload.uuid);
+                const workspaceState = [
+                    ...state.slice(0, indexToBeReplaced),
+                    {
+                        ...action.payload,
+                        saved: !!action.payload.saved ? false : Date.now(),
+                    },
+                    ...state.slice(indexToBeReplaced + 1)
+                ];
+                saveState(workspaceState);
+                return workspaceState;
+            }
         case ACTIONS.REMOVE_SITE:
             {
                 let index = getIndexOfSpace(state, action.payload.wsUuid);
@@ -98,6 +112,7 @@ export default function (state = initialState, action) {
                     },
                     ...state.slice(index + 1)
                 ];
+                saveState(workspaceState);
                 return workspaceState;
             }
             // add site to workspace
@@ -116,6 +131,7 @@ export default function (state = initialState, action) {
                     },
                     ...state.slice(index + 1)
                 ];
+                saveState(workspaceState);
                 return workspaceState;
             }
         default:

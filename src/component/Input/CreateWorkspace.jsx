@@ -19,7 +19,6 @@ class CreateWorkspace extends Component {
 
     addWorkspace(res) {
         // rename filtered tabs
-        console.log('addworkspace', res);
         let { filtered: sites } = res;
         let name = this.inputRef.current.value || 'Unnamed';
         sites = sites.map(site => {

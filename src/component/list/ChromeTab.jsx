@@ -18,8 +18,6 @@ class ChromeTabArea extends Component {
         super(props)
         this.state = {
             chromeTabs: [],
-            selectedTab: null,
-            displayModal: true,
             lastActivity: Date.now()
         }
         this.selectTab = this.selectTab.bind(this);
