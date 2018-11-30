@@ -13,7 +13,7 @@ class DetailHeader extends Component {
                     <TitleHeading>Title</TitleHeading>
                 </Row>
             </Container>
-        )
+        );
     }
 }
 export default DetailHeader;

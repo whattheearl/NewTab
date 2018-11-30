@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { selectWorkspace, updateWorkspace } from '../../actions';
+import { selectWorkspace, updateWorkspace, addSite } from '../../actions';
+import uuid from 'uuid/v4';
 
 // Assets
 import colors from '../../styles/colors';
@@ -10,24 +11,23 @@ import bookmarkIcon from '../../assets/image/bookmark.png';
 
 // Component
 import Thumbnail from '../container/Image';
-import CloseButton from '../button/Close';
+import CloseButton from '../icon/Trash';
 
 class TabTile extends Component {
     // save site to currently selected workspace
     save = (e) => {
         e.stopPropagation()
+        // Don't allow duplicates
         if (this.props.selectedWorkspace.sites.filter(site => site.url === this.props.tab.url).length >= 1) {
             return;
         }
-        let workspace = {
-            ...this.props.selectedWorkspace,
-            sites: [
-                ...this.props.selectedWorkspace.sites,
-                this.props.tab,
-            ]
+        // add site to currently open workspace
+        let site = {
+            ...this.props.tab,
+            uuid: uuid(),
+            wsUuid: this.props.selectedWorkspace.uuid,
         }
-        this.props.updateWorkspace(workspace);
-        this.props.selectWorkspace(workspace);
+        this.props.addSite(site);
     }
 
     // close tab in chrome
@@ -43,35 +43,6 @@ class TabTile extends Component {
                 { type: "CLOSE_TAB", tab: this.props.tab.id }
             )
         }
-    }
-
-    getSite() {
-        let { tab } = this.props
-        if (!tab) return
-        let site = {
-            title: this.props.name,
-            url: this.props.tab.url,
-            favIconUrl: this.props.image,
-        }
-        return new Promise((resolve, reject) => {
-            chrome.runtime.sendMessage(
-                chrome.extensionId,
-                {
-                    type: "GET_SITE",
-                    to: tab.id,
-                },
-                response => {
-                    site.icons = response && response.icons ? response.icons : []
-                    site.content = response && response.content ? response.content : ""
-                    if (site.icons && site.icons.length > 0) site.favIconUrl = site.icons[0]
-                    if (response) {
-                        resolve(site);
-                    } else {
-                        reject('sendMessage Failure');
-                    }
-                }
-            )
-        })
     }
 
     onClick = () => {
@@ -124,7 +95,7 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { selectWorkspace, updateWorkspace })(TabTile);
+export default connect(mapStateToProps, { addSite, selectWorkspace, updateWorkspace })(TabTile);
 
 const Row = styled.div`
     margin-bottom: 2px;
