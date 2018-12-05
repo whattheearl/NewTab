@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { addWorkspace } from '../../actions';
+import uuid from 'uuid/v4';
 
 // Components
 import Input from './index';
@@ -19,7 +20,6 @@ class CreateWorkspace extends Component {
 
     addWorkspace(res) {
         // rename filtered tabs
-        console.log('addworkspace', res);
         let { filtered: sites } = res;
         let name = this.inputRef.current.value || 'Unnamed';
         sites = sites.map(site => {
@@ -27,10 +27,14 @@ class CreateWorkspace extends Component {
                 title: site.title,
                 favIconUrl: site.favIconUrl,
                 url: site.url,
-                created: Date.now(),
             }
         });
         this.props.addWorkspace({ sites, name });
+        this.clearInput();
+    }
+
+    clearInput = () => {
+        this.inputRef.current.value = '';
     }
 
     closeAllTabs() {

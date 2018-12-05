@@ -7,13 +7,33 @@ import COLOR from '../../../styles/colors';
 // Components
 import LocalDate from './LocalDate';
 import Grid from '../../container/Grid';
-import CloseButton from '../../button/Close';
-import Favorite from '../../button/Favorite';
+import CloseButton from '../../icon/Trash';
+import Favorite from '../../icon/Star';
 import Text from '../../container/Text';
-import Edit from '../../button/Edit';
+import Edit from '../../icon/Pencil';
+
+// Assets
+import bookmark from '../../../assets/image/bookmark.png';
+
+// Components
+import Thumbnail from '../../container/Image';
 
 class Space extends Component {
     render() {
+        const sites = this.props.sites.map((site, index) => {
+            let image = site.image || site.favIconUrl;
+            return (<a key={index} href={site.url} target="_blank" style={{ display: 'block' }}>
+                <Thumbnail
+                    image={image}
+                    backupImage={bookmark}
+                    alt={image}
+                    width={'25px'}
+                    height={'25px'}
+                    padding={'0 4px'}
+                />
+            </a>);
+        });
+
         return (
             <Container>
                 <Row onClick={this.props.select}>
@@ -36,7 +56,7 @@ class Space extends Component {
                     </Name>
                     <RightCol>
                         <Grid numColumns={10}>
-                            {this.props.sites}
+                            {sites}
                         </Grid>
                     </RightCol>
                     <DateContainer>

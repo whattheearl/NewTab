@@ -3,34 +3,32 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Assets
-import defaultPage from '../../../assets/data/speeddial';
-import colors from '../../../styles/colors';
+import colors from '../../styles/colors';
 
 // Components
-import VerticalScrollArea from '../../container/VerticalScroll';
-import HomeButton from '../../button/Home';
-import NavItem from '../../listItem/Nav'
+import VerticalScrollArea from '../container/VerticalScroll';
+import HomeButton from '../listItem/Home';
+import WorkspaceButton from '../listItem/Nav';
 
+// Nav panel allows user to navigate between favorite workspace and home
 class NavPanel extends Component {
+    // clears data
     clearCache() {
         console.log('clearing cache');
         window.localStorage.clear();
         window.location.reload();
     }
 
-    loadTemplate() {
-        window.localStorage.setItem('pages', JSON.stringify(defaultPage));
-        window.location.reload();
-    }
-
     // using workspaces as "pages" to sort work
     render() {
         if (!this.props.display) return null;
+        // only show this area for manual testing
         const displayTempArea = process.env.NODE_ENV === 'development';
-        // sort by descending saved time
-        let spaces = this.props.workspaces.slice().sort((a, b) => { return a.saved - b.saved })
-            .map((space, index) => {
-                return <NavItem
+        // sort by date saved
+        let spaces = this.props.workspaces.slice()
+            .sort((a, b) => { return a.saved - b.saved })
+            .map((space) => {
+                return <WorkspaceButton
                     key={space.uuid}
                     name={space.name}
                     uuid={space.uuid}
@@ -45,10 +43,13 @@ class NavPanel extends Component {
                 />
                 <VerticalScrollArea>
                     {spaces}
-                    {displayTempArea ? <div style={{ marginTop: 'auto' }}>
-                        <h1 style={{ color: 'white', marginTop: 'auto' }}>Temp Area</h1>
-                        <button onClick={this.clearCache} style={{ padding: '.5rem' }}>Load Starter Data</button>
-                        <button onClick={this.loadTemplate} style={{ padding: '.5rem' }}>Load Empty Data</button></div>
+                    {displayTempArea ?
+                        <div style={{ marginTop: 'auto' }}>
+                            <h1 style={{ color: 'white', marginTop: 'auto' }}>Temp Area</h1>
+                            <button onClick={this.clearCache} style={{ padding: '.5rem' }}>
+                                Load Starter Data
+                            </button>
+                        </div>
                         : null}
                 </VerticalScrollArea>
             </Container>
