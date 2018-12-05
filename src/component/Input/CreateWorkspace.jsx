@@ -31,7 +31,6 @@ class CreateWorkspace extends Component {
             }
         });
         this.props.addWorkspace({ sites, name });
-        this.closeAllTabs();
     }
 
     closeAllTabs() {
