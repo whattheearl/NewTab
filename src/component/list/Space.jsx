@@ -71,7 +71,7 @@ class SpaceList extends Component {
     // sort selected via header
     renderSpaces() {
         const { workspace } = this.props;
-        return workspace.slice()
+        return Object.values(workspace)
             .sort(this.state.sortFunction)
             .map((space) =>
                 (<Space

@@ -5,26 +5,42 @@ import ACTIONS from '../actions/types';
 let initialState = loadWorkspace(defaultWorkspace);
 // loads from local storage, if not found loads preconstructed example workspace from app
 function loadWorkspace(defaultWorkspace) {
+    // load from browser cache
     const localWorkspace = window.localStorage.getItem('workspace');
-    let workspace = localWorkspace ? JSON.parse(localWorkspace) : defaultWorkspace;
-    workspace = ensureUUID(workspace);
-    return workspace
+    if (localWorkspace) {
+        return JSON.parse(localWorkspace);
+    }
+    // load example workspace
+    // fix uuid if using older version
+    const workspaces = ensureValidWorkspace(defaultWorkspace);
+
+    // convert array state to object state
+    return workspaces;
 }
 
 // generate uuid for workspace / sites
-function ensureUUID(initialState) {
-    let newState = initialState.slice();
-    for (let i = 0; i < newState.length; i++) {
-        let space = newState[i];
-        const wsUuid = space.uuid || uuid();
-        space.uuid = wsUuid;
-        for (let j = 0; j < space.sites.length; j++) {
-            let site = space.sites[j];
-            if (!site.uuid) site.uuid = uuid();
-            site.wsUuid = wsUuid;
+function ensureValidWorkspace(workspaces) {
+    // ensure array and copy
+    if (!Array.isArray(workspaces)) workspaces = [workspaces];
+    let validWorkspaces = workspaces.slice();
+
+    // ensure workspace has uuid / modified datetime / created datetime
+    // ensure sites have uuid / wsuuid
+    for (let space of validWorkspaces) {
+        space.created = space.created || Date.now();
+        space.modified = space.modified || Date.now();
+        space.uuid = space.uuid || uuid();
+        for (let site of space.sites) {
+            site.uuid = site.uuid || uuid();
+            site.wsUuid = space.uuid;
         }
     }
-    return newState;
+
+    // return as object
+    return validWorkspaces.reduce((result, workspace) => {
+        result[workspace.uuid] = workspace;
+        return result;
+    }, {});
 }
 
 // saves workspace to localstorage
@@ -48,72 +64,71 @@ export default function (state = initialState, action) {
         case ACTIONS.ADD_WORKSPACE:
             {
                 // make sure uuid is attached to sites/workspace
-                const space = ensureUUID([{
-                    ...action.payload,
-                    created: action.payload.created || Date.now(),
-                    modified: action.payload.modified || Date.now(),
-                    uuid: action.payload.uuid || uuid(),
-                }]);
-                const workspaceState = [
+                const validWorkspaces = ensureValidWorkspace(action.payload)
+
+                // add overwrite any of the old state with new workspaces
+                const workspaceState = {
                     ...state,
-                    space[0],
-                ];
-                console.log(space);
+                    ...validWorkspaces,
+                };
+                // return new state
                 saveState(workspaceState);
                 return workspaceState;
             }
         case ACTIONS.REMOVE_WORKSPACE:
             {
-                // remove target workspace
-                const index = state.indexOf(action.payload);
-                const workspaceState = [
-                    ...state.slice(0, index),
-                    ...state.slice(index + 1)
-                ];
-                saveState(workspaceState);
-                return workspaceState;
+                // filter out workspace
+                const {
+                    [action.payload.uuid]: filteredWorkspace,
+                    ...remainingWorkspaces
+                } = state;
+                // return new state
+                saveState(remainingWorkspaces);
+                return remainingWorkspaces;
             }
         case ACTIONS.UPDATE_WORKSPACE:
             {
-                let indexToBeReplaced = getIndexOfSpace(state, action.payload.uuid);
+                const updateWorkspace = action.payload;
                 // resplace the workspace with updated version
-                const workspaceState = [
-                    ...state.slice(0, indexToBeReplaced),
-                    action.payload,
-                    ...state.slice(indexToBeReplaced + 1)
-                ];
+                const workspaceState = {
+                    ...state,
+                    [updateWorkspace.uuid]: {
+                        ...state[updateWorkspace.uuid],
+                        ...updateWorkspace,
+                    }
+                };
+                // return new state
                 saveState(workspaceState);
                 return workspaceState;
             }
             // remove site from its workspace
         case ACTIONS.TOGGLE_FAVORITE:
             {
-                let indexToBeReplaced = getIndexOfSpace(state, action.payload.uuid);
-                const workspaceState = [
-                    ...state.slice(0, indexToBeReplaced),
-                    {
-                        ...action.payload,
-                        saved: !!action.payload.saved ? false : Date.now(),
+                const toggle_target = action.payload;
+                // toggle saved state
+                const workspaceState = {
+                    ...state,
+                    [toggle_target.uuid]: {
+                        ...toggle_target,
+                        saved: toggle_target.saved ? null : Date.now(),
                     },
-                    ...state.slice(indexToBeReplaced + 1)
-                ];
+                };
+                // return new state
                 saveState(workspaceState);
                 return workspaceState;
             }
         case ACTIONS.REMOVE_SITE:
             {
-                let index = getIndexOfSpace(state, action.payload.wsUuid);
-                const workspace = state[index];
-                const workspaceState = [
-                    ...state.slice(0, index),
-                    {
+                const workspace = state[action.payload.uuid];
+                const workspaceState = {
+                    ...state,
+                    [workspace.uuid]: {
                         ...workspace,
                         sites: [
-                            ...workspace.sites.filter(site => site.uuid !== action.payload.uuid)
+                            ...workspace.sites.filter(site => site.uuid !== action.payload.uuid),
                         ]
                     },
-                    ...state.slice(index + 1)
-                ];
+                };
                 saveState(workspaceState);
                 return workspaceState;
             }

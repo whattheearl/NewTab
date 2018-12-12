@@ -55,7 +55,7 @@ class Page extends Component {
                         <LeftCol>
                             <NavPanel
                                 display={true}
-                                workspaces={this.props.workspace.filter(space => !!space.saved)}
+                                workspaces={Object.values(this.props.workspace).filter(space => !!space.saved)}
                             />
                         </LeftCol>
                         <MainArea>

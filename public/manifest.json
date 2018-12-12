@@ -19,9 +19,9 @@
         "matches": ["http://localhost:3000/*"]
     },
     "icons": {
-        "16": "/image/bookmark-16.png",
-        "32": "/image/bookmark-32.png",
-        "128": "/image/bookmark-128.png"
+        "16": "image/bookmark-16.png",
+        "32": "image/bookmark-32.png",
+        "128": "image/bookmark-128.png"
     },
     "permissions": [
         "tabs"

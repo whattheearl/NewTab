@@ -35,9 +35,7 @@ class SearchBarInput extends Component {
 
     // clear search filter on page change
     componentDidUpdate(prevProps) {
-        console.log(this.props);
         if (prevProps.location.pathname !== this.props.location.pathname) {
-            console.log('inside if');
             this.props.setSearchFilter('');
             this.inputRef.current.value = '';
         }

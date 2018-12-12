@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 // Actions
-import { selectWorkspace } from '../../actions';
+import { selectWorkspace, addWorkspace } from '../../actions';
 
 // Assets
 import colors from '../../styles/colors';
@@ -17,14 +17,22 @@ import VerticalScrollArea from '../container/VerticalScroll';
 class DetailList extends Component {
     // select the workspace in url
     selectWorkspaceFromParam = () => {
-        const workspaces = this.props.workspace.filter(
-            space => String(space.uuid) === (this.props.match.params.workspaceid)
-        )
-        if (workspaces.length !== 1) {
-            return console.error('Cannot find workspace', this.props.match.params.workspaceid);
+        let workspace = this.props.workspace[this.props.match.params.workspaceid];
+        if (!!workspace) {
+            fetch(`http://localhost:8000/workspace/${this.props.match.params.workspaceid}`)
+                .then((res) => {
+                    return res.json()
+                })
+                .then((res) => {
+                    console.log('adding', res);
+                    this.props.addWorkspace(res);
+                    this.props.selectWorkspace(res);
+                    return;
+                }).catch((err) => {
+                    return console.error('Cannot find workspace', this.props.match.params.workspaceid);
+                })
         }
-        this.props.selectWorkspace(workspaces[0]);
-        return workspaces[0];
+        this.props.selectWorkspace(this.props.workspace[this.props.match.params.workspaceid]);
     }
 
     // Rerender there are changes to workspacestate
@@ -42,6 +50,7 @@ class DetailList extends Component {
     }
 
     renderSiteList() {
+        console.log(this.props.selectedWorkspace);
         return this.props.selectedWorkspace.sites
             .filter((site) => // filter sites
                 site.title.includes(this.props.searchFilter)
@@ -77,7 +86,7 @@ function mapStateToProps(state) {
         searchFilter: state.searchFilter,
     };
 }
-export default connect(mapStateToProps, { selectWorkspace })(DetailList);
+export default connect(mapStateToProps, { selectWorkspace, addWorkspace })(DetailList);
 
 const Container = styled.div`
     display: flex;
