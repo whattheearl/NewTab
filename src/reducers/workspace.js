@@ -119,7 +119,7 @@ export default function (state = initialState, action) {
             }
         case ACTIONS.REMOVE_SITE:
             {
-                const workspace = state[action.payload.uuid];
+                const workspace = state[action.payload.wsUuid];
                 const workspaceState = {
                     ...state,
                     [workspace.uuid]: {
@@ -135,19 +135,17 @@ export default function (state = initialState, action) {
             // add site to workspace
         case ACTIONS.ADD_SITE:
             {
-                let index = getIndexOfSpace(state, action.payload.wsUuid);
-                const workspace = state[index];
-                const workspaceState = [
-                    ...state.slice(0, index),
-                    {
+                const workspace = state[action.payload.wsUuid];
+                const workspaceState = {
+                    ...state,
+                    [workspace.uuid]: {
                         ...workspace,
                         sites: [
                             ...workspace.sites,
-                            action.payload
+                            action.payload,
                         ]
                     },
-                    ...state.slice(index + 1)
-                ];
+                };
                 saveState(workspaceState);
                 return workspaceState;
             }
