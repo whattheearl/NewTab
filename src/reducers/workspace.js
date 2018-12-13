@@ -48,16 +48,6 @@ function saveState(state) {
     window.localStorage.setItem('workspace', JSON.stringify(state));
 }
 
-// find index of workspace based on uuid
-function getIndexOfSpace(state, uuid) {
-    for (let i = 0; i < state.length; i++) {
-        let space = state[i];
-        if (space.uuid === uuid) {
-            return i;
-        }
-    }
-}
-
 export default function (state = initialState, action) {
     switch (action.type) {
         // adds a new workspace
