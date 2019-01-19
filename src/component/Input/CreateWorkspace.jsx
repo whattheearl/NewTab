@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { addWorkspace } from '../../actions';
-import uuid from 'uuid/v4';
 
 // Components
 import Input from './index';

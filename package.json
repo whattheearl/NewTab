@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "dotenv": "^6.2.0",
     "lodash.debounce": "^4.0.8",
     "react": "^16.5.1",
     "react-dnd": "^5.0.0",
@@ -16,6 +17,7 @@
     "redux": "^4.0.1",
     "redux-devtools": "^3.4.2",
     "styled-components": "^3.4.6",
+    "url-join": "^4.0.0",
     "uuid": "^3.3.2"
   },
   "scripts": {

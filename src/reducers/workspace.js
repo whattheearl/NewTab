@@ -29,10 +29,10 @@ function ensureValidWorkspace(workspaces) {
     for (let space of validWorkspaces) {
         space.created = space.created || Date.now();
         space.modified = space.modified || Date.now();
-        space.uuid = space.uuid || uuid();
+        space.uuid = space._id || space.uuid || uuid();
         for (let site of space.sites) {
-            site.uuid = site.uuid || uuid();
-            site.wsUuid = space.uuid;
+            site.uuid = site._id || site.uuid || uuid();
+            site.wsUuid = space._id || space.uuid;
         }
     }
 

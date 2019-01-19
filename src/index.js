@@ -4,7 +4,9 @@ import App from './App.jsx';
 
 // Global CSS
 import './style.css'
-// import registerServiceWorker from './registerServiceWorker';
 
+// import environmental variables
+require('dotenv').config();
+
+// bootsrap React App
 ReactDOM.render(( < App / > ), document.getElementById('root'));
-// registerServiceWorker();

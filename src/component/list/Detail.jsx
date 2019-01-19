@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import urljoin from 'url-join';
 
 // Actions
 import { selectWorkspace, addWorkspace } from '../../actions';
@@ -13,31 +14,50 @@ import DetailHeader from './DetailHeader';
 import Site from '../listItem/Detail';
 import VerticalScrollArea from '../container/VerticalScroll';
 
+
+const API_BASE = process.env.REACT_APP_API_BASE;
+
+fetch(urljoin(API_BASE, `/workspace/9445b2d5-f7eb-442e-8772-d694eb149ed3`))
+    .then((res) => {
+        return res.json()
+    })
+    .then((res) => {
+        console.log('found', res);
+        return;
+    }).catch((err) => {
+        return console.error('Cannot find workspace', this.props.match.params.workspaceid);
+    })
+
 // Renders the sites of a workspace as a list
 class DetailList extends Component {
-    // select the workspace in url
+    // select the workspace in url, if not found fetch it from server
     selectWorkspaceFromParam = () => {
         let workspace = this.props.workspace[this.props.match.params.workspaceid];
-        if (!!workspace) {
-            fetch(`http://localhost:8000/workspace/${this.props.match.params.workspaceid}`)
+        if (workspace) {
+            this.props.selectWorkspace(workspace);
+        }
+        else {
+            const workspaceUri = urljoin(API_BASE, `/workspace/${this.props.match.params.workspaceid}`)
+            fetch(workspaceUri)
                 .then((res) => {
                     return res.json()
                 })
                 .then((res) => {
                     console.log('adding', res);
-                    this.props.addWorkspace(res);
-                    this.props.selectWorkspace(res);
+                    const workspace = res[0];
+                    debugger;
+                    this.props.addWorkspace(workspace);
+                    this.props.selectWorkspace(workspace);
                     return;
                 }).catch((err) => {
                     return console.error('Cannot find workspace', this.props.match.params.workspaceid);
                 })
         }
-        this.props.selectWorkspace(this.props.workspace[this.props.match.params.workspaceid]);
     }
 
     // Rerender there are changes to workspacestate
     componentWillUpdate(nextProps) {
-        return nextProps.workspace !== this.props.workspace;
+        return nextProps.workspace.id !== this.props.workspace.id;
     }
 
     componentDidUpdate() {
@@ -80,6 +100,7 @@ class DetailList extends Component {
     }
 }
 function mapStateToProps(state) {
+    console.log('state', state);
     return {
         workspace: state.workspace,
         selectedWorkspace: state.selectedWorkspace,
